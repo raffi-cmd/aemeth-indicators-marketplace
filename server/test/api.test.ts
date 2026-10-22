@@ -65,12 +65,12 @@ async function runTests() {
   db.prepare(`
     INSERT INTO order_items (id, order_id, product_id, product_title, product_type, unit_price_cents)
     VALUES (?, ?, ?, ?, ?, ?)
-  `).run('oi_test_1', testOrderId, openSourceProd.id, openSourceProd.title, openSourceProd.type, serverCalculatedPrice);
+  `).run('oi_test_' + Date.now(), testOrderId, openSourceProd.id, openSourceProd.title, openSourceProd.type, serverCalculatedPrice);
 
   db.prepare(`
     INSERT INTO payments (id, order_id, method, amount_cents, currency, status)
     VALUES (?, ?, 'bank_transfer', ?, 'USD', 'awaiting_payment')
-  `).run('pay_test_1', testOrderId, serverCalculatedPrice);
+  `).run('pay_test_' + Date.now(), testOrderId, serverCalculatedPrice);
 
   const initialOrder = db.prepare('SELECT * FROM orders WHERE id = ?').get(testOrderId) as any;
   assert(initialOrder.status === 'pending', 'Order initialized as pending');
@@ -96,15 +96,16 @@ async function runTests() {
   // 6. Bundle Multi-Product Delivery Test
   console.log('\n--- 6. Bundle Multi-Product Fulfillment ---');
   const bundleOrderId = 'ord_bundle_' + Date.now();
+  const bundleOrderNum = 'AEM-BND-' + Date.now().toString().slice(-6);
   db.prepare(`
     INSERT INTO orders (id, order_number, user_id, total_cents, currency, status, payment_method, customer_email, customer_tv_username)
     VALUES (?, ?, ?, ?, 'USD', 'pending', 'crypto', 'bundle_trader@aemeth.test', 'tv_trader_bundle')
-  `).run(bundleOrderId, 'AEM-BND-01', testUserId, bundleProd.price_cents);
+  `).run(bundleOrderId, bundleOrderNum, testUserId, bundleProd.price_cents);
 
   db.prepare(`
     INSERT INTO order_items (id, order_id, product_id, product_title, product_type, unit_price_cents)
     VALUES (?, ?, ?, ?, ?, ?)
-  `).run('oi_bnd_1', bundleOrderId, bundleProd.id, bundleProd.title, bundleProd.type, bundleProd.price_cents);
+  `).run('oi_bnd_' + Date.now(), bundleOrderId, bundleProd.id, bundleProd.title, bundleProd.type, bundleProd.price_cents);
 
   fulfillOrder(bundleOrderId);
 

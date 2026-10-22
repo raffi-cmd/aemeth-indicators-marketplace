@@ -37,6 +37,14 @@ export interface Product {
   price_cents: number;
   discount_cents?: number;
   version: string;
+  pine_version?: 'v5' | 'v6';
+  release_date?: string;
+  changelog?: string[];
+  changelog_id?: string[];
+  changelog_en?: string[];
+  compatibility?: string;
+  compatibility_id?: string;
+  compatibility_en?: string;
   features: string[];
   features_id?: string[];
   features_en?: string[];

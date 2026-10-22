@@ -207,17 +207,24 @@ export const Catalog: React.FC<CatalogProps> = ({
                       )}
                     </div>
 
-                    {/* Version Badge top-right */}
-                    <div className="absolute top-3.5 right-3.5 bg-black/60 backdrop-blur-md border border-slate-700 px-2 py-0.5 rounded text-[10px] font-mono text-slate-300">
-                      v{product.version}
+                    {/* Version Badges top-right */}
+                    <div className="absolute top-3.5 right-3.5 flex items-center gap-1.5">
+                      {product.pine_version && (
+                        <div className="bg-blue-950/80 backdrop-blur-md border border-blue-500/40 px-2 py-0.5 rounded text-[10px] font-mono font-bold text-blue-300">
+                          {product.pine_version}
+                        </div>
+                      )}
+                      <div className="bg-black/60 backdrop-blur-md border border-slate-700 px-2 py-0.5 rounded text-[10px] font-mono text-slate-300">
+                        v{product.version}
+                      </div>
                     </div>
 
-                    {/* Anti-Repaint Guarantee banner on image */}
+                    {/* Anti-Repaint Guarantee & Pine compatibility banner on image */}
                     <div className="absolute bottom-2 left-3.5 right-3.5 flex items-center justify-between text-[10px] font-mono text-slate-300 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-lg border border-slate-800">
                       <span className="flex items-center gap-1 text-emerald-400">
                         <ShieldCheck className="w-3 h-3" /> {t.catalog.antiRepaintLock}
                       </span>
-                      <span className="text-slate-400">TradingView v5</span>
+                      <span className="text-slate-400">{product.pine_version || 'Pine v5'}</span>
                     </div>
                   </div>
 

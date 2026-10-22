@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Search, ShieldCheck, Clock, CheckCircle2, AlertCircle, Copy, Check, Download, 
-  Terminal, Lock, Code, ExternalLink, HelpCircle, ArrowRight
+  Terminal, Lock, Code, ExternalLink, HelpCircle, ArrowRight, BookOpen, MessageCircle, Send, FileText
 } from 'lucide-react';
 import { useTranslation } from '../i18n/LanguageContext';
 import { api } from '../services/api';
@@ -10,11 +10,13 @@ import type { Order } from '../types/marketplace';
 interface GuestOrderStatusProps {
   initialOrderNumber?: string;
   initialToken?: string;
+  onNavigateToGuide?: (context?: { title: string; orderNumber?: string }) => void;
 }
 
 export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
   initialOrderNumber = '',
   initialToken = '',
+  onNavigateToGuide,
 }) => {
   const { t, lang } = useTranslation();
   const [orderNumber, setOrderNumber] = useState(initialOrderNumber);
@@ -339,9 +341,21 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
                   <button
                     onClick={() => handleDownloadPineBlob(activePineScript.filename, activePineScript.code)}
                     className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-lg flex items-center gap-1 cursor-pointer"
+                    title="Download as TradingView .pine script"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>.pine</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      const txtFilename = activePineScript.filename.replace(/\.pine$/i, '') + '.txt';
+                      handleDownloadPineBlob(txtFilename, activePineScript.code);
+                    }}
+                    className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-lg flex items-center gap-1 cursor-pointer"
+                    title="Download as standard plain text .txt"
+                  >
+                    <FileText className="w-3.5 h-3.5" />
+                    <span>.txt</span>
                   </button>
                 </div>
               </div>
@@ -351,7 +365,38 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
             </div>
           )}
 
-          {/* TradingView Instructions Guide */}
+          {/* Dedicated Installation Guide Card */}
+          <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-950/40 via-[#070b14] to-[#0b1120] border border-blue-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-lg">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="p-1.5 rounded-lg bg-blue-600/20 text-blue-400">
+                  <BookOpen className="w-4 h-4" />
+                </span>
+                <span className="font-bold text-white text-sm font-heading">
+                  {lang === 'id' ? 'Panduan Instalasi TradingView Lengkap' : 'Complete TradingView Installation Guide'}
+                </span>
+              </div>
+              <p className="text-xs text-slate-300">
+                {lang === 'id' 
+                  ? 'Panduan 5 langkah membuka Pine Editor, menyimpan skrip, dan solusi compiler error (//@version=5, undeclared identifier).' 
+                  : '5-step walkthrough to paste into Pine Editor, save your script, and resolve common compiler errors.'}
+              </p>
+            </div>
+            {onNavigateToGuide && (
+              <button
+                onClick={() => onNavigateToGuide({
+                  title: order.items?.[0]?.product_title || 'Aemeth Indicator',
+                  orderNumber: order.order_number,
+                })}
+                className="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-md shrink-0 cursor-pointer"
+              >
+                <span>{lang === 'id' ? 'Buka Panduan Lengkap' : 'Open Full Guide'}</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+
+          {/* Quick Pine Editor Steps */}
           <div className="p-5 rounded-2xl bg-[#070b14] border border-slate-800 text-xs space-y-2">
             <span className="font-bold text-white block font-heading">
               {t.orderStatus.howToLoadTitle}
@@ -363,17 +408,70 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
             </ol>
           </div>
 
-          {/* Technical Support Box */}
-          <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between text-xs text-slate-400 border-t border-slate-800 gap-3">
-            <span>{t.orderStatus.supportPrompt}</span>
-            <a
-              href="mailto:support@aemethtrader.com"
-              className="text-blue-400 hover:text-blue-300 font-bold flex items-center gap-1 cursor-pointer"
-            >
-              <span>{t.orderStatus.contactSupport}</span>
-              <ExternalLink className="w-3 h-3" />
-            </a>
-          </div>
+          {/* Safe WhatsApp & Telegram Installation Support */}
+          {(() => {
+            const firstItemTitle = order.items?.[0]?.product_title || 'Aemeth Indicator';
+            const safeWaMessage = lang === 'id'
+              ? `Halo Admin Aemeth, saya membutuhkan bantuan instalasi indikator Pine Script: ${firstItemTitle} (Order: ${order.order_number}).`
+              : `Hello Aemeth Support, I need assistance installing the Pine Script indicator: ${firstItemTitle} (Order: ${order.order_number}).`;
+            const waUrl = `https://wa.me/6282123456789?text=${encodeURIComponent(safeWaMessage)}`;
+            const tgUrl = `https://t.me/aemethtrader?text=${encodeURIComponent(safeWaMessage)}`;
+
+            return (
+              <div className="p-5 rounded-2xl bg-[#070b14] border border-slate-800 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div>
+                    <h5 className="text-xs font-bold font-heading text-white flex items-center gap-1.5">
+                      <HelpCircle className="w-3.5 h-3.5 text-blue-400" />
+                      <span>{t.installationGuide.needManualHelp}</span>
+                    </h5>
+                    <p className="text-[11px] text-slate-400 mt-0.5">
+                      {t.installationGuide.needManualHelpDesc}
+                    </p>
+                  </div>
+                  <span className="text-[10px] font-mono text-slate-400 bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-800 shrink-0">
+                    {t.orderStatus.supportHoursNotice}
+                  </span>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href={waUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 sm:flex-none px-4 py-2 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 text-xs font-bold rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>WhatsApp Support</span>
+                    <ExternalLink className="w-3 h-3 opacity-70" />
+                  </a>
+
+                  <a
+                    href={tgUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 sm:flex-none px-4 py-2 bg-sky-600/20 hover:bg-sky-600/30 border border-sky-500/40 text-sky-300 text-xs font-bold rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                  >
+                    <Send className="w-3.5 h-3.5 text-sky-400" />
+                    <span>Telegram Support</span>
+                    <ExternalLink className="w-3 h-3 opacity-70" />
+                  </a>
+
+                  <a
+                    href="mailto:support@aemethtrader.com"
+                    className="flex-1 sm:flex-none px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                  >
+                    <span>Email Support</span>
+                    <ExternalLink className="w-3 h-3 opacity-70" />
+                  </a>
+                </div>
+
+                <p className="text-[10px] text-slate-400 italic">
+                  * {t.installationGuide.supportNote}
+                </p>
+              </div>
+            );
+          })()}
 
         </div>
       )}

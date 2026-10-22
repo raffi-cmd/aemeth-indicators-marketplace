@@ -1,5 +1,5 @@
-import React from 'react';
-import { X, ShieldCheck, Check, Code, Lock, Layers, Zap, AlertTriangle, ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, ShieldCheck, Check, Code, Lock, Layers, Zap, AlertTriangle, ArrowRight, GitCommit, Calendar, Cpu, ChevronDown } from 'lucide-react';
 import { useTranslation } from '../i18n/LanguageContext';
 import type { Product } from '../types/marketplace';
 
@@ -97,6 +97,69 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               {t.productDetail.antiRepaintDirectiveDesc}
             </p>
           </div>
+
+          {/* Specifications & Compatibility Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="bg-[#070b14] border border-slate-800 rounded-xl p-3 space-y-1">
+              <span className="text-[10px] uppercase font-mono text-slate-400 block">Version</span>
+              <span className="text-xs font-bold font-mono text-white flex items-center gap-1">
+                <GitCommit className="w-3.5 h-3.5 text-blue-400" />
+                v{product.version}
+              </span>
+            </div>
+
+            <div className="bg-[#070b14] border border-slate-800 rounded-xl p-3 space-y-1">
+              <span className="text-[10px] uppercase font-mono text-slate-400 block">Pine Script</span>
+              <span className="text-xs font-bold font-mono text-emerald-400 flex items-center gap-1">
+                <Cpu className="w-3.5 h-3.5" />
+                {product.pine_version || 'Pine v5'}
+              </span>
+            </div>
+
+            <div className="bg-[#070b14] border border-slate-800 rounded-xl p-3 space-y-1">
+              <span className="text-[10px] uppercase font-mono text-slate-400 block">Release Date</span>
+              <span className="text-xs font-bold font-mono text-slate-200 flex items-center gap-1">
+                <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                {product.release_date || '2025-01-15'}
+              </span>
+            </div>
+
+            <div className="bg-[#070b14] border border-slate-800 rounded-xl p-3 space-y-1">
+              <span className="text-[10px] uppercase font-mono text-slate-400 block">Platform</span>
+              <span className="text-xs font-bold font-mono text-blue-300 truncate">
+                TradingView Free/Pro
+              </span>
+            </div>
+          </div>
+
+          {/* Compatibility Notes */}
+          {product.compatibility && (
+            <div className="text-xs bg-[#070b14] border border-slate-800/80 rounded-xl p-3.5 text-slate-300 space-y-1">
+              <span className="text-[10px] font-bold font-mono text-slate-400 uppercase tracking-wider block">
+                {lang === 'id' ? 'Catatan Kompatibilitas' : 'Compatibility Notes'}
+              </span>
+              <p className="font-light leading-relaxed">{product.compatibility}</p>
+            </div>
+          )}
+
+          {/* Changelog Accordion */}
+          {product.changelog && product.changelog.length > 0 && (
+            <div className="bg-[#070b14] border border-slate-800 rounded-2xl p-4 space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300 font-mono flex items-center gap-1.5">
+                <GitCommit className="w-3.5 h-3.5 text-blue-400" />
+                <span>{lang === 'id' ? 'Riwayat Versi (Changelog)' : 'Version Changelog'}</span>
+              </h4>
+              <div className="space-y-2">
+                {product.changelog.map((entry, idx) => (
+                  <div key={idx} className="border-l-2 border-blue-500/40 pl-3 py-0.5">
+                    <span className="text-xs font-mono text-slate-300 leading-relaxed block">
+                      {entry}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Features */}
           <div className="space-y-3">

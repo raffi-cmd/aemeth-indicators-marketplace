@@ -58,6 +58,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onNavigate, onOpenA
                 </button>
               </li>
               <li>
+                <button onClick={() => onNavigate('installation-guide')} className="hover:text-blue-400 transition-colors cursor-pointer">
+                  {t.nav.installationGuide}
+                </button>
+              </li>
+              <li>
                 <button onClick={() => onNavigate('how-it-works')} className="hover:text-blue-400 transition-colors cursor-pointer">
                   {t.nav.howItWorks}
                 </button>

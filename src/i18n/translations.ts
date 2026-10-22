@@ -7,6 +7,7 @@ export interface TranslationDict {
     bundles: string;
     howItWorks: string;
     faq: string;
+    installationGuide: string;
     trackOrder: string;
     cart: string;
   };
@@ -145,6 +146,8 @@ export interface TranslationDict {
     openSourceNotice: string;
     viewSourceCode: string;
     downloadPine: string;
+    downloadTxt: string;
+    installationGuideButton: string;
     inviteNoticeTitle: string;
     inviteNoticeDesc: string;
     inviteStatusGranted: string;
@@ -153,6 +156,45 @@ export interface TranslationDict {
     howToLoadSteps: string[];
     supportPrompt: string;
     contactSupport: string;
+    contactWhatsApp: string;
+    contactTelegram: string;
+    supportHoursNotice: string;
+  };
+  installationGuide: {
+    sectionTag: string;
+    title: string;
+    subtitle: string;
+    tabSteps: string;
+    tabTroubleshooting: string;
+    stepsTitle: string;
+    step1Title: string;
+    step1Desc: string;
+    step2Title: string;
+    step2Desc: string;
+    step3Title: string;
+    step3Desc: string;
+    step4Title: string;
+    step4Desc: string;
+    step5Title: string;
+    step5Desc: string;
+    troubleshootTitle: string;
+    err1Title: string;
+    err1Desc: string;
+    err1Fix: string;
+    err2Title: string;
+    err2Desc: string;
+    err2Fix: string;
+    err3Title: string;
+    err3Desc: string;
+    err3Fix: string;
+    err4Title: string;
+    err4Desc: string;
+    err4Fix: string;
+    needManualHelp: string;
+    needManualHelpDesc: string;
+    askOnWhatsApp: string;
+    askOnTelegram: string;
+    supportNote: string;
   };
   howItWorks: {
     sectionTag: string;
@@ -224,6 +266,7 @@ export const translations: Record<Language, TranslationDict> = {
       indicators: 'Indikator',
       bundles: 'Paket Bundle',
       howItWorks: 'Cara Pembelian',
+      installationGuide: 'Panduan Instalasi',
       faq: 'FAQ',
       trackOrder: 'Cek Pesanan',
       cart: 'Keranjang',
@@ -360,22 +403,63 @@ export const translations: Record<Language, TranslationDict> = {
       statusVerifying: 'Pembayaran Sedang Diverifikasi',
       statusPaid: 'Pembayaran Terverifikasi & Lunas',
       statusCancelled: 'Dibatalkan / Bukti Tidak Sesuai',
-      openSourceNotice: 'Produk Open-Source: Anda berhak mengunduh file .pine dan menyalin kode sumber di bawah ini.',
-      viewSourceCode: 'Lihat & Salin Kode Pine Script',
+      openSourceNotice: 'Produk Kode Sumber (.pine / .txt): Anda berhak mengunduh file kode dan menyalin kode sumber untuk dipasang di TradingView Pine Editor.',
+      viewSourceCode: 'Lihat & Salin Kode Sumber Pine Script',
       downloadPine: 'Unduh File .pine',
-      inviteNoticeTitle: 'Status Otorisasi Invite-Only TradingView:',
-      inviteNoticeDesc: 'Akses langsung diberikan ke username TradingView Anda oleh penerbit Aemeth.',
-      inviteStatusGranted: 'Akses Telah Diberikan di Akun TradingView Anda',
-      inviteStatusPending: 'Antrean Otorisasi: Sedang diproses oleh Penerbit Aemeth',
-      howToLoadTitle: 'Cara memuat indikator di TradingView setelah disetujui:',
+      downloadTxt: 'Unduh File .txt',
+      installationGuideButton: 'Panduan Instalasi TradingView',
+      inviteNoticeTitle: 'Otorisasi Akses Tambahan:',
+      inviteNoticeDesc: 'Semua produk utama dikirimkan dalam bentuk file kode sumber langsung (.pine/.txt).',
+      inviteStatusGranted: 'Akses Tambahan Terdaftar',
+      inviteStatusPending: 'Antrean Otorisasi: Sedang diverifikasi',
+      howToLoadTitle: 'Langkah Cepat Memuat Kode di TradingView:',
       howToLoadSteps: [
         'Buka chart TradingView di browser atau aplikasi desktop.',
-        'Klik tombol Indikator (Indicators, Metrics & Strategies) di toolbar atas.',
-        'Pilih tab "Invite-Only Scripts" di bilah sebelah kiri.',
-        'Klik indikator Aemeth Anda untuk langsung menerapkannya pada grafik.',
+        'Buka tab "Pine Editor" di bagian bawah layar chart Anda.',
+        'Hapus template bawaan, lalu tempel kode sumber Pine Script Aemeth yang telah disalin/diunduh.',
+        'Klik tombol "Save" (simpan nama skrip) lalu klik "Add to Chart".',
       ],
-      supportPrompt: 'Butuh bantuan dengan pesanan Anda? Hubungi tim dukungan teknis kami dengan menyertakan Nomor Referensi Pesanan Anda.',
-      contactSupport: 'Hubungi Bantuan Teknis',
+      supportPrompt: 'Butuh bantuan instalasi manual atau memiliki pertanyaan terkait pesanan? Tim kami siap membantu selama jam operasional.',
+      contactSupport: 'Bantuan Instalasi',
+      contactWhatsApp: 'Bantuan via WhatsApp',
+      contactTelegram: 'Bantuan via Telegram',
+      supportHoursNotice: 'Layanan bantuan aktif pada hari kerja (Senin - Sabtu, 09:00 - 21:00 WIB). Pesan Anda akan dibalas sesuai antrean.',
+    },
+    installationGuide: {
+      sectionTag: 'Dokumentasi Resmi',
+      title: 'Panduan Instalasi Pine Script di TradingView',
+      subtitle: 'Panduan lengkap langkah demi langkah memasang kode sumber indikator Aemeth ke TradingView Pine Editor dan mengatasi kendala teknis.',
+      tabSteps: 'Langkah Instalasi',
+      tabTroubleshooting: 'Troubleshooting & Solusi Error',
+      stepsTitle: '5 Langkah Memasang Indikator ke Chart TradingView',
+      step1Title: 'Buka Platform TradingView & Masuk ke Chart',
+      step1Desc: 'Buka situs TradingView (tradingview.com) atau aplikasi desktop TradingView, lalu buka grafik pasangan mata uang atau aset yang ingin Anda analisis (contoh: XAUUSD atau EURUSD).',
+      step2Title: 'Buka Panel Pine Editor di Bagian Bawah',
+      step2Desc: 'Di bagian bawah layar grafik TradingView, klik tab "Pine Editor". Jika panel belum terbuka, klik tombol "Pine Editor" di panel navigasi bawah.',
+      step3Title: 'Hapus Template Bawaan & Tempel Kode Sumber',
+      step3Desc: 'Klik tombol "Open" lalu "New indicator" (atau pilih semua kode template bawaan dan hapus). Tempel (Paste) seluruh kode Pine Script v5/v6 yang Anda peroleh dari file .pine/.txt pesanan Aemeth Anda.',
+      step4Title: 'Simpan Indikator (Save Script)',
+      step4Desc: 'Klik tombol "Save" di bilah kanan atas panel Pine Editor. Berikan nama indikator sesuai judul produk (contoh: "Aemeth Liquidity Matrix v5.2") lalu simpan ke pustaka skrip pribadi Anda.',
+      step5Title: 'Terapkan ke Grafik (Add to Chart)',
+      step5Desc: 'Klik tombol "Add to chart" di sebelah tombol Save. Indikator akan langsung terkompilasi dan garis visual serta sinyal akan muncul di grafik harga Anda!',
+      troubleshootTitle: 'Penyelesaian Kendala Kompilasi Umum (Compiler Errors)',
+      err1Title: 'Error: Could not find compiler version (//@version=...)',
+      err1Desc: 'Pesan ini muncul jika baris pertama kode terhapus atau tertimpa saat menempel kode.',
+      err1Fix: 'Pastikan baris paling awal skrip Anda diawali dengan `//@version=5` persis tanpa spasi di baris pertama.',
+      err2Title: 'Error: Undeclared identifier / Variable not found',
+      err2Desc: 'Terjadi apabila hanya sebagian kode yang tersalin atau ada baris yang terpotong di clipboard.',
+      err2Fix: 'Gunakan tombol "Unduh File .pine" atau "Unduh File .txt" dari halaman pesanan Anda, buka dengan Text Editor (Notepad/VSCode), pilih Select All (Ctrl+A), lalu tempel ulang seluruh isinya.',
+      err3Title: 'Error: Maximum number of plots/lines/boxes exceeded',
+      err3Desc: 'TradingView memiliki batas maksimal objek visual pada akun tertentu.',
+      err3Fix: 'Seluruh skrip Aemeth telah dikonfigurasi dengan batas parameter standar. Pastikan Anda tidak menggabungkan dua skrip berbeda ke dalam satu editor.',
+      err4Title: 'Indikator Tidak Muncul di Grafik Setelah Add to Chart',
+      err4Desc: 'Kemungkinan skala grafik tersembunyi atau time-frame aset memerlukan beberapa bar harga untuk kalkulasi.',
+      err4Fix: 'Periksa pengaturan skala sumbu kanan (klik kanan sumbu harga -> Reset Price Scale), dan pastikan Anda menggunakan timeframe 1m, 5m, 15m, 1h, atau 4h sesuai rekomendasi produk.',
+      needManualHelp: 'Butuh Bantuan Instalasi Manual Langsung?',
+      needManualHelpDesc: 'Jika Anda mengalami kendala saat menempelkan kode atau memerlukan panduan via layar jarak jauh, admin Aemeth siap membantu memandu Anda.',
+      askOnWhatsApp: 'Hubungi Admin via WhatsApp',
+      askOnTelegram: 'Hubungi Admin via Telegram',
+      supportNote: 'Penting: Jangan pernah membagikan password akun TradingView atau data perbankan sensitif kepada siapa pun. Dukungan teknis hanya memandu proses instalasi kode.',
     },
     howItWorks: {
       sectionTag: 'Alur Pembelian Transparan',
@@ -445,6 +529,7 @@ export const translations: Record<Language, TranslationDict> = {
       indicators: 'Indicators',
       bundles: 'Bundles',
       howItWorks: 'How It Works',
+      installationGuide: 'Installation Guide',
       faq: 'FAQ',
       trackOrder: 'Track Order',
       cart: 'Cart',
@@ -581,22 +666,63 @@ export const translations: Record<Language, TranslationDict> = {
       statusVerifying: 'Payment Under Review',
       statusPaid: 'Payment Verified & Delivered',
       statusCancelled: 'Cancelled / Invalid Proof',
-      openSourceNotice: 'Open-Source Product: You are licensed to download the .pine file and copy the raw source code below.',
-      viewSourceCode: 'View & Copy Pine Script',
+      openSourceNotice: 'Source Code Product (.pine / .txt): You are licensed to download the source files and copy the code to install inside TradingView Pine Editor.',
+      viewSourceCode: 'View & Copy Pine Script Source Code',
       downloadPine: 'Download .pine File',
-      inviteNoticeTitle: 'TradingView Invite-Only Authorization Status:',
-      inviteNoticeDesc: 'Direct script access is provisioned to your TradingView username by Aemeth publisher.',
-      inviteStatusGranted: 'Access Granted on Your TradingView Account',
-      inviteStatusPending: 'Authorization Queued: Being processed by Aemeth Publisher',
-      howToLoadTitle: 'How to load the indicator in TradingView once approved:',
+      downloadTxt: 'Download .txt File',
+      installationGuideButton: 'TradingView Installation Guide',
+      inviteNoticeTitle: 'Additional Script Access:',
+      inviteNoticeDesc: 'All primary products are delivered as raw, verifiable Pine Script source code (.pine/.txt).',
+      inviteStatusGranted: 'Access Registered',
+      inviteStatusPending: 'Verification Queue: Processing',
+      howToLoadTitle: 'Quick Steps to Load Script in TradingView:',
       howToLoadSteps: [
-        'Open any TradingView chart in your browser or desktop application.',
-        'Click the "Indicators" button on the top toolbar.',
-        'Select the "Invite-Only Scripts" tab in the left panel.',
-        'Click your approved Aemeth indicator to apply it to your chart.',
+        'Open any TradingView chart in your browser or desktop app.',
+        'Click the "Pine Editor" tab at the bottom of the chart screen.',
+        'Clear any default template code and paste the Aemeth source code you copied or downloaded.',
+        'Click the "Save" button to name the script, then click "Add to chart".',
       ],
-      supportPrompt: 'Need assistance with your order? Contact our technical desk quoting your Order Reference Number.',
-      contactSupport: 'Contact Technical Support',
+      supportPrompt: 'Need manual installation assistance or have questions regarding your order? Our team is available during operating hours.',
+      contactSupport: 'Installation Support',
+      contactWhatsApp: 'Chat via WhatsApp',
+      contactTelegram: 'Chat via Telegram',
+      supportHoursNotice: 'Support operates Monday through Saturday, 09:00 - 21:00 WIB (UTC+7). Inquiries are answered in queue order.',
+    },
+    installationGuide: {
+      sectionTag: 'Official Documentation',
+      title: 'TradingView Pine Script Installation Guide',
+      subtitle: 'Complete step-by-step walkthrough for installing Aemeth indicator source code into TradingView Pine Editor and resolving common compiler issues.',
+      tabSteps: 'Installation Steps',
+      tabTroubleshooting: 'Troubleshooting & Compiler Errors',
+      stepsTitle: '5 Simple Steps to Add Indicators to Your TradingView Chart',
+      step1Title: 'Open TradingView Platform & Load Your Chart',
+      step1Desc: 'Open tradingview.com in your browser or launch the desktop application, then open any market chart (e.g. XAUUSD or EURUSD).',
+      step2Title: 'Open the Pine Editor Panel at the Bottom',
+      step2Desc: 'Look at the bottom toolbar of your chart and click on the "Pine Editor" tab. If the panel is minimized, clicking it will expand the editor window.',
+      step3Title: 'Clear Default Template & Paste Aemeth Source Code',
+      step3Desc: 'Click "Open" -> "New indicator" (or select all default code and delete it). Paste the complete Pine Script v5/v6 source code obtained from your Aemeth order (.pine or .txt file).',
+      step4Title: 'Save Script to Your Personal Library',
+      step4Desc: 'Click the "Save" button on the top right of the Pine Editor. Give it a descriptive name matching your purchased indicator (e.g. "Aemeth Liquidity Matrix v5.2") and confirm.',
+      step5Title: 'Add Script to Your Chart (Add to Chart)',
+      step5Desc: 'Click the "Add to chart" button next to Save. The Pine Script compiler will immediately process the code, and visual zones, order blocks, and signals will render on your price bars!',
+      troubleshootTitle: 'Common Compilation Errors & Resolutions',
+      err1Title: 'Error: Could not find compiler version (//@version=...)',
+      err1Desc: 'This occurs if the first line was accidentally deleted or overwritten when pasting.',
+      err1Fix: 'Ensure the very first line of the editor reads `//@version=5` without any spaces or blank lines before it.',
+      err2Title: 'Error: Undeclared identifier / Variable not found',
+      err2Desc: 'Happens if the clipboard truncated the code or only a partial snippet was pasted.',
+      err2Fix: 'Use the "Download .pine" or "Download .txt" button from your order status page, open it in a text editor (Notepad/VSCode), select all (Ctrl+A / Cmd+A), and re-paste the full code.',
+      err3Title: 'Error: Maximum number of plots/lines/boxes exceeded',
+      err3Desc: 'TradingView enforces strict graphic resource limits per script.',
+      err3Fix: 'All Aemeth scripts are balanced within standard limits. Do not accidentally append two different scripts into the same editor window.',
+      err4Title: 'Indicator Does Not Appear on Price Chart After Adding',
+      err4Desc: 'The price scale may be shifted, or the algorithm may require closed price bars on the selected timeframe.',
+      err4Fix: 'Right-click the right-hand price axis and select "Reset price scale". Make sure you are viewing a supported timeframe (1m, 5m, 15m, 1h, 4h) recommended in the indicator documentation.',
+      needManualHelp: 'Need Personal Installation Assistance?',
+      needManualHelpDesc: 'If you encounter any difficulty pasting or configuring your script, an Aemeth technical specialist is happy to walk you through it.',
+      askOnWhatsApp: 'Contact via WhatsApp',
+      askOnTelegram: 'Contact via Telegram',
+      supportNote: 'Important: Never share your TradingView account passwords or financial credentials with anyone. Support only assists with Pine Script pasting and installation.',
     },
     howItWorks: {
       sectionTag: 'Transparent Fulfillment Workflow',

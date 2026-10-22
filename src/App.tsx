@@ -6,6 +6,7 @@ import { Catalog } from './components/Catalog';
 import { ProductDetailModal } from './components/ProductDetailModal';
 import { CheckoutModal } from './components/CheckoutModal';
 import { GuestOrderStatus } from './components/GuestOrderStatus';
+import { InstallationGuide } from './components/InstallationGuide';
 import { AdminDashboard } from './components/AdminDashboard';
 import { HowItWorks } from './components/HowItWorks';
 import { FAQ } from './components/FAQ';
@@ -29,6 +30,9 @@ export function App() {
     orderNumber: '',
     token: '',
   });
+
+  // Installation Guide Context state
+  const [guideContext, setGuideContext] = useState<{ title: string; orderNumber?: string } | undefined>(undefined);
 
   // Admin Access state
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
@@ -198,11 +202,24 @@ export function App() {
           </div>
         )}
 
+        {activeTab === 'installation-guide' && (
+          <div className="pt-6">
+            <InstallationGuide
+              onBackToCatalog={() => setActiveTab('catalog')}
+              productContext={guideContext}
+            />
+          </div>
+        )}
+
         {activeTab === 'order-status' && (
           <div className="pt-6">
             <GuestOrderStatus
               initialOrderNumber={trackedOrder.orderNumber}
               initialToken={trackedOrder.token}
+              onNavigateToGuide={(ctx) => {
+                if (ctx) setGuideContext(ctx);
+                setActiveTab('installation-guide');
+              }}
             />
           </div>
         )}
