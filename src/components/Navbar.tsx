@@ -1,13 +1,10 @@
 import React from 'react';
-import { User as UserIcon, Shield, ShoppingCart, LogOut, Code, Sparkles } from 'lucide-react';
-import type { User } from '../types/marketplace';
+import { ShoppingCart, Search, Globe } from 'lucide-react';
+import { useTranslation } from '../i18n/LanguageContext';
 
 interface NavbarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  currentUser: User | null;
-  onOpenAuth: () => void;
-  onLogout: () => void;
   cartCount: number;
   onOpenCart: () => void;
 }
@@ -15,55 +12,56 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({
   activeTab,
   setActiveTab,
-  currentUser,
-  onOpenAuth,
-  onLogout,
   cartCount,
   onOpenCart,
 }) => {
+  const { t, lang, setLang } = useTranslation();
+
   return (
     <header className="sticky top-0 z-50 w-full px-4 sm:px-6 lg:px-8 pt-4 pb-2 transition-all">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
+        
         {/* Brand / Logo */}
         <button
           onClick={() => setActiveTab('home')}
-          className="flex items-center gap-2.5 text-left group focus:outline-none"
+          className="flex items-center gap-2.5 text-left group focus:outline-none cursor-pointer"
         >
-          <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-tr from-[#ff2a3b] to-[#ff6b78] p-0.5 shadow-md shadow-red-500/30 group-hover:shadow-red-500/60 transition-all">
-            <div className="w-full h-full bg-[#070709] rounded-full flex items-center justify-center">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#ff2a3b] animate-pulse"></span>
+          <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-blue-400 p-0.5 shadow-md shadow-blue-500/20 group-hover:shadow-blue-500/50 transition-all">
+            <div className="w-full h-full bg-[#070b14] rounded-full flex items-center justify-center">
+              <span className="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
             </div>
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-heading font-extrabold text-base tracking-tight text-white group-hover:text-red-400 transition-colors">
+              <span className="font-heading font-extrabold text-base tracking-tight text-white group-hover:text-blue-400 transition-colors">
                 Aemeth
               </span>
-              <span className="font-heading font-medium text-xs text-red-500 tracking-wider uppercase">
-                Indicators
+              <span className="font-heading font-medium text-xs text-blue-400 tracking-wider uppercase font-mono">
+                TradingView
               </span>
             </div>
           </div>
         </button>
 
-        {/* Floating Pill Navigation - Directly mirrors the reference image */}
-        <nav className="hidden md:flex items-center bg-[#111117]/85 backdrop-blur-xl border border-white/10 rounded-full px-2 py-1.5 shadow-xl shadow-black/60">
+        {/* Floating Pill Navigation */}
+        <nav className="hidden lg:flex items-center bg-[#0b1120]/90 backdrop-blur-xl border border-slate-800 rounded-full px-2 py-1.5 shadow-xl shadow-black/50">
           {[
-            { id: 'home', label: 'Home' },
-            { id: 'catalog', label: 'Indicators' },
-            { id: 'bundles', label: 'Bundles' },
-            { id: 'how-it-works', label: 'How It Works' },
-            { id: 'faq', label: 'FAQ' },
+            { id: 'home', label: t.nav.home },
+            { id: 'catalog', label: t.nav.indicators },
+            { id: 'bundles', label: t.nav.bundles },
+            { id: 'how-it-works', label: t.nav.howItWorks },
+            { id: 'faq', label: t.nav.faq },
+            { id: 'order-status', label: t.nav.trackOrder },
           ].map((item) => {
             const isActive = activeTab === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`relative px-4 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 ${
+                className={`relative px-4 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 cursor-pointer ${
                   isActive
-                    ? 'bg-[#ff2a3b] text-white shadow-md shadow-red-500/50 glow-pill font-bold'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-white/5'
+                    ? 'bg-blue-600 text-white shadow-md shadow-blue-500/30 glow-pill font-bold'
+                    : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
                 }`}
               >
                 {item.label}
@@ -72,91 +70,66 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </nav>
 
-        {/* Action Controls */}
+        {/* Action Controls: Language Switcher & Cart */}
         <div className="flex items-center gap-2.5">
-          {/* Cart Pill */}
+          
+          {/* Language Switcher ID | EN */}
+          <div className="flex items-center bg-[#0b1120] border border-slate-800 rounded-full p-1 text-xs font-mono">
+            <button
+              onClick={() => setLang('id')}
+              className={`px-2.5 py-1 rounded-full transition-all cursor-pointer font-bold ${
+                lang === 'id' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              ID
+            </button>
+            <span className="text-slate-600 px-0.5">|</span>
+            <button
+              onClick={() => setLang('en')}
+              className={`px-2.5 py-1 rounded-full transition-all cursor-pointer font-bold ${
+                lang === 'en' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              EN
+            </button>
+          </div>
+
+          {/* Cart / Guest Checkout Pill */}
           <button
             onClick={onOpenCart}
-            className="relative flex items-center gap-2 bg-[#121218]/90 hover:bg-[#1c1c24] border border-white/10 rounded-full px-3.5 py-1.5 text-xs font-medium text-zinc-200 transition-all shadow-md"
-            title="Cart"
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white rounded-full px-4 py-2 text-xs font-bold transition-all shadow-md shadow-blue-500/20 cursor-pointer"
           >
-            <ShoppingCart className="w-3.5 h-3.5 text-red-400" />
-            <span className="hidden sm:inline">Checkout</span>
+            <ShoppingCart className="w-3.5 h-3.5" />
+            <span>{t.nav.cart}</span>
             {cartCount > 0 && (
-              <span className="flex items-center justify-center w-4 h-4 text-[10px] font-bold rounded-full bg-[#ff2a3b] text-white">
+              <span className="flex items-center justify-center w-4 h-4 text-[10px] font-bold rounded-full bg-white text-blue-900">
                 {cartCount}
               </span>
             )}
           </button>
 
-          {/* User Menu / Dashboard / Sign In */}
-          {currentUser ? (
-            <div className="flex items-center gap-1.5 bg-[#121218]/90 border border-white/10 rounded-full p-1 pl-3 shadow-md">
-              <button
-                onClick={() => setActiveTab('dashboard')}
-                className={`flex items-center gap-1.5 text-xs font-medium px-2 py-1 rounded-full transition-all ${
-                  activeTab === 'dashboard'
-                    ? 'bg-[#ff2a3b] text-white shadow-sm'
-                    : 'text-zinc-300 hover:text-white'
-                }`}
-              >
-                <UserIcon className="w-3.5 h-3.5" />
-                <span className="max-w-[100px] truncate">{currentUser.name.split(' ')[0]}</span>
-              </button>
-
-              {currentUser.role === 'admin' && (
-                <button
-                  onClick={() => setActiveTab('admin')}
-                  className={`flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full transition-all ${
-                    activeTab === 'admin'
-                      ? 'bg-amber-500 text-black shadow-sm'
-                      : 'text-amber-400 hover:bg-amber-500/10'
-                  }`}
-                  title="Admin Portal"
-                >
-                  <Shield className="w-3 h-3" />
-                  <span>Admin</span>
-                </button>
-              )}
-
-              <button
-                onClick={onLogout}
-                className="p-1.5 text-zinc-400 hover:text-red-400 rounded-full hover:bg-white/5 transition-colors"
-                title="Log Out"
-              >
-                <LogOut className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={onOpenAuth}
-              className="flex items-center gap-1.5 bg-[#ff2a3b] hover:bg-[#e02434] text-white text-xs font-bold rounded-full px-4 py-2 transition-all shadow-lg shadow-red-500/30 hover:shadow-red-500/50"
-            >
-              <UserIcon className="w-3.5 h-3.5" />
-              <span>Sign In</span>
-            </button>
-          )}
         </div>
       </div>
 
-      {/* Mobile Nav Bar */}
-      <div className="flex md:hidden overflow-x-auto py-2 gap-1.5 mt-2 justify-center scrollbar-none">
+      {/* Mobile Navigation Scrollbar */}
+      <div className="flex lg:hidden overflow-x-auto py-2 gap-1.5 mt-2 justify-center scrollbar-none">
         {[
-          { id: 'home', label: 'Home' },
-          { id: 'catalog', label: 'Indicators' },
-          { id: 'bundles', label: 'Bundles' },
-          { id: 'how-it-works', label: 'How It Works' },
-          { id: 'faq', label: 'FAQ' },
+          { id: 'home', label: t.nav.home },
+          { id: 'catalog', label: t.nav.indicators },
+          { id: 'bundles', label: t.nav.bundles },
+          { id: 'how-it-works', label: t.nav.howItWorks },
+          { id: 'faq', label: t.nav.faq },
+          { id: 'order-status', label: t.nav.trackOrder },
         ].map((item) => {
           const isActive = activeTab === item.id;
           return (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`px-3 py-1 text-xs font-semibold rounded-full whitespace-nowrap transition-all ${
+              className={`px-3 py-1 text-xs font-semibold rounded-full whitespace-nowrap transition-all cursor-pointer ${
                 isActive
-                  ? 'bg-[#ff2a3b] text-white shadow-md shadow-red-500/40'
-                  : 'bg-[#121218] text-zinc-400 border border-white/5'
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'bg-[#0b1120] text-slate-400 border border-slate-800'
               }`}
             >
               {item.label}

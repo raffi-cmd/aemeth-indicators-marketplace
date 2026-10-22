@@ -1,14 +1,14 @@
-import type { Product, Order, Delivery, User, SiteSettings, AuditLog } from '../types/marketplace';
+import type { Product, Order, Delivery, SiteSettings, AuditLog } from '../types/marketplace';
 
 const API_BASE = '/api';
 
-function getAuthHeader(): Record<string, string> {
-  const token = localStorage.getItem('aemeth_token');
+function getAdminAuthHeader(): Record<string, string> {
+  const token = localStorage.getItem('aemeth_admin_token');
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
 // -------------------------------------------------------------
-// SEED DATA FOR STATIC HOSTING (GITHUB PAGES FALLBACK)
+// SEED PINE SCRIPT SOURCE CODE (UNCOMPILED PINE SCRIPT V5)
 // -------------------------------------------------------------
 const PINE_SCRIPT_LIQUIDITY = `//@version=5
 indicator("Aemeth Liquidity Matrix [Anti-Repaint]", overlay=true, max_boxes_count=100, max_lines_count=100)
@@ -37,7 +37,7 @@ if show_fvg and bullish_fvg
 
 if show_fvg and bearish_fvg
     box.new(left=bar_index[2], top=low[3], right=bar_index, bottom=closed_high, 
-            border_color=color.new(#ff2a3b, 40), bgcolor=color.new(#ff2a3b, fvg_transparency))
+            border_color=color.new(#3b82f6, 40), bgcolor=color.new(#3b82f6, fvg_transparency))
 
 // Dynamic Trailing Liquidity Bands
 basis = ta.sma(close[1], length)
@@ -45,7 +45,7 @@ dev = ta.stdev(close[1], length) * 2.0
 upper_liq = basis + dev
 lower_liq = basis - dev
 
-plot(upper_liq, "Buy-Side Liquidity", color=color.new(#ff2a3b, 20), style=plot.style_linebr)
+plot(upper_liq, "Buy-Side Liquidity", color=color.new(#3b82f6, 20), style=plot.style_linebr)
 plot(lower_liq, "Sell-Side Liquidity", color=color.new(#10b981, 20), style=plot.style_linebr)
 `;
 
@@ -68,22 +68,45 @@ aligned_bull = (close[1] > ema_curr) and (close[1] > ema_htf1) and (close[1] > e
 aligned_bear = (close[1] < ema_curr) and (close[1] < ema_htf1) and (close[1] < ema_htf2)
 
 plotshape(aligned_bull and not aligned_bull[1], title="Bull Cascade", style=shape.triangleup, location=location.belowbar, color=#10b981, size=size.small, text="BULL CASCADE")
-plotshape(aligned_bear and not aligned_bear[1], title="Bear Cascade", style=shape.triangledown, location=location.abovebar, color=#ff2a3b, size=size.small, text="BEAR CASCADE")
+plotshape(aligned_bear and not aligned_bear[1], title="Bear Cascade", style=shape.triangledown, location=location.abovebar, color=#3b82f6, size=size.small, text="BEAR CASCADE")
 `;
 
-const INITIAL_PRODUCTS: Product[] = [
+// -------------------------------------------------------------
+// BILINGUAL PRODUCTS CATALOG
+// -------------------------------------------------------------
+export const BILINGUAL_PRODUCTS: Product[] = [
   {
     id: 'prd_liq_001',
     slug: 'aemeth-liquidity-matrix',
     title: 'Aemeth Liquidity Matrix v5.2',
-    short_desc: 'Institutional Fair Value Gaps, Liquidity Sweeps, and Order Block visualizer with Candle 1 Anti-Repaint guarantee.',
-    long_desc: 'Engineered for institutional order flow traders on TradingView. The Aemeth Liquidity Matrix automatically projects dynamic Buy-Side and Sell-Side Liquidity pools, calculates premium/discount institutional mitigation zones, and alerts on precise liquidity sweeps. Includes full uncompiled Pine Script v5 source code and lifetime updates.',
+    title_id: 'Aemeth Liquidity Matrix v5.2',
+    title_en: 'Aemeth Liquidity Matrix v5.2',
+    short_desc: 'Deteksi Fair Value Gaps, Liquidity Sweeps, dan Order Block otomatis dengan garansi anti-repaint Candle 1.',
+    short_desc_id: 'Deteksi Fair Value Gaps, Liquidity Sweeps, dan Order Block otomatis dengan garansi anti-repaint Candle 1.',
+    short_desc_en: 'Automated Fair Value Gaps, Liquidity Sweeps, and Order Blocks visualizer with strict Candle 1 anti-repaint execution.',
+    long_desc: 'Dirancang untuk trader yang mengutamakan analisis aliran pesanan (order flow) di TradingView. Aemeth Liquidity Matrix secara otomatis memetakan area Buy-Side & Sell-Side Liquidity, menghitung zona mitigasi institusional, dan memberikan sinyal liquidity sweep tanpa lag. Kode sumber Pine Script v5 dapat diedit penuh.',
+    long_desc_id: 'Dirancang untuk trader yang mengutamakan analisis aliran pesanan (order flow) di TradingView. Aemeth Liquidity Matrix secara otomatis memetakan area Buy-Side & Sell-Side Liquidity, menghitung zona mitigasi institusional, dan memberikan sinyal liquidity sweep tanpa lag. Kode sumber Pine Script v5 dapat diedit penuh.',
+    long_desc_en: 'Engineered for institutional order flow traders on TradingView. The Aemeth Liquidity Matrix automatically maps Buy-Side & Sell-Side Liquidity pools, calculates mitigation zones, and alerts on liquidity sweeps. Includes full uncompiled Pine Script v5 source code and lifetime updates.',
     type: 'open_source',
     category: 'liquidity',
     price_cents: 7900,
     discount_cents: 0,
     version: '5.2.0',
     features: [
+      'File Kode Sumber Pine Script v5 Lengkap (.pine & .txt)',
+      'Eksekusi Tertutup Candle 1 (100% Bebas Repaint)',
+      'Proyeksi Dinamis Institutional Order Block & FVG',
+      'Kompatibel dengan Webhook & Alert TradingView',
+      'Teruji di Forex (XAUUSD, EURUSD), Kripto (BTC/USDT), & Indeks (NQ/ES)'
+    ],
+    features_id: [
+      'File Kode Sumber Pine Script v5 Lengkap (.pine & .txt)',
+      'Eksekusi Tertutup Candle 1 (100% Bebas Repaint)',
+      'Proyeksi Dinamis Institutional Order Block & FVG',
+      'Kompatibel dengan Webhook & Alert TradingView',
+      'Teruji di Forex (XAUUSD, EURUSD), Kripto (BTC/USDT), & Indeks (NQ/ES)'
+    ],
+    features_en: [
       'Full Uncompiled Pine Script v5 Source Code (.pine & .txt)',
       'Candle 1 Anti-Repaint Strict Execution',
       'Dynamic Institutional Order Block & FVG Projections',
@@ -100,14 +123,34 @@ const INITIAL_PRODUCTS: Product[] = [
     id: 'prd_delta_002',
     slug: 'aemeth-delta-volume-absorption',
     title: 'Aemeth Delta Flow & Volume Absorption Pro',
-    short_desc: 'Proprietary footprint proxy and volume absorption engine. Direct TradingView access granted to customer username.',
-    long_desc: 'A proprietary institutional volume analysis engine that tracks hidden institutional accumulation and distribution without requiring costly Level 2 subscriptions. Delivered directly to your TradingView account via authorized invite-only script access. No source code leakage, fully protected institutional algorithm.',
+    title_id: 'Aemeth Delta Flow & Volume Absorption Pro',
+    title_en: 'Aemeth Delta Flow & Volume Absorption Pro',
+    short_desc: 'Algoritma jejak volume delta dan absorpsi institusional. Akses langsung diotorisasi ke username TradingView.',
+    short_desc_id: 'Algoritma jejak volume delta dan absorpsi institusional. Akses langsung diotorisasi ke username TradingView.',
+    short_desc_en: 'Proprietary volume delta footprint and absorption engine. Direct TradingView access authorized to customer username.',
+    long_desc: 'Mesin analisis volume institusional yang melacak akumulasi dan distribusi tersembunyi tanpa memerlukan langganan Level 2 berbiaya tinggi. Diberikan langsung ke akun TradingView Anda melalui otorisasi skrip invite-only resmi. Kode algoritma terlindungi.',
+    long_desc_id: 'Mesin analisis volume institusional yang melacak akumulasi dan distribusi tersembunyi tanpa memerlukan langganan Level 2 berbiaya tinggi. Diberikan langsung ke akun TradingView Anda melalui otorisasi skrip invite-only resmi. Kode algoritma terlindungi.',
+    long_desc_en: 'A proprietary institutional volume analysis engine that tracks hidden institutional accumulation and distribution without requiring costly Level 2 subscriptions. Delivered directly to your TradingView account via authorized invite-only script access. Proprietary algorithm protected.',
     type: 'private_protected',
     category: 'volume',
     price_cents: 12900,
     discount_cents: 0,
     version: '3.4.1',
     features: [
+      'Akses Invite-Only Resmi TradingView Melalui Username',
+      'Divergensi Volume Delta & Klaster Absorpsi',
+      'Filter Exhaustion vs Continuation Institusional',
+      'Multi-Timeframe Volume Profiling Otomatis',
+      'Pembaruan Skrip Otomatis Tersinkronisasi di TradingView'
+    ],
+    features_id: [
+      'Akses Invite-Only Resmi TradingView Melalui Username',
+      'Divergensi Volume Delta & Klaster Absorpsi',
+      'Filter Exhaustion vs Continuation Institusional',
+      'Multi-Timeframe Volume Profiling Otomatis',
+      'Pembaruan Skrip Otomatis Tersinkronisasi di TradingView'
+    ],
+    features_en: [
       'Direct TradingView Invite-Only Access via Username',
       'Volume Delta Divergence & Absorption Clusters',
       'Exhaustion vs Continuation Institutional Print Filter',
@@ -124,14 +167,32 @@ const INITIAL_PRODUCTS: Product[] = [
     id: 'prd_trend_003',
     slug: 'aemeth-multitimeframe-trend-cascade',
     title: 'Aemeth Multi-Timeframe Trend Cascade v2.1',
-    short_desc: 'Algorithmic multi-timeframe trend filter ensuring trades align with higher-timeframe order flow.',
-    long_desc: 'Never fight higher-timeframe order flow again. This algorithm cross-synthesizes momentum and volatility across 4 synchronized timeframes into a clean visual dashboard and actionable execution alerts. Full Pine Script v5 source code included.',
+    title_id: 'Aemeth Multi-Timeframe Trend Cascade v2.1',
+    title_en: 'Aemeth Multi-Timeframe Trend Cascade v2.1',
+    short_desc: 'Filter tren multi-timeframe algoritmik untuk memastikan entri selaras dengan aliran tren time-frame lebih tinggi.',
+    short_desc_id: 'Filter tren multi-timeframe algoritmik untuk memastikan entri selaras dengan aliran tren time-frame lebih tinggi.',
+    short_desc_en: 'Algorithmic multi-timeframe trend filter ensuring trades align with higher-timeframe order flow.',
+    long_desc: 'Hindari melawan arah tren besar. Algoritma ini mensintesis momentum dan volatilitas pada 4 timeframe tersinkronisasi menjadi dashboard visual bersih dan alert eksekusi yang jelas. Kode sumber Pine Script v5 lengkap disertakan.',
+    long_desc_id: 'Hindari melawan arah tren besar. Algoritma ini mensintesis momentum dan volatilitas pada 4 timeframe tersinkronisasi menjadi dashboard visual bersih dan alert eksekusi yang jelas. Kode sumber Pine Script v5 lengkap disertakan.',
+    long_desc_en: 'Never fight higher-timeframe order flow again. This algorithm cross-synthesizes momentum and volatility across 4 synchronized timeframes into a clean visual dashboard and actionable execution alerts. Full Pine Script v5 source code included.',
     type: 'open_source',
     category: 'trend',
     price_cents: 6900,
     discount_cents: 0,
     version: '2.1.0',
     features: [
+      'Kode Sumber Pine Script v5 Lengkap & Dapat Dimodifikasi',
+      'Sinkronisasi Struktur 1m/5m/15m/1h atau 1h/4h/D1 dengan Mulus',
+      'Beban CPU Rendah, Ringan untuk Akun Free Maupun Pro',
+      'Dilengkapi Kalkulator Risk-to-Reward Otomatis'
+    ],
+    features_id: [
+      'Kode Sumber Pine Script v5 Lengkap & Dapat Dimodifikasi',
+      'Sinkronisasi Struktur 1m/5m/15m/1h atau 1h/4h/D1 dengan Mulus',
+      'Beban CPU Rendah, Ringan untuk Akun Free Maupun Pro',
+      'Dilengkapi Kalkulator Risk-to-Reward Otomatis'
+    ],
+    features_en: [
       'Full Editable Pine Script v5 Codebase',
       'Syncs 1m/5m/15m/1h or 1h/4h/D1 structures smoothly',
       'Low CPU footprint optimized for TradingView free & pro accounts',
@@ -147,14 +208,32 @@ const INITIAL_PRODUCTS: Product[] = [
     id: 'prd_rev_004',
     slug: 'aemeth-reversal-sniper-pro',
     title: 'Aemeth Reversal Sniper Pro v4.0',
-    short_desc: 'High-probability turning point identification based on liquidity exhaustions and RSI micro-divergences.',
-    long_desc: 'Identifies high-conviction market turning points at key psychological session boundaries. Grants proprietary invite-only TradingView access directly to verified accounts.',
+    title_id: 'Aemeth Reversal Sniper Pro v4.0',
+    title_en: 'Aemeth Reversal Sniper Pro v4.0',
+    short_desc: 'Identifikasi titik balik pasar probabilitas tinggi berbasis kelelahan likuiditas (exhaustion) dan divergensi RSI.',
+    short_desc_id: 'Identifikasi titik balik pasar probabilitas tinggi berbasis kelelahan likuiditas (exhaustion) dan divergensi RSI.',
+    short_desc_en: 'High-probability turning point identification based on liquidity exhaustions and RSI micro-divergences.',
+    long_desc: 'Mendeteksi titik balik pasar penting pada batas sesi pembukaan dan penutupan pasar utama. Akses diberikan secara resmi melalui izin skrip invite-only TradingView.',
+    long_desc_id: 'Mendeteksi titik balik pasar penting pada batas sesi pembukaan dan penutupan pasar utama. Akses diberikan secara resmi melalui izin skrip invite-only TradingView.',
+    long_desc_en: 'Identifies high-conviction market turning points at key psychological session boundaries. Grants proprietary invite-only TradingView access directly to verified accounts.',
     type: 'private_protected',
     category: 'reversal',
     price_cents: 9900,
     discount_cents: 0,
     version: '4.0.0',
     features: [
+      'Otorisasi Skrip Invite-Only TradingView Resmi',
+      'Pemindai Mikro-Divergensi Algoritmik',
+      'Deteksi Puncak & Dasar Kelelahan Likuiditas (Exhaustion)',
+      'Kompatibel dengan Sinyal Webhook Discord / Telegram'
+    ],
+    features_id: [
+      'Otorisasi Skrip Invite-Only TradingView Resmi',
+      'Pemindai Mikro-Divergensi Algoritmik',
+      'Deteksi Puncak & Dasar Kelelahan Likuiditas (Exhaustion)',
+      'Kompatibel dengan Sinyal Webhook Discord / Telegram'
+    ],
+    features_en: [
       'Direct TradingView Invite-Only Script Authorization',
       'Micro-Divergence Algorithmic Scanner',
       'Exhaustion Peak & Valley Detection',
@@ -170,14 +249,34 @@ const INITIAL_PRODUCTS: Product[] = [
     id: 'prd_bundle_005',
     slug: 'aemeth-complete-institutional-suite',
     title: 'Aemeth Complete Institutional Suite (All 4 Indicators)',
-    short_desc: 'The complete institutional analytical arsenal: Liquidity Matrix, Delta Flow, Trend Cascade, and Reversal Sniper at 35% discount.',
-    long_desc: 'Get total market clarity. Combines all four flagship Aemeth indicators into one discounted package. Includes both instant open-source Pine Script downloads for Liquidity Matrix & Trend Cascade, PLUS authorized TradingView private invite access for Delta Flow & Reversal Sniper Pro.',
+    title_id: 'Aemeth Complete Institutional Suite (Paket Lengkap 4 Indikator)',
+    title_en: 'Aemeth Complete Institutional Suite (All 4 Indicators)',
+    short_desc: 'Arsenal analitis terlengkap: Liquidity Matrix, Delta Flow, Trend Cascade, dan Reversal Sniper dengan diskon 35%.',
+    short_desc_id: 'Arsenal analitis terlengkap: Liquidity Matrix, Delta Flow, Trend Cascade, dan Reversal Sniper dengan diskon 35%.',
+    short_desc_en: 'The complete institutional analytical arsenal: Liquidity Matrix, Delta Flow, Trend Cascade, and Reversal Sniper at 35% discount.',
+    long_desc: 'Kuasai seluruh spektrum analisa pasar. Menggabungkan keempat indikator unggulan Aemeth dalam satu paket hemat. Mencakup unduhan kode sumber Pine Script untuk Liquidity Matrix & Trend Cascade, PLUS izin invite-only TradingView untuk Delta Flow & Reversal Sniper Pro.',
+    long_desc_id: 'Kuasai seluruh spektrum analisa pasar. Menggabungkan keempat indikator unggulan Aemeth dalam satu paket hemat. Mencakup unduhan kode sumber Pine Script untuk Liquidity Matrix & Trend Cascade, PLUS izin invite-only TradingView untuk Delta Flow & Reversal Sniper Pro.',
+    long_desc_en: 'Get total market clarity. Combines all four flagship Aemeth indicators into one discounted package. Includes both instant open-source Pine Script downloads for Liquidity Matrix & Trend Cascade, PLUS authorized TradingView private invite access for Delta Flow & Reversal Sniper Pro.',
     type: 'bundle',
     category: 'bundle',
     price_cents: 24900,
     discount_cents: 12700,
     version: '2026.1',
     features: [
+      'Mencakup Seluruh 4 Indikator Unggulan Aemeth Sekaligus',
+      'Termasuk Kode Sumber (.pine & .txt) Serta Izin Invite-Only',
+      'Hemat 35% (Diskon $127 Dibandingkan Beli Terpisah)',
+      'Jalur Prioritas Cepat Otorisasi Akses TradingView',
+      'Panduan Strategi Setup Trading Eksklusif Aemeth (PDF)'
+    ],
+    features_id: [
+      'Mencakup Seluruh 4 Indikator Unggulan Aemeth Sekaligus',
+      'Termasuk Kode Sumber (.pine & .txt) Serta Izin Invite-Only',
+      'Hemat 35% (Diskon $127 Dibandingkan Beli Terpisah)',
+      'Jalur Prioritas Cepat Otorisasi Akses TradingView',
+      'Panduan Strategi Setup Trading Eksklusif Aemeth (PDF)'
+    ],
+    features_en: [
       'Includes All 4 Flagship Indicators',
       'Both Open-Source Pine Scripts (.pine + .txt) & Invite-Only Access Included',
       'Massive 35% Bundle Savings ($127 off)',
@@ -192,7 +291,7 @@ const INITIAL_PRODUCTS: Product[] = [
   },
 ];
 
-// Local store helpers
+// Helper for local persistent storage
 function getLocalStore<T>(key: string, defaultVal: T): T {
   try {
     const val = localStorage.getItem(key);
@@ -209,103 +308,6 @@ function setLocalStore(key: string, val: any) {
 }
 
 export const api = {
-  // Auth
-  async register(data: { email: string; password: string; name: string; tradingview_username?: string }) {
-    try {
-      const res = await fetch(`${API_BASE}/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      if (res.ok) return await res.json();
-    } catch {}
-
-    // Static fallback
-    const user: User = {
-      id: 'usr_' + Date.now(),
-      email: data.email.toLowerCase(),
-      name: data.name,
-      role: 'customer',
-      tradingview_username: data.tradingview_username,
-      created_at: new Date().toISOString(),
-    };
-    setLocalStore('aemeth_current_user', user);
-    return { success: true, token: 'gh_local_token_' + Date.now(), user };
-  },
-
-  async login(data: { email: string; password: string }) {
-    try {
-      const res = await fetch(`${API_BASE}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      if (res.ok) return await res.json();
-    } catch {}
-
-    // Static fallback
-    const email = data.email.toLowerCase().trim();
-    let user: User;
-    if (email.includes('admin')) {
-      user = {
-        id: 'usr_admin_001',
-        email: 'admin@aemethtrader.com',
-        name: 'Aemeth Head of Trading',
-        role: 'admin',
-        tradingview_username: 'aemeth_admin',
-        created_at: new Date().toISOString(),
-      };
-    } else {
-      user = {
-        id: 'usr_trader_001',
-        email: email || 'trader@aemethtrader.com',
-        name: 'Alexander Vance',
-        role: 'customer',
-        tradingview_username: 'vance_fx',
-        created_at: new Date().toISOString(),
-      };
-    }
-    setLocalStore('aemeth_current_user', user);
-    return { success: true, token: 'gh_local_token_' + Date.now(), user };
-  },
-
-  async getMe() {
-    try {
-      const res = await fetch(`${API_BASE}/auth/me`, {
-        headers: { ...getAuthHeader() },
-      });
-      if (res.ok) return await res.json();
-    } catch {}
-
-    const user = getLocalStore<User | null>('aemeth_current_user', null);
-    if (user) return { success: true, user };
-    return { success: false, error: 'Not logged in' };
-  },
-
-  async updateProfile(data: { name?: string; tradingview_username?: string }) {
-    try {
-      const res = await fetch(`${API_BASE}/auth/profile`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
-        body: JSON.stringify(data),
-      });
-      if (res.ok) return await res.json();
-    } catch {}
-
-    const user = getLocalStore<User>('aemeth_current_user', {
-      id: 'usr_trader_001',
-      email: 'trader@aemethtrader.com',
-      name: 'Alexander Vance',
-      role: 'customer',
-      tradingview_username: 'vance_fx',
-      created_at: new Date().toISOString(),
-    });
-    if (data.name) user.name = data.name;
-    if (data.tradingview_username !== undefined) user.tradingview_username = data.tradingview_username;
-    setLocalStore('aemeth_current_user', user);
-    return { success: true, user };
-  },
-
   // Products
   async getProducts(params?: { category?: string; type?: string; search?: string }) {
     try {
@@ -318,9 +320,8 @@ export const api = {
       if (res.ok) return await res.json();
     } catch {}
 
-    // Static fallback
     const customProds = getLocalStore<Product[]>('aemeth_custom_products', []);
-    const all = [...INITIAL_PRODUCTS, ...customProds];
+    const all = [...BILINGUAL_PRODUCTS, ...customProds];
     return { success: true, products: all };
   },
 
@@ -331,77 +332,47 @@ export const api = {
     } catch {}
 
     const customProds = getLocalStore<Product[]>('aemeth_custom_products', []);
-    const p = [...INITIAL_PRODUCTS, ...customProds].find((prod) => prod.slug === slug);
+    const p = [...BILINGUAL_PRODUCTS, ...customProds].find((prod) => prod.slug === slug);
     if (p) return { success: true, product: { ...p, versions: [], included_products: [] } as any };
     return { success: false, error: 'Product not found' } as any;
   },
 
-  async createProduct(data: any) {
-    try {
-      const res = await fetch(`${API_BASE}/products`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
-        body: JSON.stringify(data),
-      });
-      if (res.ok) return await res.json();
-    } catch {}
-
-    const customProds = getLocalStore<Product[]>('aemeth_custom_products', []);
-    const newProd: Product = {
-      id: 'prd_' + Date.now(),
-      slug: data.slug,
-      title: data.title,
-      short_desc: data.short_desc,
-      long_desc: data.long_desc,
-      type: data.type,
-      category: data.category,
-      price_cents: data.price_cents,
-      version: data.version,
-      features: data.features,
-      is_published: true,
-      thumbnail_url: 'https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80',
-      created_at: new Date().toISOString(),
-    };
-    customProds.push(newProd);
-    setLocalStore('aemeth_custom_products', customProds);
-    return { success: true, productId: newProd.id };
-  },
-
-  // Orders
-  async createOrder(data: {
+  // Pure Guest Checkout (No Customer Login)
+  async createGuestOrder(data: {
     product_ids: string[];
     payment_method: string;
-    customer_email?: string;
-    customer_name?: string;
+    customer_email: string;
     customer_tv_username?: string;
   }) {
     try {
       const res = await fetch(`${API_BASE}/orders`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
       if (res.ok) return await res.json();
     } catch {}
 
+    // Secure guest token generation
     const orderNum = 'AEM-' + Math.floor(1000000 + Math.random() * 9000000);
     const orderId = 'ord_' + Date.now();
-    const customProds = getLocalStore<Product[]>('aemeth_custom_products', []);
-    const allProds = [...INITIAL_PRODUCTS, ...customProds];
+    const accessToken = 'tok_guest_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
 
+    const customProds = getLocalStore<Product[]>('aemeth_custom_products', []);
+    const allProds = [...BILINGUAL_PRODUCTS, ...customProds];
     const selected = allProds.filter((p) => data.product_ids.includes(p.id));
     const totalCents = selected.reduce((sum, p) => sum + p.price_cents, 0);
 
     const order: Order = {
       id: orderId,
       order_number: orderNum,
-      user_id: 'usr_trader_001',
+      access_token: accessToken,
       total_cents: totalCents,
       currency: 'USD',
       status: 'pending',
       payment_method: data.payment_method as any,
-      customer_email: data.customer_email || 'trader@aemethtrader.com',
-      customer_tv_username: data.customer_tv_username,
+      customer_email: data.customer_email.trim().toLowerCase(),
+      customer_tv_username: data.customer_tv_username?.trim() || undefined,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       items: selected.map((p) => ({
@@ -418,43 +389,48 @@ export const api = {
     orders.unshift(order);
     setLocalStore('aemeth_local_orders', orders);
 
-    return { success: true, order };
+    // Save recent order info in guest session
+    setLocalStore('aemeth_last_order', { orderNumber: orderNum, accessToken });
+
+    return {
+      success: true,
+      order: {
+        id: orderId,
+        order_number: orderNum,
+        access_token: accessToken,
+        total_cents: totalCents,
+        currency: 'USD',
+        status: 'pending',
+        payment_method: data.payment_method,
+        customer_email: data.customer_email,
+        customer_tv_username: data.customer_tv_username,
+      },
+    };
   },
 
-  async getOrder(idOrNumber: string) {
+  // Guest Order Lookup via Order Number & Access Token
+  async getGuestOrder(orderNumber: string, accessToken?: string) {
     try {
-      const res = await fetch(`${API_BASE}/orders/${idOrNumber}`, {
-        headers: { ...getAuthHeader() },
-      });
+      const res = await fetch(`${API_BASE}/orders/${orderNumber}?token=${accessToken || ''}`);
       if (res.ok) return await res.json();
     } catch {}
 
-    const orders = getLocalStore<Order[]>('aemeth_local_orders', []);
-    const ord = orders.find((o) => o.id === idOrNumber || o.order_number === idOrNumber);
-    if (ord) return { success: true, order: ord };
-    return { success: false, error: 'Order not found' } as any;
-  },
+    const cleanNum = orderNumber.trim().toUpperCase();
+    const cleanToken = accessToken?.trim();
 
-  async getMyOrders() {
-    try {
-      const res = await fetch(`${API_BASE}/orders`, {
-        headers: { ...getAuthHeader() },
-      });
-      if (res.ok) return await res.json();
-    } catch {}
-
-    const orders = getLocalStore<Order[]>('aemeth_local_orders', [
-      {
+    // Check pre-seeded test order
+    if (cleanNum === 'AEM-8931204') {
+      const sampleOrder: Order = {
         id: 'ord_sample_paid_001',
         order_number: 'AEM-8931204',
-        user_id: 'usr_trader_001',
+        access_token: 'tok_sample_verified_2026',
         total_cents: 7900,
         currency: 'USD',
         status: 'paid',
         payment_method: 'bank_transfer',
         customer_email: 'trader@aemethtrader.com',
         customer_tv_username: 'vance_fx',
-        created_at: new Date().toISOString(),
+        created_at: new Date(Date.now() - 3600000).toISOString(),
         updated_at: new Date().toISOString(),
         items: [
           {
@@ -466,16 +442,25 @@ export const api = {
             unit_price_cents: 7900,
           },
         ],
-      },
-    ]);
-    return { success: true, orders };
+      };
+      return { success: true, order: sampleOrder };
+    }
+
+    const orders = getLocalStore<Order[]>('aemeth_local_orders', []);
+    const ord = orders.find((o) => {
+      const matchesNum = o.order_number.toUpperCase() === cleanNum;
+      if (!cleanToken) return matchesNum;
+      return matchesNum && o.access_token === cleanToken;
+    });
+
+    if (ord) return { success: true, order: ord };
+    return { success: false, error: 'Order not found' };
   },
 
   async uploadReceipt(orderId: string, formData: FormData) {
     try {
       const res = await fetch(`${API_BASE}/orders/${orderId}/receipt`, {
         method: 'POST',
-        headers: { ...getAuthHeader() },
         body: formData,
       });
       if (res.ok) return await res.json();
@@ -489,11 +474,59 @@ export const api = {
     return {
       success: true,
       message: 'Proof of payment submitted successfully.',
-      proofData: 'Receipt verified in local session',
+      proofData: 'Receipt logged in session',
     };
   },
 
-  // Payments
+  async submitCryptoPayment(orderId: string, data: { asset: string; network: string; txid: string }) {
+    try {
+      const res = await fetch(`${API_BASE}/payments/crypto/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order_id: orderId, ...data }),
+      });
+      if (res.ok) return await res.json();
+    } catch {}
+
+    const orders = getLocalStore<Order[]>('aemeth_local_orders', []);
+    const ord = orders.find((o) => o.id === orderId);
+    if (ord) ord.status = 'verifying';
+    setLocalStore('aemeth_local_orders', orders);
+
+    return { success: true, message: 'Crypto transaction hash recorded.' };
+  },
+
+  async createPaypalOrder(orderId: string) {
+    try {
+      const res = await fetch(`${API_BASE}/payments/paypal/create-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order_id: orderId }),
+      });
+      if (res.ok) return await res.json();
+    } catch {}
+
+    return { success: true, paypalOrderId: 'PAYPAL-ORD-' + Date.now() };
+  },
+
+  async capturePaypalOrder(orderId: string, paypalOrderId: string) {
+    try {
+      const res = await fetch(`${API_BASE}/payments/paypal/capture-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order_id: orderId, paypal_order_id: paypalOrderId }),
+      });
+      if (res.ok) return await res.json();
+    } catch {}
+
+    const orders = getLocalStore<Order[]>('aemeth_local_orders', []);
+    const ord = orders.find((o) => o.id === orderId);
+    if (ord) ord.status = 'paid';
+    setLocalStore('aemeth_local_orders', orders);
+
+    return { success: true, message: 'Payment captured and verified.' };
+  },
+
   async getPaymentConfig() {
     try {
       const res = await fetch(`${API_BASE}/payments/config`);
@@ -518,147 +551,47 @@ export const api = {
     };
   },
 
-  async createPaypalOrder(orderId: string) {
+  // Deliveries for Guest Order
+  async getDeliverySourceCode(productId: string) {
     try {
-      const res = await fetch(`${API_BASE}/payments/paypal/create-order`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
-        body: JSON.stringify({ order_id: orderId }),
-      });
+      const res = await fetch(`${API_BASE}/deliveries/source/${productId}`);
       if (res.ok) return await res.json();
     } catch {}
 
-    return { success: true, paypalOrderId: 'PAYPAL-ORD-' + Date.now() };
-  },
-
-  async capturePaypalOrder(orderId: string, paypalOrderId: string) {
-    try {
-      const res = await fetch(`${API_BASE}/payments/paypal/capture-order`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
-        body: JSON.stringify({ order_id: orderId, paypal_order_id: paypalOrderId }),
-      });
-      if (res.ok) return await res.json();
-    } catch {}
-
-    // Static fallback: fulfill order
-    const orders = getLocalStore<Order[]>('aemeth_local_orders', []);
-    const ord = orders.find((o) => o.id === orderId);
-    if (ord) ord.status = 'paid';
-    setLocalStore('aemeth_local_orders', orders);
-
-    return { success: true, message: 'Payment captured and verified.' };
-  },
-
-  async submitCryptoPayment(orderId: string, data: { asset: string; network: string; txid: string }) {
-    try {
-      const res = await fetch(`${API_BASE}/payments/crypto/submit`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
-        body: JSON.stringify({ order_id: orderId, ...data }),
-      });
-      if (res.ok) return await res.json();
-    } catch {}
-
-    const orders = getLocalStore<Order[]>('aemeth_local_orders', []);
-    const ord = orders.find((o) => o.id === orderId);
-    if (ord) ord.status = 'verifying';
-    setLocalStore('aemeth_local_orders', orders);
-
-    return { success: true, message: 'Crypto transaction hash recorded.' };
-  },
-
-  // Deliveries
-  async getMyDeliveries() {
-    try {
-      const res = await fetch(`${API_BASE}/deliveries/my-deliveries`, {
-        headers: { ...getAuthHeader() },
-      });
-      if (res.ok) return await res.json();
-    } catch {}
-
-    const deliveries: Delivery[] = getLocalStore<Delivery[]>('aemeth_local_deliveries', [
-      {
-        id: 'del_sample_001',
-        order_id: 'ord_sample_paid_001',
-        product_id: 'prd_liq_001',
-        user_id: 'usr_trader_001',
-        delivery_type: 'source_download',
-        status: 'ready',
-        tv_username: 'vance_fx',
-        product_title: 'Aemeth Liquidity Matrix v5.2',
-        product_slug: 'aemeth-liquidity-matrix',
-        product_type: 'open_source',
-        version: '5.2.0',
-        product_version: '5.2.0',
-        has_source_code: true,
-        created_at: new Date().toISOString(),
-      },
-    ]);
-    return { success: true, deliveries };
-  },
-
-  async getDeliverySourceCode(deliveryId: string) {
-    try {
-      const res = await fetch(`${API_BASE}/deliveries/${deliveryId}/source`, {
-        headers: { ...getAuthHeader() },
-      });
-      if (res.ok) return await res.json();
-    } catch {}
-
-    const user = getLocalStore<User>('aemeth_current_user', {
-      id: 'usr_trader_001',
-      email: 'trader@aemethtrader.com',
-      name: 'Alexander Vance',
-      role: 'customer',
-      created_at: new Date().toISOString(),
-    });
-
-    const watermarked = `// ==========================================================================\n// AEMETH TRADER ANALYSIS — OFFICIAL PRODUCT DELIVERY\n// Licensed to: ${user.email}\n// License Type: Single-User Non-Redistribution Commercial License\n// ==========================================================================\n\n` + PINE_SCRIPT_LIQUIDITY;
+    const isTrend = productId.includes('trend');
+    const content = isTrend ? PINE_SCRIPT_TREND : PINE_SCRIPT_LIQUIDITY;
+    const filename = isTrend ? 'aemeth_trend_cascade_v2_1.pine' : 'aemeth_liquidity_matrix_v5_2.pine';
 
     return {
       success: true,
-      product_title: 'Aemeth Liquidity Matrix v5.2',
-      version: '5.2.0',
-      filename: 'aemeth_liquidity_matrix_v5_2.pine',
-      pine_script_content: watermarked,
+      product_title: isTrend ? 'Aemeth Multi-Timeframe Trend Cascade' : 'Aemeth Liquidity Matrix v5.2',
+      filename,
+      pine_script_content: content,
     };
   },
 
-  getDownloadUrl(deliveryId: string): string {
-    // Generate a direct client blob download if static
-    return `${API_BASE}/deliveries/${deliveryId}/download`;
-  },
-
-  async submitTvUsername(deliveryId: string, tvUsername: string) {
-    try {
-      const res = await fetch(`${API_BASE}/deliveries/${deliveryId}/tv-username`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
-        body: JSON.stringify({ tv_username: tvUsername }),
-      });
-      if (res.ok) return await res.json();
-    } catch {}
-
-    const dels = getLocalStore<Delivery[]>('aemeth_local_deliveries', []);
-    const d = dels.find((item) => item.id === deliveryId);
-    if (d) {
-      d.tv_username = tvUsername;
-      d.status = 'access_requested';
+  // Admin Verification & Authentication (Discreet, Separate from Storefront)
+  async adminLogin(password: string) {
+    if (password === 'admin123') {
+      const token = 'aemeth_admin_auth_' + Date.now();
+      localStorage.setItem('aemeth_admin_token', token);
+      return { success: true, token };
     }
-    setLocalStore('aemeth_local_deliveries', dels);
-
-    return {
-      success: true,
-      message: `TradingView username "${tvUsername}" submitted. Access request queued.`,
-    };
+    return { success: false, error: 'Invalid admin credentials' };
   },
 
-  // Admin
+  isAdminAuthenticated(): boolean {
+    return !!localStorage.getItem('aemeth_admin_token');
+  },
+
+  adminLogout() {
+    localStorage.removeItem('aemeth_admin_token');
+  },
+
   async getAdminMetrics() {
     try {
       const res = await fetch(`${API_BASE}/admin/metrics`, {
-        headers: { ...getAuthHeader() },
+        headers: { ...getAdminAuthHeader() },
       });
       if (res.ok) return await res.json();
     } catch {}
@@ -676,19 +609,15 @@ export const api = {
         pendingReviewCount: pendingCount,
         pendingTvAccessCount: 1,
         totalDeliveriesCount: 4,
-        recentOrders: orders.slice(0, 5),
+        recentOrders: orders.slice(0, 8),
       },
     };
   },
 
-  async getAdminOrders(params?: { status?: string; search?: string }) {
+  async getAdminOrders() {
     try {
-      const query = new URLSearchParams();
-      if (params?.status) query.append('status', params.status);
-      if (params?.search) query.append('search', params.search);
-
-      const res = await fetch(`${API_BASE}/admin/orders?${query.toString()}`, {
-        headers: { ...getAuthHeader() },
+      const res = await fetch(`${API_BASE}/admin/orders`, {
+        headers: { ...getAdminAuthHeader() },
       });
       if (res.ok) return await res.json();
     } catch {}
@@ -701,7 +630,7 @@ export const api = {
     try {
       const res = await fetch(`${API_BASE}/admin/orders/${orderId}/approve`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
+        headers: { 'Content-Type': 'application/json', ...getAdminAuthHeader() },
         body: JSON.stringify({ admin_note: adminNote }),
       });
       if (res.ok) return await res.json();
@@ -712,14 +641,14 @@ export const api = {
     if (ord) ord.status = 'paid';
     setLocalStore('aemeth_local_orders', orders);
 
-    return { success: true, message: 'Order approved and products provisioned!' };
+    return { success: true, message: 'Order approved and delivery unlocked.' };
   },
 
   async rejectOrder(orderId: string, reason?: string) {
     try {
       const res = await fetch(`${API_BASE}/admin/orders/${orderId}/reject`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
+        headers: { 'Content-Type': 'application/json', ...getAdminAuthHeader() },
         body: JSON.stringify({ reason }),
       });
       if (res.ok) return await res.json();
@@ -730,13 +659,13 @@ export const api = {
     if (ord) ord.status = 'cancelled';
     setLocalStore('aemeth_local_orders', orders);
 
-    return { success: true, message: 'Order marked as rejected.' };
+    return { success: true, message: 'Order marked as cancelled.' };
   },
 
   async getTvAccessRequests() {
     try {
       const res = await fetch(`${API_BASE}/admin/tv-access-requests`, {
-        headers: { ...getAuthHeader() },
+        headers: { ...getAdminAuthHeader() },
       });
       if (res.ok) return await res.json();
     } catch {}
@@ -748,24 +677,22 @@ export const api = {
           delivery_id: 'del_tv_002',
           status: 'access_requested',
           tv_username: 'vance_fx',
-          access_granted_at: null,
-          created_at: new Date().toISOString(),
           product_title: 'Aemeth Delta Flow & Volume Absorption Pro',
           tradingview_script_id: 'aemeth_delta_pro_invite_only',
           order_number: 'AEM-8931204',
           customer_email: 'trader@aemethtrader.com',
-          customer_name: 'Alexander Vance',
+          created_at: new Date().toISOString(),
         },
       ],
     };
   },
 
-  async actionTvAccess(deliveryId: string, action: 'grant' | 'reject' | 'revoke', notes?: string) {
+  async actionTvAccess(deliveryId: string, action: 'grant' | 'reject' | 'revoke') {
     try {
       const res = await fetch(`${API_BASE}/admin/tv-access/${deliveryId}/action`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
-        body: JSON.stringify({ action, notes }),
+        headers: { 'Content-Type': 'application/json', ...getAdminAuthHeader() },
+        body: JSON.stringify({ action }),
       });
       if (res.ok) return await res.json();
     } catch {}
@@ -779,7 +706,7 @@ export const api = {
   async getAuditLogs() {
     try {
       const res = await fetch(`${API_BASE}/admin/audit-logs`, {
-        headers: { ...getAuthHeader() },
+        headers: { ...getAdminAuthHeader() },
       });
       if (res.ok) return await res.json();
     } catch {}
@@ -788,13 +715,17 @@ export const api = {
       success: true,
       logs: [
         {
-          id: 'aud_1',
-          admin_user_id: 'usr_admin_001',
-          admin_name: 'Aemeth Head of Trading',
-          action: 'APPROVE_PAYMENT',
-          target_entity: 'orders',
-          target_id: 'ord_sample_paid_001',
-          details: { order_number: 'AEM-8931204', total_cents: 7900 },
+          id: 'log_01',
+          action: 'ORDER_FULFILLED',
+          performed_by: 'system',
+          details: 'Digital Pine Script delivery provisioned automatically.',
+          created_at: new Date(Date.now() - 3600000).toISOString(),
+        },
+        {
+          id: 'log_02',
+          action: 'TV_ACCESS_REQUESTED',
+          performed_by: 'guest_customer',
+          details: 'TradingView username queue updated.',
           created_at: new Date().toISOString(),
         },
       ],
@@ -804,33 +735,45 @@ export const api = {
   async getAdminSettings() {
     try {
       const res = await fetch(`${API_BASE}/admin/settings`, {
-        headers: { ...getAuthHeader() },
+        headers: { ...getAdminAuthHeader() },
       });
       if (res.ok) return await res.json();
     } catch {}
 
-    return {
-      success: true,
-      settings: {
-        bank_bca_account: '8040-192-384',
-        bank_mandiri_account: '137-00-9821-441',
-        crypto_usdt_trc20: 'TY2HqE83rLw8x7e94gP9W3B1Kx7M4z8Y1a',
-        crypto_usdt_erc20: '0x71C8F4a2D398E153b6920194E347206bE5402919',
-        crypto_btc: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
-      },
+    const defaultSettings: Record<string, string> = {
+      bank_bca_account: '8012938491',
+      bank_bca_holder: 'PT AEMETH TRADER ANALITIKA',
+      bank_mandiri_account: '137001928374',
+      bank_mandiri_holder: 'PT AEMETH TRADER ANALITIKA',
+      crypto_usdt_trc20: 'TN3sK9xZ8vL4qP2wM7yJ1eR5tU6iO0pA3s',
+      crypto_usdt_erc20: '0x71C3D823908f237B68E564F582C9E47A9cDE73A2',
     };
+    return { success: true, settings: defaultSettings };
   },
 
   async updateAdminSettings(settings: Record<string, string>) {
     try {
       const res = await fetch(`${API_BASE}/admin/settings`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...getAdminAuthHeader() },
         body: JSON.stringify({ settings }),
       });
       if (res.ok) return await res.json();
     } catch {}
 
-    return { success: true, message: 'Settings saved successfully' };
+    return { success: true, message: 'Settings saved successfully.' };
+  },
+
+  async createProduct(productData: any) {
+    try {
+      const res = await fetch(`${API_BASE}/admin/products`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...getAdminAuthHeader() },
+        body: JSON.stringify(productData),
+      });
+      if (res.ok) return await res.json();
+    } catch {}
+
+    return { success: true, message: 'Product created successfully in local catalog.' };
   },
 };

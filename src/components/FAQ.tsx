@@ -1,53 +1,34 @@
 import React, { useState } from 'react';
-import { ChevronDown, HelpCircle } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
+import { useTranslation } from '../i18n/LanguageContext';
 
 export const FAQ: React.FC = () => {
+  const { t } = useTranslation();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const faqs = [
-    {
-      q: 'How do I install an open-source Pine Script indicator in TradingView?',
-      a: 'After verified payment, navigate to "Downloads & Pine Code" in your customer dashboard. Copy the raw Pine Script code. In TradingView, open the bottom panel named "Pine Editor", click "New", paste the code, and click "Add to Chart". You can also save it as a favorite indicator.',
-    },
-    {
-      q: 'How do private / invite-only indicators work?',
-      a: 'For proprietary protected indicators, access is authorized directly to your TradingView username by our administrator. Once approved, the indicator appears under the "Invite-Only Scripts" tab in your TradingView Indicators dialog. No source code installation is required.',
-    },
-    {
-      q: 'How long does delivery take after payment?',
-      a: 'Open-source indicator downloads and copyable code unlock immediately upon payment verification (<1s for PayPal; within minutes for reviewed bank transfer or crypto transactions). TradingView invite authorizations are typically provisioned within 1 to 4 hours.',
-    },
-    {
-      q: 'Do your indicators repaint historical bars?',
-      a: 'No. All Aemeth indicators follow our strict Section 2 Anti-Repaint Directive: calculations and signals lock exclusively to Candle 1 (Fixed Closed Bar). Once a bar closes, the signal will never shift or disappear.',
-    },
-    {
-      q: 'What payment methods do you accept?',
-      a: 'We accept Bank Transfer (BCA, Mandiri, International Wire), PayPal (Credit/Debit cards worldwide), and Crypto Deposits (USDT on TRC-20, USDT on ERC-20, and Bitcoin).',
-    },
-    {
-      q: 'Will I receive updates when new indicator versions are released?',
-      a: 'Yes. Every purchase grants lifetime access to future version updates and algorithmic enhancements within that indicator series at no extra charge.',
-    },
-    {
-      q: 'What is your refund policy?',
-      a: 'Due to the non-returnable digital nature of downloadable Pine Script source code and proprietary script access, all sales are final once digital files or invite-only authorizations have been delivered. If you experience technical setup issues, our dedicated support team will assist you until it is working properly.',
-    },
+    { q: t.faq.q1, a: t.faq.a1 },
+    { q: t.faq.q2, a: t.faq.a2 },
+    { q: t.faq.q3, a: t.faq.a3 },
+    { q: t.faq.q4, a: t.faq.a4 },
+    { q: t.faq.q5, a: t.faq.a5 },
+    { q: t.faq.q6, a: t.faq.a6 },
+    { q: t.faq.q7, a: t.faq.a7 },
   ];
 
   return (
-    <section id="faq-section" className="w-full py-16 border-t border-white/5">
+    <section id="faq-section" className="w-full py-16 border-t border-slate-800">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         <div className="text-center space-y-2">
-          <span className="text-[11px] font-bold text-red-400 uppercase tracking-wider font-mono">
-            Frequently Asked Questions
+          <span className="text-xs font-bold text-blue-400 uppercase tracking-wider font-mono">
+            {t.faq.sectionTag}
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white">
-            Everything You Need To Know
+            {t.faq.title}
           </h2>
-          <p className="text-xs sm:text-sm text-zinc-400">
-            Clear, transparent answers about indicator licensing, delivery, and TradingView compatibility.
+          <p className="text-xs sm:text-sm text-slate-400 font-light">
+            {t.faq.subtitle}
           </p>
         </div>
 
@@ -57,7 +38,7 @@ export const FAQ: React.FC = () => {
             return (
               <div
                 key={i}
-                className="bg-[#101016]/90 backdrop-blur-xl border border-white/8 rounded-2xl overflow-hidden transition-colors"
+                className="bg-[#0b1120] border border-slate-800 rounded-2xl overflow-hidden transition-colors hover:border-slate-700"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : i)}
@@ -67,14 +48,14 @@ export const FAQ: React.FC = () => {
                     {faq.q}
                   </span>
                   <ChevronDown
-                    className={`w-4 h-4 text-red-400 shrink-0 transition-transform duration-200 ${
+                    className={`w-4 h-4 text-blue-400 shrink-0 transition-transform duration-200 ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                   />
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-xs text-zinc-300 leading-relaxed border-t border-white/5">
+                  <div className="px-5 pb-5 pt-1 text-xs text-slate-300 leading-relaxed border-t border-slate-800/80 font-light">
                     {faq.a}
                   </div>
                 )}

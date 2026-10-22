@@ -7,10 +7,16 @@ import { api } from '../services/api';
 import type { User, Product } from '../types/marketplace';
 
 interface AdminDashboardProps {
-  currentUser: User;
+  currentUser?: User | null;
+  onLogout?: () => void;
+  onClose?: () => void;
 }
 
-export const AdminDashboard: React.FC<AdminDashboardProps> = ({ currentUser }) => {
+export const AdminDashboard: React.FC<AdminDashboardProps> = ({ 
+  currentUser = { id: 'admin-1', email: 'admin@aemeth.internal', name: 'Master Administrator', role: 'admin' },
+  onLogout,
+  onClose,
+}) => {
   const [activeSection, setActiveSection] = useState<'overview' | 'orders' | 'tv_access' | 'products' | 'audit' | 'settings'>('overview');
   const [metrics, setMetrics] = useState<any>(null);
   const [orders, setOrders] = useState<any[]>([]);
@@ -156,17 +162,35 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ currentUser }) =
             Marketplace Command & Fulfillment
           </h1>
           <p className="text-xs text-zinc-400">
-            Logged in as <strong className="text-zinc-200">{currentUser.name}</strong> ({currentUser.email})
+            Logged in as <strong className="text-zinc-200">{currentUser?.name || 'Administrator'}</strong> ({currentUser?.email || 'admin@aemeth.internal'})
           </p>
         </div>
 
-        <button
-          onClick={fetchAdminData}
-          className="px-4 py-2 bg-white/5 hover:bg-white/10 text-white text-xs font-bold rounded-full border border-white/10 flex items-center gap-1.5 cursor-pointer"
-        >
-          <RefreshCw className="w-3.5 h-3.5" />
-          <span>Refresh Data</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={fetchAdminData}
+            className="px-4 py-2 bg-white/5 hover:bg-white/10 text-white text-xs font-bold rounded-full border border-white/10 flex items-center gap-1.5 cursor-pointer transition-colors"
+          >
+            <RefreshCw className="w-3.5 h-3.5" />
+            <span>Refresh Data</span>
+          </button>
+          {onLogout && (
+            <button
+              onClick={onLogout}
+              className="px-4 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-bold rounded-full border border-red-500/20 cursor-pointer transition-colors"
+            >
+              Logout Admin
+            </button>
+          )}
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-bold rounded-full cursor-pointer transition-colors"
+            >
+              Exit to Store
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Admin Nav Tabs */}

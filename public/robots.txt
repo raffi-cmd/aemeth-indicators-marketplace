@@ -1,0 +1,5 @@
+﻿User-agent: *
+Allow: /
+Disallow: /?order=
+
+Sitemap: https://raffi-cmd.github.io/aemeth-indicators-marketplace/sitemap.xml

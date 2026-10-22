@@ -3,8 +3,8 @@
 @layer base {
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    background-color: #070709;
-    color: #f4f4f5;
+    background-color: #070b14;
+    color: #f8fafc;
   }
   
   h1, h2, h3, .font-heading {
@@ -15,55 +15,50 @@
   code, pre, .font-mono {
     font-family: 'JetBrains Mono', monospace;
   }
+
+  /* Accessible focus indicators */
+  *:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
 }
 
-/* Custom glow and glass utilities */
-.glow-red {
-  box-shadow: 0 0 35px -5px rgba(255, 42, 59, 0.35);
+/* Institutional Electric Blue & Charcoal Utilities */
+.glow-blue {
+  box-shadow: 0 0 25px -4px rgba(59, 130, 246, 0.25);
 }
 
-.glow-red-lg {
-  box-shadow: 0 0 60px -10px rgba(255, 42, 59, 0.45);
-}
-
-.glow-red-sm {
-  box-shadow: 0 0 18px -2px rgba(255, 42, 59, 0.3);
+.glow-blue-sm {
+  box-shadow: 0 0 15px -2px rgba(59, 130, 246, 0.2);
 }
 
 .glow-pill {
-  box-shadow: 0 4px 20px -2px rgba(255, 42, 59, 0.5);
+  box-shadow: 0 2px 14px -1px rgba(37, 99, 235, 0.4);
 }
 
-.text-gradient-red {
-  background: linear-gradient(135deg, #ffffff 10%, #ff5e6c 50%, #ff2a3b 100%);
+.text-gradient-blue {
+  background: linear-gradient(135deg, #ffffff 15%, #93c5fd 60%, #3b82f6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .bg-glass {
-  background: rgba(14, 14, 20, 0.7);
+  background: rgba(11, 17, 32, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .bg-glass-card {
-  background: linear-gradient(180deg, rgba(22, 22, 30, 0.6) 0%, rgba(12, 12, 18, 0.7) 100%);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.75) 0%, rgba(11, 17, 32, 0.85) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .bg-glass-card:hover {
-  border-color: rgba(255, 42, 59, 0.3);
-  box-shadow: 0 10px 30px -10px rgba(255, 42, 59, 0.15);
-}
-
-.bg-glass-glow {
-  background: linear-gradient(180deg, rgba(25, 20, 24, 0.8) 0%, rgba(14, 14, 20, 0.9) 100%);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 42, 59, 0.25);
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 8px 24px -8px rgba(37, 99, 235, 0.15);
 }
 
 /* Custom scrollbars */
@@ -72,12 +67,12 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #09090d;
+  background: #070b14;
 }
 ::-webkit-scrollbar-thumb {
-  background: #272733;
+  background: #1e293b;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff2a3b;
+  background: #3b82f6;
 }

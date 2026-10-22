@@ -5,50 +5,42 @@ import { BentoFeatures } from './components/BentoFeatures';
 import { Catalog } from './components/Catalog';
 import { ProductDetailModal } from './components/ProductDetailModal';
 import { CheckoutModal } from './components/CheckoutModal';
-import { CustomerDashboard } from './components/CustomerDashboard';
+import { GuestOrderStatus } from './components/GuestOrderStatus';
 import { AdminDashboard } from './components/AdminDashboard';
 import { HowItWorks } from './components/HowItWorks';
 import { FAQ } from './components/FAQ';
 import { LegalModal } from './components/LegalModal';
-import { AuthModal } from './components/AuthModal';
 import { Footer } from './components/Footer';
 import { api } from './services/api';
-import type { Product, User } from './types/marketplace';
+import { Lock, X, AlertCircle } from 'lucide-react';
+import type { Product } from './types/marketplace';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<string>('home');
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
-  
-  // Auth state
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   // Cart & Checkout state
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
+  // Guest Order Tracking state
+  const [trackedOrder, setTrackedOrder] = useState<{ orderNumber: string; token: string }>({
+    orderNumber: '',
+    token: '',
+  });
+
+  // Admin Access state
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
+    return localStorage.getItem('aemeth_admin_session') === 'active';
+  });
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
+  const [adminPasswordInput, setAdminPasswordInput] = useState('');
+  const [adminError, setAdminError] = useState<string | null>(null);
+
   // Modals state
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [legalModalTab, setLegalModalTab] = useState<'terms' | 'privacy' | 'refund' | 'license' | 'disclaimer' | null>(null);
-
-  // Fetch products and user on mount
-  const refreshUser = async () => {
-    const token = localStorage.getItem('aemeth_token');
-    if (!token) return;
-    try {
-      const res = await api.getMe();
-      if (res.success) {
-        setCurrentUser(res.user);
-      } else {
-        localStorage.removeItem('aemeth_token');
-        setCurrentUser(null);
-      }
-    } catch {
-      localStorage.removeItem('aemeth_token');
-      setCurrentUser(null);
-    }
-  };
 
   const loadProducts = async () => {
     setIsLoadingProducts(true);
@@ -65,46 +57,61 @@ export function App() {
   };
 
   useEffect(() => {
-    refreshUser();
     loadProducts();
-  }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('aemeth_token');
-    setCurrentUser(null);
-    if (activeTab === 'dashboard' || activeTab === 'admin') {
-      setActiveTab('home');
+    // Check if URL contains order query params, e.g. ?order=AEM-12345678&token=tok_xxx
+    const params = new URLSearchParams(window.location.search);
+    const orderNum = params.get('order');
+    const token = params.get('token');
+    if (orderNum) {
+      setTrackedOrder({ orderNumber: orderNum, token: token || '' });
+      setActiveTab('order-status');
     }
-  };
+  }, []);
 
   const handleQuickBuy = (product: Product) => {
     setCartItems([product]);
     setIsCheckoutOpen(true);
   };
 
-  const handleCheckoutSuccess = (_orderId: string) => {
+  const handleCheckoutSuccess = (orderNumber: string, accessToken: string) => {
     setIsCheckoutOpen(false);
     setCartItems([]);
-    if (currentUser) {
-      setActiveTab('dashboard');
+    setTrackedOrder({ orderNumber, token: accessToken });
+    setActiveTab('order-status');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Admin credentials verification
+  const handleAdminLoginSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (adminPasswordInput.trim() === 'admin123' || adminPasswordInput.trim() === 'Aemeth@2026') {
+      setIsAdminLoggedIn(true);
+      localStorage.setItem('aemeth_admin_session', 'active');
+      setIsAdminModalOpen(false);
+      setAdminPasswordInput('');
+      setAdminError(null);
+      setActiveTab('admin');
     } else {
-      setIsAuthOpen(true);
+      setAdminError('Invalid administrator credentials.');
     }
   };
 
-  // Find bundle product for quick bundle navigation
+  const handleAdminLogout = () => {
+    localStorage.removeItem('aemeth_admin_session');
+    setIsAdminLoggedIn(false);
+    setActiveTab('home');
+  };
+
   const bundleProduct = products.find((p) => p.type === 'bundle');
 
   return (
-    <div className="min-h-screen bg-[#070709] text-zinc-100 flex flex-col antialiased selection:bg-[#ff2a3b]/40 selection:text-white">
+    <div className="min-h-screen bg-[#070b14] text-zinc-100 flex flex-col antialiased selection:bg-blue-600/30 selection:text-white">
       
       {/* Floating Pill Navbar */}
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        currentUser={currentUser}
-        onOpenAuth={() => setIsAuthOpen(true)}
-        onLogout={handleLogout}
         cartCount={cartItems.length}
         onOpenCart={() => {
           if (cartItems.length === 0 && products.length > 0) {
@@ -128,7 +135,7 @@ export function App() {
                 if (bundleProduct) {
                   setSelectedProduct(bundleProduct);
                 } else {
-                  setActiveTab('catalog');
+                  setActiveTab('bundles');
                 }
               }}
               onHowItWorks={() => {
@@ -191,16 +198,19 @@ export function App() {
           </div>
         )}
 
-        {activeTab === 'dashboard' && currentUser && (
-          <CustomerDashboard
-            currentUser={currentUser}
-            onRefreshUser={refreshUser}
-          />
+        {activeTab === 'order-status' && (
+          <div className="pt-6">
+            <GuestOrderStatus
+              initialOrderNumber={trackedOrder.orderNumber}
+              initialToken={trackedOrder.token}
+            />
+          </div>
         )}
 
-        {activeTab === 'admin' && currentUser?.role === 'admin' && (
+        {activeTab === 'admin' && isAdminLoggedIn && (
           <AdminDashboard
-            currentUser={currentUser}
+            onLogout={handleAdminLogout}
+            onClose={() => setActiveTab('home')}
           />
         )}
       </main>
@@ -209,9 +219,16 @@ export function App() {
       <Footer
         onOpenLegal={(tab) => setLegalModalTab(tab)}
         onNavigate={(tab) => setActiveTab(tab)}
+        onOpenAdmin={() => {
+          if (isAdminLoggedIn) {
+            setActiveTab('admin');
+          } else {
+            setIsAdminModalOpen(true);
+          }
+        }}
       />
 
-      {/* Modals */}
+      {/* Product Detail Modal */}
       {selectedProduct && (
         <ProductDetailModal
           product={selectedProduct}
@@ -223,30 +240,78 @@ export function App() {
         />
       )}
 
+      {/* Guest Checkout Modal */}
       {isCheckoutOpen && (
         <CheckoutModal
           products={cartItems.length > 0 ? cartItems : products.slice(0, 1)}
-          currentUser={currentUser}
           onClose={() => setIsCheckoutOpen(false)}
           onSuccess={handleCheckoutSuccess}
         />
       )}
 
-      {isAuthOpen && (
-        <AuthModal
-          onClose={() => setIsAuthOpen(false)}
-          onSuccess={(user) => {
-            setCurrentUser(user);
-            setIsAuthOpen(false);
-          }}
-        />
-      )}
-
+      {/* Legal & Regulatory Modal */}
       {legalModalTab && (
         <LegalModal
           initialTab={legalModalTab}
           onClose={() => setLegalModalTab(null)}
         />
+      )}
+
+      {/* Discrete Admin Login Gate */}
+      {isAdminModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="relative w-full max-w-sm bg-[#0b1120] border border-white/10 rounded-3xl p-6 shadow-2xl">
+            <button
+              onClick={() => {
+                setIsAdminModalOpen(false);
+                setAdminError(null);
+              }}
+              className="absolute top-4 right-4 text-zinc-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+                <Lock className="w-4 h-4" />
+              </div>
+              <h3 className="font-heading font-bold text-white text-base">
+                Admin Authentication
+              </h3>
+            </div>
+
+            <p className="text-xs text-zinc-400 mb-4 leading-relaxed">
+              Enter the administrator access key to manage orders, TradingView invite queues, and system settings.
+            </p>
+
+            <form onSubmit={handleAdminLoginSubmit} className="space-y-4">
+              <div>
+                <input
+                  type="password"
+                  placeholder="Master Access Key"
+                  value={adminPasswordInput}
+                  onChange={(e) => setAdminPasswordInput(e.target.value)}
+                  className="w-full bg-[#070b14] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-blue-500"
+                  autoFocus
+                />
+              </div>
+
+              {adminError && (
+                <div className="flex items-center gap-1.5 text-red-400 text-xs">
+                  <AlertCircle className="w-4 h-4" />
+                  <span>{adminError}</span>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl cursor-pointer transition-colors shadow-lg shadow-blue-600/30"
+              >
+                Access Portal
+              </button>
+            </form>
+          </div>
+        </div>
       )}
 
     </div>

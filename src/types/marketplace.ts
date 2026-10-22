@@ -24,14 +24,22 @@ export interface Product {
   id: string;
   slug: string;
   title: string;
+  title_id?: string;
+  title_en?: string;
   short_desc: string;
+  short_desc_id?: string;
+  short_desc_en?: string;
   long_desc: string;
+  long_desc_id?: string;
+  long_desc_en?: string;
   type: ProductType;
   category: ProductCategory;
   price_cents: number;
   discount_cents?: number;
   version: string;
   features: string[];
+  features_id?: string[];
+  features_en?: string[];
   tradingview_script_id?: string;
   is_published: boolean;
   thumbnail_url: string;
@@ -56,7 +64,8 @@ export interface OrderItem {
 export interface Order {
   id: string;
   order_number: string;
-  user_id: string;
+  user_id?: string;
+  access_token?: string;
   total_cents: number;
   currency: string;
   status: OrderStatus;
