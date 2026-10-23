@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { useTranslation } from '../i18n/LanguageContext';
 import { api } from '../services/api';
+import { formatPriceExact } from '../utils/currency';
 import type { Order } from '../types/marketplace';
 
 interface GuestOrderStatusProps {
@@ -283,7 +284,7 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
                         {item.product_title}
                       </h5>
                       <span className="text-xs font-mono text-slate-400">
-                        ${(item.unit_price_cents / 100).toFixed(2)} USD
+                        {formatPriceExact(item.unit_price_cents, lang)}
                       </span>
                     </div>
 

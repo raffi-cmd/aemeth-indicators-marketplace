@@ -3,6 +3,7 @@ import { X, Check, Copy, Building2, Wallet, CreditCard, RefreshCw, AlertCircle, 
 import confetti from 'canvas-confetti';
 import { useTranslation } from '../i18n/LanguageContext';
 import { api } from '../services/api';
+import { formatPriceExact, USD_TO_IDR_RATE } from '../utils/currency';
 import type { Product, PaymentMethod, SiteSettings } from '../types/marketplace';
 
 interface CheckoutModalProps {
@@ -47,6 +48,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   }, []);
 
   const totalCents = products.reduce((acc, p) => acc + p.price_cents, 0);
+  const totalIdr = products.reduce((acc, p) => {
+    return acc + (p.price_idr ?? Math.round((p.price_cents / 100) * USD_TO_IDR_RATE));
+  }, 0);
 
   const copyToClipboard = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
@@ -179,11 +183,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-2xl bg-[#0b1120] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl my-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+      <div className="relative w-full max-w-2xl bg-[#0b1120] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl my-4 sm:my-6 max-h-[92vh] flex flex-col">
         
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-[#070b14]">
+        <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-slate-800 bg-[#070b14] shrink-0">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
             <h3 className="font-heading font-bold text-white text-base">
@@ -199,7 +203,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 sm:p-8 space-y-6">
+        <div className="p-5 sm:p-8 space-y-6 overflow-y-auto flex-1">
           
           {/* Order Complete Screen */}
           {isComplete ? (
@@ -253,22 +257,31 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 <div className="space-y-2">
                   {products.map((p) => {
                     const title = lang === 'id' ? p.title_id || p.title : p.title_en || p.title;
+                    const priceFormatted = formatPriceExact(p.price_cents, lang, p.price_idr);
                     return (
-                      <div key={p.id} className="flex items-center justify-between text-xs">
-                        <span className="text-slate-200 font-medium truncate max-w-[280px]">
+                      <div key={p.id} className="flex items-center justify-between text-xs py-1 border-b border-slate-900/60 last:border-none">
+                        <span className="text-slate-200 font-medium truncate max-w-[190px] sm:max-w-[340px]">
                           {title}
                         </span>
-                        <span className="font-mono text-white font-bold">
-                          ${(p.price_cents / 100).toFixed(2)}
+                        <span className="font-mono text-white font-bold shrink-0 ml-2">
+                          {priceFormatted}
                         </span>
                       </div>
                     );
                   })}
                 </div>
-                <div className="pt-2 border-t border-slate-800 flex items-baseline justify-between">
+                <div className="pt-2.5 border-t border-slate-800 flex items-baseline justify-between">
                   <span className="text-xs font-bold text-slate-300">{t.checkout.totalDue}</span>
-                  <span className="text-xl font-extrabold font-heading text-white">
-                    ${(totalCents / 100).toFixed(2)} <span className="text-xs font-mono text-slate-400">USD</span>
+                  <span className="text-lg sm:text-xl font-extrabold font-heading text-white">
+                    {lang === 'id' ? (
+                      <>
+                        Rp {totalIdr.toLocaleString('id-ID')} <span className="text-xs font-mono text-slate-400 font-normal">IDR</span>
+                      </>
+                    ) : (
+                      <>
+                        ${(totalCents / 100).toFixed(2)} <span className="text-xs font-mono text-slate-400 font-normal">USD</span>
+                      </>
+                    )}
                   </span>
                 </div>
               </div>
@@ -404,20 +417,41 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             <div className="space-y-6">
               
               {/* Order Reference Pill */}
-              <div className="flex items-center justify-between bg-[#070b14] p-3 rounded-xl border border-slate-800 text-xs font-mono">
-                <div>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between bg-[#070b14] p-3.5 rounded-xl border border-slate-800 text-xs font-mono gap-2">
+                <div className="flex items-center justify-between sm:justify-start gap-2">
                   <span className="text-slate-400">{t.checkout.orderReference}:</span>
-                  <span className="text-white font-bold ml-2">{createdOrder.order_number}</span>
+                  <span className="text-white font-bold">{createdOrder.order_number}</span>
                 </div>
-                <div>
+                <div className="flex items-center justify-between sm:justify-start gap-2">
                   <span className="text-slate-400">{t.checkout.amountDue}:</span>
-                  <span className="text-white font-bold ml-2">${(createdOrder.total_cents / 100).toFixed(2)} USD</span>
+                  <span className="text-emerald-400 font-bold">
+                    {lang === 'id' ? `Rp ${totalIdr.toLocaleString('id-ID')} IDR` : `$${(createdOrder.total_cents / 100).toFixed(2)} USD`}
+                  </span>
                 </div>
               </div>
 
               {/* Bank Transfer Instructions */}
               {paymentMethod === 'bank_transfer' && (
                 <div className="space-y-4">
+                  {/* Exact Transfer Amount Banner */}
+                  <div className="flex items-center justify-between p-3.5 bg-blue-950/40 rounded-2xl border border-blue-500/30">
+                    <div>
+                      <span className="text-[10px] text-blue-300 font-mono block">
+                        {lang === 'id' ? 'NOMINAL TRANSFER TEPAT' : 'EXACT TRANSFER AMOUNT'}
+                      </span>
+                      <div className="text-base sm:text-lg font-bold font-mono text-white mt-0.5">
+                        {lang === 'id' ? `Rp ${totalIdr.toLocaleString('id-ID')}` : `$${(createdOrder.total_cents / 100).toFixed(2)} USD (≈ Rp ${totalIdr.toLocaleString('id-ID')})`}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => copyToClipboard(lang === 'id' ? totalIdr.toString() : (createdOrder.total_cents / 100).toFixed(2), 'amount')}
+                      className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 cursor-pointer font-mono shadow-md transition-colors"
+                    >
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>{isCopied === 'amount' ? (lang === 'id' ? 'Tersalin' : 'Copied') : (lang === 'id' ? 'Salin Nominal' : 'Copy Amount')}</span>
+                    </button>
+                  </div>
+
                   <div className="bg-[#070b14] rounded-2xl p-4 border border-slate-800 space-y-3">
                     <span className="text-xs font-bold text-blue-400 uppercase tracking-wider block font-mono">
                       Bank Central Asia (BCA)

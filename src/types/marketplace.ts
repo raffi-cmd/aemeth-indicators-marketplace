@@ -35,7 +35,9 @@ export interface Product {
   type: ProductType;
   category: ProductCategory;
   price_cents: number;
+  price_idr?: number;
   discount_cents?: number;
+  discount_idr?: number;
   version: string;
   pine_version?: 'v5' | 'v6';
   release_date?: string;
@@ -48,6 +50,12 @@ export interface Product {
   features: string[];
   features_id?: string[];
   features_en?: string[];
+  technical_specs?: { label: string; value: string }[];
+  technical_specs_id?: { label: string; value: string }[];
+  technical_specs_en?: { label: string; value: string }[];
+  package_includes?: string[];
+  package_includes_id?: string[];
+  package_includes_en?: string[];
   tradingview_script_id?: string;
   is_published: boolean;
   thumbnail_url: string;

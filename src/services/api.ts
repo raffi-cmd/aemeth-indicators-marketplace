@@ -76,315 +76,548 @@ plotshape(aligned_bear and not aligned_bear[1], title="Bear Cascade", style=shap
 // -------------------------------------------------------------
 export const BILINGUAL_PRODUCTS: Product[] = [
   {
-    id: 'prd_liq_001',
-    slug: 'aemeth-liquidity-matrix',
-    title: 'Aemeth Liquidity Matrix v5.2',
-    title_id: 'Aemeth Liquidity Matrix v5.2',
-    title_en: 'Aemeth Liquidity Matrix v5.2',
-    short_desc: 'Deteksi Fair Value Gaps, Liquidity Sweeps, dan Order Block otomatis dengan garansi anti-repaint Candle 1.',
-    short_desc_id: 'Deteksi Fair Value Gaps, Liquidity Sweeps, dan Order Block otomatis dengan garansi anti-repaint Candle 1.',
-    short_desc_en: 'Automated Fair Value Gaps, Liquidity Sweeps, and Order Blocks visualizer with strict Candle 1 anti-repaint execution.',
-    long_desc: 'Dirancang untuk trader yang mengutamakan analisis aliran pesanan (order flow) di TradingView. Aemeth Liquidity Matrix secara otomatis memetakan area Buy-Side & Sell-Side Liquidity, menghitung zona mitigasi institusional, dan memberikan sinyal liquidity sweep tanpa lag. Kode sumber Pine Script v5 dapat diunduh dan dipasang mandiri di Pine Editor.',
-    long_desc_id: 'Dirancang untuk trader yang mengutamakan analisis aliran pesanan (order flow) di TradingView. Aemeth Liquidity Matrix secara otomatis memetakan area Buy-Side & Sell-Side Liquidity, menghitung zona mitigasi institusional, dan memberikan sinyal liquidity sweep tanpa lag. Kode sumber Pine Script v5 dapat diunduh dan dipasang mandiri di Pine Editor.',
-    long_desc_en: 'Engineered for institutional order flow traders on TradingView. The Aemeth Liquidity Matrix automatically maps Buy-Side & Sell-Side Liquidity pools, calculates mitigation zones, and alerts on liquidity sweeps. Delivered as direct downloadable Pine Script v5 source code (.pine and .txt).',
+    id: 'prd_ichimoku_001',
+    slug: 'aemeth-ichimoku-cloud',
+    title: 'Aemeth Ichimoku Cloud Indicator',
+    title_id: 'Aemeth Ichimoku Cloud Indicator',
+    title_en: 'Aemeth Ichimoku Cloud Indicator',
+    short_desc: 'Indikator TradingView yang membantu trader mengidentifikasi potensi peluang BUY dan SELL melalui analisis Ichimoku Cloud dengan level Entry, SL, dan TP1-TP3.',
+    short_desc_id: 'Indikator TradingView yang membantu trader mengidentifikasi potensi peluang BUY dan SELL melalui analisis Ichimoku Cloud dengan level Entry, SL, dan TP1-TP3.',
+    short_desc_en: 'TradingView indicator helping traders identify potential BUY & SELL opportunities via Ichimoku Cloud analysis with Entry, SL, and TP1-TP3 targets.',
+    long_desc: 'Aemeth Ichimoku Cloud Indicator adalah indikator TradingView yang membantu trader mengidentifikasi potensi peluang BUY dan SELL melalui analisis Ichimoku Cloud.\n\nIndikator menampilkan informasi Entry, Stop Loss (SL), serta tiga target Take Profit (TP1, TP2, dan TP3) secara visual langsung pada chart. Dilengkapi dashboard ringkas untuk memantau status sinyal terakhir dan fitur alert untuk membantu memantau kondisi pasar.\n\nCocok bagi trader yang ingin menyusun analisis teknikal dengan tampilan yang lebih terstruktur dan praktis.',
+    long_desc_id: 'Aemeth Ichimoku Cloud Indicator adalah indikator TradingView yang membantu trader mengidentifikasi potensi peluang BUY dan SELL melalui analisis Ichimoku Cloud.\n\nIndikator menampilkan informasi Entry, Stop Loss (SL), serta tiga target Take Profit (TP1, TP2, dan TP3) secara visual langsung pada chart. Dilengkapi dashboard ringkas untuk memantau status sinyal terakhir dan fitur alert untuk membantu memantau kondisi pasar.\n\nCocok bagi trader yang ingin menyusun analisis teknikal dengan tampilan yang lebih terstruktur dan praktis.',
+    long_desc_en: 'Aemeth Ichimoku Cloud Indicator is a TradingView tool that helps traders identify potential BUY and SELL setups through Ichimoku Cloud trend analysis.\n\nVisually plots Entry, Stop Loss (SL), and three Take Profit targets (TP1, TP2, TP3) directly on your chart. Features an on-chart signal status dashboard and customizable alert triggers for structured technical execution.',
     type: 'open_source',
-    category: 'liquidity',
-    price_cents: 7900,
+    category: 'trend',
+    price_cents: 7900, // $79
+    price_idr: 1250000, // Rp 1.250.000
     discount_cents: 0,
+    discount_idr: 0,
     version: '5.2.0',
     pine_version: 'v5',
     release_date: '2026-03-15',
     changelog: [
-      'v5.2.0: Added multi-timeframe FVG mitigation tracking algorithm',
-      'v5.1.0: Optimized CPU rendering memory by 45%',
-      'v5.0.0: Initial Pine Script v5 core rewrite with Candle-1 lock'
+      'v5.2.0: Pine Script v5 upgrade with dynamic cloud projections & TP1-TP3 targets',
+      'v5.0.0: Initial release of Aemeth Ichimoku Cloud engine'
     ],
     changelog_id: [
-      'v5.2.0: Penambahan pelacakan mitigasi FVG multi-timeframe otomatis',
-      'v5.1.0: Pengurangan beban komputasi grafik hingga 45%',
-      'v5.0.0: Rilis arsitektur Pine Script v5 dengan kunci Candle-1'
+      'v5.2.0: Peningkatan Pine Script v5 dengan proyeksi cloud dinamis & target TP1-TP3',
+      'v5.0.0: Rilis awal mesin Aemeth Ichimoku Cloud'
     ],
     changelog_en: [
-      'v5.2.0: Added multi-timeframe FVG mitigation tracking algorithm',
-      'v5.1.0: Optimized CPU rendering memory by 45%',
-      'v5.0.0: Initial Pine Script v5 core rewrite with Candle-1 lock'
+      'v5.2.0: Pine Script v5 upgrade with dynamic cloud projections & TP1-TP3 targets',
+      'v5.0.0: Initial release of Aemeth Ichimoku Cloud engine'
     ],
     compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
-    compatibility_id: 'Kompatibel dengan semua akun TradingView (Free, Essential, Plus, dan Premium)',
-    compatibility_en: 'Compatible with all TradingView accounts (Free, Essential, Plus, and Premium)',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
     features: [
-      'File Kode Sumber Pine Script v5 Lengkap (.pine & .txt)',
-      'Eksekusi Tertutup Candle 1 (100% Bebas Repaint)',
-      'Proyeksi Dinamis Institutional Order Block & FVG',
-      'Kompatibel dengan Webhook & Alert TradingView',
-      'Teruji di Forex (XAUUSD, EURUSD), Kripto (BTC/USDT), & Indeks (NQ/ES)'
+      'Sinyal BUY dan SELL berbasis Ichimoku Cloud.',
+      'Tampilan level Entry, Stop Loss, dan tiga target Take Profit (TP1, TP2, TP3).',
+      'Perhitungan target yang dapat disesuaikan.',
+      'Dashboard informasi status sinyal pada chart (termasuk counter bar sejak sinyal).',
+      'Fitur alert untuk kondisi sinyal tertentu.',
+      'Pengaturan indikator yang fleksibel.'
     ],
     features_id: [
-      'File Kode Sumber Pine Script v5 Lengkap (.pine & .txt)',
-      'Eksekusi Tertutup Candle 1 (100% Bebas Repaint)',
-      'Proyeksi Dinamis Institutional Order Block & FVG',
-      'Kompatibel dengan Webhook & Alert TradingView',
-      'Teruji di Forex (XAUUSD, EURUSD), Kripto (BTC/USDT), & Indeks (NQ/ES)'
+      'Sinyal BUY dan SELL berbasis Ichimoku Cloud.',
+      'Tampilan level Entry, Stop Loss, dan tiga target Take Profit (TP1, TP2, TP3).',
+      'Perhitungan target yang dapat disesuaikan.',
+      'Dashboard informasi status sinyal pada chart (termasuk counter bar sejak sinyal).',
+      'Fitur alert untuk kondisi sinyal tertentu.',
+      'Pengaturan indikator yang fleksibel.'
     ],
     features_en: [
-      'Full Uncompiled Pine Script v5 Source Code (.pine & .txt)',
-      'Candle 1 Anti-Repaint Strict Execution',
-      'Dynamic Institutional Order Block & FVG Projections',
-      'TradingView Webhook & Mobile Alert Ready',
-      'Tested across Forex (XAUUSD, EURUSD), Crypto (BTC/USDT), & Indices (NQ/ES)'
+      'BUY & SELL signals powered by Ichimoku Cloud analysis.',
+      'Direct on-chart visualization of Entry, Stop Loss, and TP1, TP2, TP3 levels.',
+      'Customizable target calculation methodology.',
+      'On-chart signal dashboard including bar duration counter since trigger.',
+      'TradingView alerts for specific signal and exit conditions.',
+      'Flexible indicator parameters and display styling.'
     ],
-    tradingview_script_id: 'aemeth_liquidity_v5_pub',
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Overlay Indicator' },
+      { label: 'Sistem Analisis', value: 'Ichimoku Cloud' },
+      { label: 'Sinyal', value: 'BUY / SELL' },
+      { label: 'Level Ditampilkan', value: 'Entry, SL, TP1, TP2, TP3' },
+      { label: 'Fitur Tambahan', value: 'Dashboard & Alert' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Overlay Indicator' },
+      { label: 'Analysis System', value: 'Ichimoku Cloud' },
+      { label: 'Signals', value: 'BUY / SELL' },
+      { label: 'Levels Displayed', value: 'Entry, SL, TP1, TP2, TP3' },
+      { label: 'Additional Features', value: 'Dashboard & Alerts' }
+    ],
+    package_includes_id: [
+      'Source code indikator Pine Script (.pine & .txt).',
+      'Panduan pemasangan di TradingView (Pine Editor).',
+      'Bantuan instalasi dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Complete Pine Script indicator source code (.pine & .txt).',
+      'TradingView step-by-step installation walkthrough.',
+      'Personal installation assistance from the Aemeth support desk.'
+    ],
+    tradingview_script_id: 'aemeth_ichimoku_cloud_v5',
     is_published: true,
-    thumbnail_url: 'https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80',
-    preview_images: ['https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=1200&q=80'],
-    created_at: new Date().toISOString(),
+    thumbnail_url: './products/ichimoku.jpg',
+    preview_images: ['./products/ichimoku.jpg'],
+    created_at: new Date('2026-03-15').toISOString(),
   },
   {
-    id: 'prd_delta_002',
-    slug: 'aemeth-delta-volume-absorption',
-    title: 'Aemeth Delta Flow & Volume Absorption Pro v3.4',
-    title_id: 'Aemeth Delta Flow & Volume Absorption Pro v3.4',
-    title_en: 'Aemeth Delta Flow & Volume Absorption Pro v3.4',
-    short_desc: 'Algoritma jejak volume delta dan absorpsi institusional. Dikirimkan langsung dalam kode sumber Pine Script v5.',
-    short_desc_id: 'Algoritma jejak volume delta dan absorpsi institusional. Dikirimkan langsung dalam kode sumber Pine Script v5.',
-    short_desc_en: 'Proprietary volume delta footprint and absorption engine. Delivered directly as Pine Script v5 source code.',
-    long_desc: 'Mesin analisis volume institusional yang melacak akumulasi dan distribusi tersembunyi tanpa memerlukan langganan Level 2 berbiaya tinggi. Kode sumber asli diberikan langsung dalam format .pine dan .txt untuk dipasang mandiri di TradingView Pine Editor.',
-    long_desc_id: 'Mesin analisis volume institusional yang melacak akumulasi dan distribusi tersembunyi tanpa memerlukan langganan Level 2 berbiaya tinggi. Kode sumber asli diberikan langsung dalam format .pine dan .txt untuk dipasang mandiri di TradingView Pine Editor.',
-    long_desc_en: 'A proprietary volume analysis engine tracking institutional accumulation and distribution without expensive Level 2 data. Delivered directly as uncompiled Pine Script v5 source code (.pine and .txt) for personal installation.',
+    id: 'prd_aisignal_002',
+    slug: 'aemeth-ai-signal-v1',
+    title: 'Aemeth AI Signal V1',
+    title_id: 'Aemeth AI Signal V1',
+    title_en: 'Aemeth AI Signal V1',
+    short_desc: 'Membaca potensi peluang LONG dan SHORT melalui visualisasi sinyal, zona SL/TP1-TP3, serta badge Grade & AI Confidence.',
+    short_desc_id: 'Membaca potensi peluang LONG dan SHORT melalui visualisasi sinyal, zona SL/TP1-TP3, serta badge Grade & AI Confidence.',
+    short_desc_en: 'Detects high-conviction LONG & SHORT setups with on-chart SL/TP zones, Grade evaluation, and AI Confidence telemetry.',
+    long_desc: 'Aemeth AI Signal V1 adalah indikator TradingView yang dirancang untuk membantu trader membaca potensi peluang LONG dan SHORT melalui visualisasi sinyal dan level trading langsung pada chart.\n\nDengan tampilan zona Stop Loss (SL), tiga target Take Profit (TP1–TP3), serta informasi Grade dan AI Confidence, indikator ini membantu menyajikan informasi analisis pasar dalam format visual yang lebih terstruktur.\n\nCocok bagi trader yang menginginkan tampilan sinyal, level risiko, dan target harga dalam satu chart.',
+    long_desc_id: 'Aemeth AI Signal V1 adalah indikator TradingView yang dirancang untuk membantu trader membaca potensi peluang LONG dan SHORT melalui visualisasi sinyal dan level trading langsung pada chart.\n\nDengan tampilan zona Stop Loss (SL), tiga target Take Profit (TP1–TP3), serta informasi Grade dan AI Confidence, indikator ini membantu menyajikan informasi analisis pasar dalam format visual yang lebih terstruktur.\n\nCocok bagi trader yang menginginkan tampilan sinyal, level risiko, dan target harga dalam satu chart.',
+    long_desc_en: 'Aemeth AI Signal V1 is an advanced TradingView indicator built to help traders analyze potential LONG and SHORT opportunities via structured visual level mapping.\n\nFeaturing dynamic Stop Loss (SL) zones, three Take Profit target boundaries (TP1–TP3), and on-chart Grade and AI Confidence badges for clear risk-reward planning.',
     type: 'open_source',
-    category: 'volume',
-    price_cents: 12900,
+    category: 'momentum',
+    price_cents: 8900, // $89
+    price_idr: 1400000, // Rp 1.400.000
     discount_cents: 0,
-    version: '3.4.1',
-    pine_version: 'v5',
-    release_date: '2026-02-28',
-    changelog: [
-      'v3.4.1: Enhanced candle delta divergence detection filter',
-      'v3.3.0: Added volume cluster absorption bands',
-      'v3.0.0: Clean Pine Script v5 codebase release'
-    ],
-    changelog_id: [
-      'v3.4.1: Penyempurnaan filter divergensi volume delta',
-      'v3.3.0: Penambahan pita klaster absorpsi volume',
-      'v3.0.0: Rilis awal basis kode Pine Script v5'
-    ],
-    changelog_en: [
-      'v3.4.1: Enhanced candle delta divergence detection filter',
-      'v3.3.0: Added volume cluster absorption bands',
-      'v3.0.0: Clean Pine Script v5 codebase release'
-    ],
-    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
-    compatibility_id: 'Kompatibel dengan semua akun TradingView (Free, Essential, Plus, dan Premium)',
-    compatibility_en: 'Compatible with all TradingView accounts (Free, Essential, Plus, and Premium)',
-    features: [
-      'File Kode Sumber Pine Script v5 Lengkap (.pine & .txt)',
-      'Divergensi Volume Delta & Klaster Absorpsi',
-      'Filter Exhaustion vs Continuation Institusional',
-      'Multi-Timeframe Volume Profiling Otomatis',
-      'Dukungan Instalasi Mandiri & Panduan Lengkap'
-    ],
-    features_id: [
-      'File Kode Sumber Pine Script v5 Lengkap (.pine & .txt)',
-      'Divergensi Volume Delta & Klaster Absorpsi',
-      'Filter Exhaustion vs Continuation Institusional',
-      'Multi-Timeframe Volume Profiling Otomatis',
-      'Dukungan Instalasi Mandiri & Panduan Lengkap'
-    ],
-    features_en: [
-      'Full Uncompiled Pine Script v5 Source Code (.pine & .txt)',
-      'Volume Delta Divergence & Absorption Clusters',
-      'Exhaustion vs Continuation Institutional Print Filter',
-      'Automatic Multi-Timeframe Volume Profiling',
-      'Self-Installation Ready with Complete Step-by-Step Guide'
-    ],
-    tradingview_script_id: 'aemeth_delta_pro_source',
-    is_published: true,
-    thumbnail_url: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80',
-    preview_images: ['https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80'],
-    created_at: new Date().toISOString(),
-  },
-  {
-    id: 'prd_trend_003',
-    slug: 'aemeth-multitimeframe-trend-cascade',
-    title: 'Aemeth Multi-Timeframe Trend Cascade v2.1',
-    title_id: 'Aemeth Multi-Timeframe Trend Cascade v2.1',
-    title_en: 'Aemeth Multi-Timeframe Trend Cascade v2.1',
-    short_desc: 'Filter tren multi-timeframe algoritmik untuk memastikan entri selaras dengan aliran tren time-frame lebih tinggi.',
-    short_desc_id: 'Filter tren multi-timeframe algoritmik untuk memastikan entri selaras dengan aliran tren time-frame lebih tinggi.',
-    short_desc_en: 'Algorithmic multi-timeframe trend filter ensuring trades align with higher-timeframe order flow.',
-    long_desc: 'Hindari melawan arah tren besar. Algoritma ini mensintesis momentum dan volatilitas pada 4 timeframe tersinkronisasi menjadi dashboard visual bersih dan alert eksekusi yang jelas. Kode sumber Pine Script v5 lengkap disertakan (.pine dan .txt).',
-    long_desc_id: 'Hindari melawan arah tren besar. Algoritma ini mensintesis momentum dan volatilitas pada 4 timeframe tersinkronisasi menjadi dashboard visual bersih dan alert eksekusi yang jelas. Kode sumber Pine Script v5 lengkap disertakan (.pine dan .txt).',
-    long_desc_en: 'Never fight higher-timeframe order flow again. This algorithm cross-synthesizes momentum and volatility across 4 synchronized timeframes into a clean visual dashboard and actionable execution alerts. Full Pine Script v5 source code included (.pine and .txt).',
-    type: 'open_source',
-    category: 'trend',
-    price_cents: 6900,
-    discount_cents: 0,
-    version: '2.1.0',
-    pine_version: 'v5',
-    release_date: '2026-01-20',
-    changelog: [
-      'v2.1.0: Real-time higher-timeframe EMA smoothing upgrade',
-      'v2.0.0: Pine Script v5 multi-resolution security call optimization',
-      'v1.0.0: Initial trend cascade release'
-    ],
-    changelog_id: [
-      'v2.1.0: Peningkatan algoritma smoothing EMA multi-timeframe',
-      'v2.0.0: Optimalisasi panggilan data security() Pine Script v5',
-      'v1.0.0: Rilis awal seri trend cascade'
-    ],
-    changelog_en: [
-      'v2.1.0: Real-time higher-timeframe EMA smoothing upgrade',
-      'v2.0.0: Pine Script v5 multi-resolution security call optimization',
-      'v1.0.0: Initial trend cascade release'
-    ],
-    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
-    compatibility_id: 'Kompatibel dengan semua akun TradingView (Free, Essential, Plus, dan Premium)',
-    compatibility_en: 'Compatible with all TradingView accounts (Free, Essential, Plus, and Premium)',
-    features: [
-      'Kode Sumber Pine Script v5 Lengkap & Dapat Dimodifikasi (.pine & .txt)',
-      'Sinkronisasi Struktur 1m/5m/15m/1h atau 1h/4h/D1 dengan Mulus',
-      'Beban CPU Rendah, Ringan untuk Akun Free Maupun Pro',
-      'Dilengkapi Kalkulator Risk-to-Reward Otomatis'
-    ],
-    features_id: [
-      'Kode Sumber Pine Script v5 Lengkap & Dapat Dimodifikasi (.pine & .txt)',
-      'Sinkronisasi Struktur 1m/5m/15m/1h atau 1h/4h/D1 dengan Mulus',
-      'Beban CPU Rendah, Ringan untuk Akun Free Maupun Pro',
-      'Dilengkapi Kalkulator Risk-to-Reward Otomatis'
-    ],
-    features_en: [
-      'Full Editable Pine Script v5 Codebase (.pine & .txt)',
-      'Syncs 1m/5m/15m/1h or 1h/4h/D1 structures smoothly',
-      'Low CPU footprint optimized for TradingView free & pro accounts',
-      'Built-in Risk-to-Reward stop projection'
-    ],
-    tradingview_script_id: 'aemeth_trend_cascade_pub',
-    is_published: true,
-    thumbnail_url: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80',
-    preview_images: ['https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1200&q=80'],
-    created_at: new Date().toISOString(),
-  },
-  {
-    id: 'prd_rev_004',
-    slug: 'aemeth-reversal-sniper-pro',
-    title: 'Aemeth Reversal Sniper Pro v4.0',
-    title_id: 'Aemeth Reversal Sniper Pro v4.0',
-    title_en: 'Aemeth Reversal Sniper Pro v4.0',
-    short_desc: 'Identifikasi titik balik pasar probabilitas tinggi berbasis kelelahan likuiditas (exhaustion) dan divergensi RSI.',
-    short_desc_id: 'Identifikasi titik balik pasar probabilitas tinggi berbasis kelelahan likuiditas (exhaustion) dan divergensi RSI.',
-    short_desc_en: 'High-probability turning point identification based on liquidity exhaustions and RSI micro-divergences.',
-    long_desc: 'Mendeteksi titik balik pasar penting pada batas sesi pembukaan dan penutupan pasar utama. Dilengkapi kode sumber Pine Script v5 lengkap yang dapat Anda pasang sendiri ke TradingView chart Anda.',
-    long_desc_id: 'Mendeteksi titik balik pasar penting pada batas sesi pembukaan dan penutupan pasar utama. Dilengkapi kode sumber Pine Script v5 lengkap yang dapat Anda pasang sendiri ke TradingView chart Anda.',
-    long_desc_en: 'Identifies high-conviction market turning points at key psychological session boundaries. Delivered with complete uncompiled Pine Script v5 source files (.pine and .txt) for self-installation.',
-    type: 'open_source',
-    category: 'reversal',
-    price_cents: 9900,
-    discount_cents: 0,
-    version: '4.0.0',
-    pine_version: 'v5',
-    release_date: '2026-03-01',
-    changelog: [
-      'v4.0.0: Multi-session liquidity exhaustion filter integration',
-      'v3.2.0: Added dynamic alert triggers for Discord/Telegram webhooks',
-      'v3.0.0: Pine Script v5 modernization'
-    ],
-    changelog_id: [
-      'v4.0.0: Integrasi filter exhaustion likuiditas multi-sesi',
-      'v3.2.0: Penambahan trigger alert dinamis webhook Discord/Telegram',
-      'v3.0.0: Modernisasi ke standar Pine Script v5'
-    ],
-    changelog_en: [
-      'v4.0.0: Multi-session liquidity exhaustion filter integration',
-      'v3.2.0: Added dynamic alert triggers for Discord/Telegram webhooks',
-      'v3.0.0: Pine Script v5 modernization'
-    ],
-    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
-    compatibility_id: 'Kompatibel dengan semua akun TradingView (Free, Essential, Plus, dan Premium)',
-    compatibility_en: 'Compatible with all TradingView accounts (Free, Essential, Plus, and Premium)',
-    features: [
-      'File Kode Sumber Pine Script v5 Lengkap (.pine & .txt)',
-      'Pemindai Mikro-Divergensi Algoritmik',
-      'Deteksi Puncak & Dasar Kelelahan Likuiditas (Exhaustion)',
-      'Kompatibel dengan Sinyal Webhook Discord / Telegram',
-      'Bantuan Instalasi & Panduan Kode Sumber Mandiri'
-    ],
-    features_id: [
-      'File Kode Sumber Pine Script v5 Lengkap (.pine & .txt)',
-      'Pemindai Mikro-Divergensi Algoritmik',
-      'Deteksi Puncak & Dasar Kelelahan Likuiditas (Exhaustion)',
-      'Kompatibel dengan Sinyal Webhook Discord / Telegram',
-      'Bantuan Instalasi & Panduan Kode Sumber Mandiri'
-    ],
-    features_en: [
-      'Full Uncompiled Pine Script v5 Source Code (.pine & .txt)',
-      'Micro-Divergence Algorithmic Scanner',
-      'Exhaustion Peak & Valley Detection',
-      'Discord / Telegram Webhook Signal Compatible',
-      'Installation Support & Self-Setup Documentation'
-    ],
-    tradingview_script_id: 'aemeth_reversal_sniper_source',
-    is_published: true,
-    thumbnail_url: 'https://images.unsplash.com/photo-1535320903710-d993d3d77d29?auto=format&fit=crop&w=800&q=80',
-    preview_images: ['https://images.unsplash.com/photo-1535320903710-d993d3d77d29?auto=format&fit=crop&w=1200&q=80'],
-    created_at: new Date().toISOString(),
-  },
-  {
-    id: 'prd_bundle_005',
-    slug: 'aemeth-complete-institutional-suite',
-    title: 'Aemeth Complete Institutional Suite (All 4 Indicators)',
-    title_id: 'Aemeth Complete Institutional Suite (Paket Lengkap 4 Indikator)',
-    title_en: 'Aemeth Complete Institutional Suite (All 4 Indicators)',
-    short_desc: 'Arsenal analitis terlengkap: Liquidity Matrix, Delta Flow, Trend Cascade, dan Reversal Sniper dengan diskon 35%.',
-    short_desc_id: 'Arsenal analitis terlengkap: Liquidity Matrix, Delta Flow, Trend Cascade, dan Reversal Sniper dengan diskon 35%.',
-    short_desc_en: 'The complete institutional analytical arsenal: Liquidity Matrix, Delta Flow, Trend Cascade, and Reversal Sniper at 35% discount.',
-    long_desc: 'Kuasai seluruh spektrum analisa pasar. Menggabungkan keempat indikator unggulan Aemeth dalam satu paket hemat. Mencakup unduhan kode sumber Pine Script (.pine & .txt) lengkap untuk keempat algoritma sekaligus.',
-    long_desc_id: 'Kuasai seluruh spektrum analisa pasar. Menggabungkan keempat indikator unggulan Aemeth dalam satu paket hemat. Mencakup unduhan kode sumber Pine Script (.pine & .txt) lengkap untuk keempat algoritma sekaligus.',
-    long_desc_en: 'Get total market clarity. Combines all four flagship Aemeth indicators into one discounted package. Includes instant uncompiled Pine Script source code downloads (.pine & .txt) for all four algorithms.',
-    type: 'bundle',
-    category: 'bundle',
-    price_cents: 24500,
-    discount_cents: 13100,
-    version: '2026.1',
+    discount_idr: 0,
+    version: '1.2.0',
     pine_version: 'v5',
     release_date: '2026-03-20',
     changelog: [
-      '2026.1: Unified Pine Script v5 suite with matched color telemetry & alert standardization',
-      '2025.4: Bundle release with initial multi-indicator license distribution'
+      'v1.2.0: Added Grade evaluation & AI Confidence telemetry badges',
+      'v1.0.0: Initial release of Aemeth AI Signal suite'
     ],
     changelog_id: [
-      '2026.1: Penyatuan arsitektur Pine Script v5 dengan telemetri warna dan alert standar',
-      '2025.4: Rilis paket bundel awal dengan 4 indikator institusional'
+      'v1.2.0: Penambahan evaluasi Grade & badge telemetri AI Confidence',
+      'v1.0.0: Rilis awal suite Aemeth AI Signal'
     ],
     changelog_en: [
-      '2026.1: Unified Pine Script v5 suite with matched color telemetry & alert standardization',
-      '2025.4: Bundle release with initial multi-indicator license distribution'
+      'v1.2.0: Added Grade evaluation & AI Confidence telemetry badges',
+      'v1.0.0: Initial release of Aemeth AI Signal suite'
     ],
     compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
-    compatibility_id: 'Kompatibel dengan semua akun TradingView (Free, Essential, Plus, dan Premium)',
-    compatibility_en: 'Compatible with all TradingView accounts (Free, Essential, Plus, and Premium)',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
     features: [
-      '4 Paket Kode Sumber Lengkap (.pine & .txt) Sekaligus',
-      'Hemat $131 Dibandingkan Membeli Satu Per Satu',
-      'Panduan Instalasi Step-by-Step Khusus 4 Indikator',
-      'Dukungan Bantuan Instalasi Langsung dari Tim Aemeth'
+      'LONG & SHORT Signals — menampilkan sinyal arah pasar.',
+      'SL & TP Zones — visualisasi area Stop Loss dan tiga target Take Profit (TP1-TP3).',
+      'Grade Badge — indikator penilaian kondisi sinyal (Grade A, B, C).',
+      'AI Confidence Badge — kategori tingkat confidence yang ditampilkan pada chart.',
+      'Dynamic Visuals — tampilan zona dan penanda yang mengikuti perkembangan chart.',
+      'Configurable Settings — pengaturan indikator yang dapat disesuaikan.',
+      'Trade Visualization — membantu memantau perkembangan level dan target pada chart.'
     ],
     features_id: [
-      '4 Paket Kode Sumber Lengkap (.pine & .txt) Sekaligus',
-      'Hemat $131 Dibandingkan Membeli Satu Per Satu',
-      'Panduan Instalasi Step-by-Step Khusus 4 Indikator',
-      'Dukungan Bantuan Instalasi Langsung dari Tim Aemeth'
+      'LONG & SHORT Signals — menampilkan sinyal arah pasar.',
+      'SL & TP Zones — visualisasi area Stop Loss dan tiga target Take Profit (TP1-TP3).',
+      'Grade Badge — indikator penilaian kondisi sinyal (Grade A, B, C).',
+      'AI Confidence Badge — kategori tingkat confidence yang ditampilkan pada chart.',
+      'Dynamic Visuals — tampilan zona dan penanda yang mengikuti perkembangan chart.',
+      'Configurable Settings — pengaturan indikator yang dapat disesuaikan.',
+      'Trade Visualization — membantu memantau perkembangan level dan target pada chart.'
     ],
     features_en: [
-      'All 4 Complete Pine Script Source Codebases (.pine & .txt)',
-      'Save $131 Compared to Individual Purchases',
-      'Step-by-Step 4-Indicator Setup Guide',
-      'Direct Personal Installation Assistance from Aemeth Desk'
+      'LONG & SHORT Signals — clear market direction markers.',
+      'SL & TP Zones — visual Stop Loss area and 3 Take Profit target zones.',
+      'Grade Badge — signal quality evaluation metrics.',
+      'AI Confidence Badge — telemetry confidence scoring displayed directly on chart.',
+      'Dynamic Visuals — level boxes and tracking bands following market progression.',
+      'Configurable Settings — adjustable signal confirmation and risk parameters.',
+      'Trade Visualization — structured on-chart risk-to-reward ratio layout.'
     ],
-    included_product_ids: ['prd_liq_001', 'prd_delta_002', 'prd_trend_003', 'prd_rev_004'],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Overlay Indicator' },
+      { label: 'Arah Sinyal', value: 'LONG / SHORT' },
+      { label: 'Visualisasi', value: 'Entry, SL, TP1, TP2, TP3' },
+      { label: 'Informasi Tambahan', value: 'Grade & AI Confidence' },
+      { label: 'Pengaturan', value: 'Konfirmasi sinyal & parameter fleksibel' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Overlay Indicator' },
+      { label: 'Signal Direction', value: 'LONG / SHORT' },
+      { label: 'Visualization', value: 'Entry, SL, TP1, TP2, TP3' },
+      { label: 'Additional Info', value: 'Grade & AI Confidence' },
+      { label: 'Settings', value: 'Signal confirmation & customizable params' }
+    ],
+    package_includes_id: [
+      'Source code Pine Script (.pine & .txt).',
+      'Panduan pemasangan di TradingView.',
+      'Bantuan instalasi dari Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and installation guide.',
+      'Direct installation support from Aemeth if required.'
+    ],
+    tradingview_script_id: 'aemeth_ai_signal_v1',
     is_published: true,
-    thumbnail_url: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80',
-    preview_images: ['https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80'],
-    created_at: new Date().toISOString(),
+    thumbnail_url: './products/ai-signal.jpg',
+    preview_images: ['./products/ai-signal.jpg'],
+    created_at: new Date('2026-03-20').toISOString(),
+  },
+  {
+    id: 'prd_mfi_003',
+    slug: 'aemeth-mfi-reversal',
+    title: 'Aemeth MFI Reversal Indicator',
+    title_id: 'Aemeth MFI Reversal Indicator',
+    title_en: 'Aemeth MFI Reversal Indicator',
+    short_desc: 'Mengidentifikasi potensi pembalikan momentum pasar melalui Money Flow Index (MFI) dengan level Entry, SL, dan TP1-TP3.',
+    short_desc_id: 'Mengidentifikasi potensi pembalikan momentum pasar melalui Money Flow Index (MFI) dengan level Entry, SL, dan TP1-TP3.',
+    short_desc_en: 'Identifies potential market momentum turning points via Money Flow Index (MFI) with Entry, SL, and TP1-TP3 projection.',
+    long_desc: 'Aemeth MFI Reversal adalah indikator TradingView yang membantu trader mengidentifikasi potensi pembalikan momentum pasar melalui Money Flow Index (MFI).\n\nIndikator menampilkan sinyal BUY dan SELL, lengkap dengan level Entry, Stop Loss (SL), serta tiga target Take Profit (TP1, TP2, dan TP3). Dashboard informatif dan penanda visual membantu trader memantau level trading langsung pada chart.\n\nDirancang untuk membantu analisis teknikal menjadi lebih terstruktur dan praktis.',
+    long_desc_id: 'Aemeth MFI Reversal adalah indikator TradingView yang membantu trader mengidentifikasi potensi pembalikan momentum pasar melalui Money Flow Index (MFI).\n\nIndikator menampilkan sinyal BUY dan SELL, lengkap dengan level Entry, Stop Loss (SL), serta tiga target Take Profit (TP1, TP2, dan TP3). Dashboard informatif dan penanda visual membantu trader memantau level trading langsung pada chart.\n\nDirancang untuk membantu analisis teknikal menjadi lebih terstruktur dan praktis.',
+    long_desc_en: 'Aemeth MFI Reversal helps traders anticipate institutional momentum inflections using volume-weighted Money Flow Index (MFI).\n\nDisplays clean BUY and SELL triggers with Entry, Stop Loss (SL), and TP1, TP2, TP3 targets, paired with an informative dashboard and TradingView alerts.',
+    type: 'open_source',
+    category: 'reversal',
+    price_cents: 6900, // $69
+    price_idr: 1100000, // Rp 1.100.000
+    discount_cents: 0,
+    discount_idr: 0,
+    version: '2.4.0',
+    pine_version: 'v5',
+    release_date: '2026-03-10',
+    changelog: [
+      'v2.4.0: Dynamic MFI exhaustion threshold tuning and ATR distance logic',
+      'v2.0.0: Initial Pine Script v5 rewrite'
+    ],
+    changelog_id: [
+      'v2.4.0: Penyesuaian ambang kelelahan MFI dinamis & kalkulasi jarak ATR',
+      'v2.0.0: Rilis arsitektur Pine Script v5'
+    ],
+    changelog_en: [
+      'v2.4.0: Dynamic MFI exhaustion threshold tuning and ATR distance logic',
+      'v2.0.0: Initial Pine Script v5 rewrite'
+    ],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'BUY & SELL Signals — penanda potensi perubahan momentum pasar.',
+      'Entry, SL & TP — visualisasi level masuk, batas risiko, dan tiga target harga.',
+      'ATR & Fixed Distance — pilihan metode perhitungan jarak level trading.',
+      'Dashboard Sinyal — ringkasan status sinyal dan level harga terakhir.',
+      'TradingView Alerts — notifikasi untuk kondisi sinyal bullish dan bearish.',
+      'Customizable Settings — pengaturan yang dapat disesuaikan dengan kebutuhan pengguna.'
+    ],
+    features_id: [
+      'BUY & SELL Signals — penanda potensi perubahan momentum pasar.',
+      'Entry, SL & TP — visualisasi level masuk, batas risiko, dan tiga target harga.',
+      'ATR & Fixed Distance — pilihan metode perhitungan jarak level trading.',
+      'Dashboard Sinyal — ringkasan status sinyal dan level harga terakhir.',
+      'TradingView Alerts — notifikasi untuk kondisi sinyal bullish dan bearish.',
+      'Customizable Settings — pengaturan yang dapat disesuaikan dengan kebutuhan pengguna.'
+    ],
+    features_en: [
+      'BUY & SELL Signals — institutional volume-momentum inflection markers.',
+      'Entry, SL & TP — clear visual entry line, protective stop, and 3 targets.',
+      'ATR & Fixed Distance — flexible risk calculation methods.',
+      'Signal Dashboard — live summary of active signal state on chart.',
+      'TradingView Alerts — notifications for bullish and bearish setups.',
+      'Customizable Settings — adaptable to various timeframes and instruments.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Overlay Indicator' },
+      { label: 'Metode Analisis', value: 'Money Flow Index (MFI)' },
+      { label: 'Sinyal', value: 'BUY / SELL' },
+      { label: 'Visualisasi', value: 'Entry, SL, TP1, TP2, TP3' },
+      { label: 'Fitur Tambahan', value: 'Dashboard & Alert' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Overlay Indicator' },
+      { label: 'Analysis Method', value: 'Money Flow Index (MFI)' },
+      { label: 'Signals', value: 'BUY / SELL' },
+      { label: 'Visualization', value: 'Entry, SL, TP1, TP2, TP3' },
+      { label: 'Additional Features', value: 'Dashboard & Alerts' }
+    ],
+    package_includes_id: [
+      'Source code Pine Script (.pine & .txt).',
+      'Panduan pemasangan di TradingView.',
+      'Bantuan instalasi dari Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView installation walkthrough.',
+      'Direct installation support from Aemeth if required.'
+    ],
+    tradingview_script_id: 'aemeth_mfi_reversal_v5',
+    is_published: true,
+    thumbnail_url: './products/mfi.jpg',
+    preview_images: ['./products/mfi.jpg'],
+    created_at: new Date('2026-03-10').toISOString(),
+  },
+  {
+    id: 'prd_psar_004',
+    slug: 'aemeth-parabolic-sar',
+    title: 'Aemeth Parabolic SAR Indicator',
+    title_id: 'Aemeth Parabolic SAR Indicator',
+    title_en: 'Aemeth Parabolic SAR Indicator',
+    short_desc: 'Mengamati perubahan arah tren dan potensi sinyal BUY maupun SELL melalui Parabolic SAR dengan visualisasi titik & level TP1-TP3.',
+    short_desc_id: 'Mengamati perubahan arah tren dan potensi sinyal BUY maupun SELL melalui Parabolic SAR dengan visualisasi titik & level TP1-TP3.',
+    short_desc_en: 'Tracks trend flips and BUY/SELL signals via Parabolic SAR with SAR dots and automated Entry/SL/TP1-TP3 dashboard.',
+    long_desc: 'Aemeth Parabolic SAR Indicator adalah indikator TradingView yang membantu trader mengamati perubahan arah tren dan potensi sinyal BUY maupun SELL melalui Parabolic SAR.\n\nIndikator menampilkan titik Parabolic SAR pada chart, dilengkapi level Entry, Stop Loss (SL), dan tiga target Take Profit (TP1, TP2, dan TP3). Dashboard informatif membantu pengguna memantau sinyal terakhir, sementara fitur alert memudahkan pemantauan perubahan kondisi pasar.\n\nDirancang untuk membantu analisis tren dan pengelolaan level trading secara lebih praktis dalam satu tampilan.',
+    long_desc_id: 'Aemeth Parabolic SAR Indicator adalah indikator TradingView yang membantu trader mengamati perubahan arah tren dan potensi sinyal BUY maupun SELL melalui Parabolic SAR.\n\nIndikator menampilkan titik Parabolic SAR pada chart, dilengkapi level Entry, Stop Loss (SL), dan tiga target Take Profit (TP1, TP2, dan TP3). Dashboard informatif membantu pengguna memantau sinyal terakhir, sementara fitur alert memudahkan pemantauan perubahan kondisi pasar.\n\nDirancang untuk membantu analisis tren dan pengelolaan level trading secara lebih praktis dalam satu tampilan.',
+    long_desc_en: 'Aemeth Parabolic SAR Indicator helps traders capture clean trend transitions and momentum shifts on TradingView.\n\nPlots Parabolic SAR dots on chart with clear Entry, Stop Loss (SL), and TP1, TP2, TP3 targets, status dashboard, and customizable alerts.',
+    type: 'open_source',
+    category: 'trend',
+    price_cents: 6900, // $69
+    price_idr: 1100000, // Rp 1.100.000
+    discount_cents: 0,
+    discount_idr: 0,
+    version: '3.1.0',
+    pine_version: 'v5',
+    release_date: '2026-03-05',
+    changelog: [
+      'v3.1.0: Added multi-stage acceleration parameter tuning & dynamic status dashboard',
+      'v3.0.0: Initial Pine Script v5 rewrite'
+    ],
+    changelog_id: [
+      'v3.1.0: Penambahan akselerasi dinamis & dashboard status sinyal',
+      'v3.0.0: Rilis awal basis kode Pine Script v5'
+    ],
+    changelog_en: [
+      'v3.1.0: Added multi-stage acceleration parameter tuning & dynamic status dashboard',
+      'v3.0.0: Initial Pine Script v5 rewrite'
+    ],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'BUY & SELL Signals — penanda potensi perubahan arah tren.',
+      'Parabolic SAR Visualization — menampilkan titik indikator pada chart.',
+      'Entry, SL & TP — visualisasi level Entry, Stop Loss, dan tiga target Take Profit (TP1-TP3).',
+      'ATR & Fixed Distance — pilihan metode pengaturan jarak level trading.',
+      'Signal Dashboard — ringkasan status sinyal dan level harga terakhir.',
+      'TradingView Alerts — notifikasi untuk kondisi bullish dan bearish.',
+      'Customizable Settings — pengaturan indikator yang dapat disesuaikan.'
+    ],
+    features_id: [
+      'BUY & SELL Signals — penanda potensi perubahan arah tren.',
+      'Parabolic SAR Visualization — menampilkan titik indikator pada chart.',
+      'Entry, SL & TP — visualisasi level Entry, Stop Loss, dan tiga target Take Profit (TP1-TP3).',
+      'ATR & Fixed Distance — pilihan metode pengaturan jarak level trading.',
+      'Signal Dashboard — ringkasan status sinyal dan level harga terakhir.',
+      'TradingView Alerts — notifikasi untuk kondisi bullish dan bearish.',
+      'Customizable Settings — pengaturan indikator yang dapat disesuaikan.'
+    ],
+    features_en: [
+      'BUY & SELL Signals — clear trend flip indication.',
+      'Parabolic SAR Visualization — clean on-chart dot telemetry.',
+      'Entry, SL & TP — visual level plotting for Entry, SL, and TP1, TP2, TP3.',
+      'ATR & Fixed Distance — flexible distance calculation methods.',
+      'Signal Dashboard — real-time signal and duration tracker.',
+      'TradingView Alerts — instant alert triggering for bullish/bearish flips.',
+      'Customizable Settings — adjustable acceleration factor and max step.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Overlay Indicator' },
+      { label: 'Metode Analisis', value: 'Parabolic SAR' },
+      { label: 'Sinyal', value: 'BUY / SELL' },
+      { label: 'Visualisasi', value: 'Entry, SL, TP1, TP2, TP3' },
+      { label: 'Fitur Tambahan', value: 'Dashboard & Alert' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Overlay Indicator' },
+      { label: 'Analysis Method', value: 'Parabolic SAR' },
+      { label: 'Signals', value: 'BUY / SELL' },
+      { label: 'Visualization', value: 'Entry, SL, TP1, TP2, TP3' },
+      { label: 'Additional Features', value: 'Dashboard & Alerts' }
+    ],
+    package_includes_id: [
+      'Source code Pine Script (.pine & .txt).',
+      'Panduan pemasangan di TradingView.',
+      'Bantuan instalasi dari Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView installation walkthrough.',
+      'Direct installation support from Aemeth if required.'
+    ],
+    tradingview_script_id: 'aemeth_parabolic_sar_v5',
+    is_published: true,
+    thumbnail_url: './products/parabolic-sar.jpg',
+    preview_images: ['./products/parabolic-sar.jpg'],
+    created_at: new Date('2026-03-05').toISOString(),
+  },
+  {
+    id: 'prd_trendsr_005',
+    slug: 'aemeth-trendline-breakout-sr-utbot',
+    title: 'Aemeth Trendline Breakout + S/R + UT Bot',
+    title_id: 'Aemeth Trendline Breakout + S/R + UT Bot',
+    title_en: 'Aemeth Trendline Breakout + S/R + UT Bot',
+    short_desc: 'Menggabungkan analisis trendline breakout, Support & Resistance, serta sinyal UT Bot dalam satu chart.',
+    short_desc_id: 'Menggabungkan analisis trendline breakout, Support & Resistance, serta sinyal UT Bot dalam satu chart.',
+    short_desc_en: 'All-in-one confluence engine combining trendline breakouts, Support & Resistance zones, and UT Bot trailing signals.',
+    long_desc: 'Aemeth Trendline Breakout + S/R + UT Bot adalah indikator TradingView yang menggabungkan analisis trendline, Support & Resistance, serta sinyal UT Bot dalam satu tampilan chart. Dirancang untuk membantu trader mengamati arah tren, potensi breakout, area support dan resistance, serta peluang pergerakan harga.\n\nDilengkapi dengan garis trailing stop dinamis, penanda level breakout horizontal, dan warna chart adaptif.',
+    long_desc_id: 'Aemeth Trendline Breakout + S/R + UT Bot adalah indikator TradingView yang menggabungkan analisis trendline, Support & Resistance, serta sinyal UT Bot dalam satu tampilan chart. Dirancang untuk membantu trader mengamati arah tren, potensi breakout, area support dan resistance, serta peluang pergerakan harga.\n\nDilengkapi dengan garis trailing stop dinamis, penanda level breakout horizontal, dan warna chart adaptif.',
+    long_desc_en: 'Aemeth Trendline Breakout + S/R + UT Bot fuses trendline breakout detection, horizontal Support & Resistance structures, and UT Bot trailing stop signals into a single unified TradingView overlay.\n\nDesigned to help traders spot high-probability continuation and reversal breakouts with adaptive trailing lines and custom alert conditions.',
+    type: 'open_source',
+    category: 'trend',
+    price_cents: 9900, // $99
+    price_idr: 1550000, // Rp 1.550.000
+    discount_cents: 0,
+    discount_idr: 0,
+    version: '4.2.0',
+    pine_version: 'v5',
+    release_date: '2026-03-25',
+    changelog: [
+      'v4.2.0: Integrated UT Bot trailing ATR stop with multi-swing trendline logic',
+      'v4.0.0: Full Pine Script v5 rewrite'
+    ],
+    changelog_id: [
+      'v4.2.0: Integrasi trailing ATR stop UT Bot dengan logika swing multi-trendline',
+      'v4.0.0: Rilis arsitektur Pine Script v5'
+    ],
+    changelog_en: [
+      'v4.2.0: Integrated UT Bot trailing ATR stop with multi-swing trendline logic',
+      'v4.0.0: Full Pine Script v5 rewrite'
+    ],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'Trendline Breakout: Membantu mengamati tren dan potensi breakout melalui beberapa pilihan swing.',
+      'Support & Resistance: Menampilkan area support, resistance, serta penanda potensi breakout.',
+      'UT Bot Signals: Menampilkan sinyal BUY dan SELL beserta garis trailing stop.',
+      'Visualisasi Chart: Pilihan warna tren, penanda sinyal, dan garis indikator.',
+      'TradingView Alerts: Mendukung notifikasi untuk kondisi sinyal tertentu.',
+      'Pengaturan Fleksibel: Beberapa komponen dan tampilannya dapat disesuaikan dengan preferensi pengguna.'
+    ],
+    features_id: [
+      'Trendline Breakout: Membantu mengamati tren dan potensi breakout melalui beberapa pilihan swing.',
+      'Support & Resistance: Menampilkan area support, resistance, serta penanda potensi breakout.',
+      'UT Bot Signals: Menampilkan sinyal BUY dan SELL beserta garis trailing stop.',
+      'Visualisasi Chart: Pilihan warna tren, penanda sinyal, dan garis indikator.',
+      'TradingView Alerts: Mendukung notifikasi untuk kondisi sinyal tertentu.',
+      'Pengaturan Fleksibel: Beberapa komponen dan tampilannya dapat disesuaikan dengan preferensi pengguna.'
+    ],
+    features_en: [
+      'Trendline Breakout: Detects dynamic trendline breaches across multiple swing lengths.',
+      'Support & Resistance: Plots key horizontal demand and supply barriers with breakout markers.',
+      'UT Bot Signals: Delivers responsive BUY and SELL alerts with dynamic ATR trailing stops.',
+      'Chart Visuals: Customizable trend line colors, signal labels, and level boundaries.',
+      'TradingView Alerts: Fully compatible with TradingView mobile alerts & webhooks.',
+      'Flexible Configuration: Highly customizable parameters for each sub-module.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Overlay Indicator' },
+      { label: 'Komponen', value: 'Trendline Breakout, Support & Resistance, UT Bot' },
+      { label: 'Sinyal', value: 'BUY / SELL & Penanda Breakout' },
+      { label: 'Alert', value: 'Tersedia untuk kondisi tertentu' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Overlay Indicator' },
+      { label: 'Components', value: 'Trendline Breakout, Support & Resistance, UT Bot' },
+      { label: 'Signals', value: 'BUY / SELL & Breakout Markers' },
+      { label: 'Alerts', value: 'Available for specific trigger events' }
+    ],
+    package_includes_id: [
+      'Source code Pine Script (.pine & .txt).',
+      'Panduan pemasangan indikator di TradingView.',
+      'Bantuan instalasi dari Aemeth jika mengalami kesulitan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and indicator installation guide.',
+      'Direct installation support from Aemeth if required.'
+    ],
+    tradingview_script_id: 'aemeth_trend_sr_utbot_v5',
+    is_published: true,
+    thumbnail_url: './products/trendline-sr-utbot.jpg',
+    preview_images: ['./products/trendline-sr-utbot.jpg'],
+    created_at: new Date('2026-03-25').toISOString(),
+  },
+  {
+    id: 'prd_bundle_006',
+    slug: 'aemeth-complete-suite',
+    title: 'Aemeth Complete Indicator Suite (All 5 Indicators)',
+    title_id: 'Aemeth Complete Indicator Suite (Paket Lengkap 5 Indikator)',
+    title_en: 'Aemeth Complete Indicator Suite (All 5 Indicators)',
+    short_desc: 'Paket terlengkap: Ichimoku Cloud, AI Signal V1, MFI Reversal, Parabolic SAR, dan Trendline Breakout + S/R + UT Bot dengan diskon 40%.',
+    short_desc_id: 'Paket terlengkap: Ichimoku Cloud, AI Signal V1, MFI Reversal, Parabolic SAR, dan Trendline Breakout + S/R + UT Bot dengan diskon 40%.',
+    short_desc_en: 'Complete 5-indicator institutional arsenal: Ichimoku Cloud, AI Signal V1, MFI Reversal, Parabolic SAR, and Trendline S/R UT Bot with 40% discount.',
+    long_desc: 'Dapatkan seluruh indikator trading unggulan Aemeth dalam satu paket hemat. Mencakup seluruh 5 source code Pine Script (.pine & .txt) lengkap dengan panduan instalasi step-by-step dan dukungan prioritas.',
+    long_desc_id: 'Dapatkan seluruh indikator trading unggulan Aemeth dalam satu paket hemat. Mencakup seluruh 5 source code Pine Script (.pine & .txt) lengkap dengan panduan instalasi step-by-step dan dukungan prioritas.',
+    long_desc_en: 'Get all 5 flagship Aemeth trading indicators in one comprehensive package. Includes instant uncompiled Pine Script source code downloads (.pine & .txt) for all 5 algorithms, lifetime minor updates, and personal installation support.',
+    type: 'bundle',
+    category: 'bundle',
+    price_cents: 24500, // $245
+    price_idr: 3900000, // Rp 3.900.000 (hemat dari ~Rp 6.400.000)
+    discount_cents: 16000,
+    discount_idr: 2500000,
+    version: '2026.2',
+    pine_version: 'v5',
+    release_date: '2026-03-25',
+    changelog: [
+      '2026.2: Complete bundle suite release with all 5 new indicators'
+    ],
+    changelog_id: [
+      '2026.2: Rilis paket bundle lengkap 5 indikator baru Aemeth'
+    ],
+    changelog_en: [
+      '2026.2: Complete bundle suite release with all 5 new indicators'
+    ],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      '5 File Kode Sumber Pine Script Lengkap (.pine & .txt) Sekaligus',
+      'Hemat Signifikan Lebih Dari 40% Dibanding Membeli Satuan',
+      'Mencakup Indikator Trend, Sinyal AI, Reversal MFI, SAR, dan Trendline Breakout',
+      'Panduan Instalasi Step-by-Step Khusus 5 Indikator',
+      'Dukungan Bantuan Instalasi Prioritas dari Tim Aemeth'
+    ],
+    features_id: [
+      '5 File Kode Sumber Pine Script Lengkap (.pine & .txt) Sekaligus',
+      'Hemat Signifikan Lebih Dari 40% Dibanding Membeli Satuan',
+      'Mencakup Indikator Trend, Sinyal AI, Reversal MFI, SAR, dan Trendline Breakout',
+      'Panduan Instalasi Step-by-Step Khusus 5 Indikator',
+      'Dukungan Bantuan Instalasi Prioritas dari Tim Aemeth'
+    ],
+    features_en: [
+      'All 5 Complete Pine Script Source Codebases (.pine & .txt)',
+      'Substantial 40% Discount Compared to Individual Purchases',
+      'Covers Ichimoku, AI Signal, MFI Reversal, Parabolic SAR, and Trendline S/R UT Bot',
+      'Step-by-Step Multi-Indicator Setup Guide',
+      'Priority Personal Installation Assistance from Aemeth Desk'
+    ],
+    package_includes_id: [
+      '5 Source code indikator Pine Script (.pine & .txt).',
+      'Panduan pemasangan lengkap di TradingView.',
+      'Bantuan instalasi dari Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      '5 Pine Script indicator source codes (.pine & .txt).',
+      'Comprehensive TradingView installation guide.',
+      'Personal installation assistance from Aemeth support.'
+    ],
+    included_product_ids: ['prd_ichimoku_001', 'prd_aisignal_002', 'prd_mfi_003', 'prd_psar_004', 'prd_trendsr_005'],
+    is_published: true,
+    thumbnail_url: './products/trendline-sr-utbot.jpg',
+    preview_images: ['./products/trendline-sr-utbot.jpg'],
+    created_at: new Date('2026-03-25').toISOString(),
   },
 ];
 
@@ -669,26 +902,36 @@ export const api = {
       if (res.ok) return await res.json();
     } catch {}
 
-    const isTrend = productId.includes('trend');
-    const isDelta = productId.includes('delta');
-    const isReversal = productId.includes('rev');
+    const isIchimoku = productId.includes('ichimoku');
+    const isAiSignal = productId.includes('aisignal');
+    const isMfi = productId.includes('mfi');
+    const isPsar = productId.includes('psar');
+    const isTrendSr = productId.includes('trendsr');
 
     let content = PINE_SCRIPT_LIQUIDITY;
-    let filename = 'aemeth_liquidity_matrix_v5_2.pine';
-    let title = 'Aemeth Liquidity Matrix v5.2';
+    let filename = 'aemeth_ichimoku_cloud_v5.pine';
+    let title = 'Aemeth Ichimoku Cloud Indicator';
 
-    if (isTrend) {
-      content = PINE_SCRIPT_TREND;
-      filename = 'aemeth_trend_cascade_v2_1.pine';
-      title = 'Aemeth Multi-Timeframe Trend Cascade v2.1';
-    } else if (isDelta) {
-      content = `//@version=5\nindicator("Aemeth Delta Flow & Volume Absorption Pro", overlay=true)\n// Proprietary Aemeth Delta Algorithm - Locked to Candle 1\nlength = input.int(20, "Delta Length")\nvol_delta = ta.sma(volume * (close - open) / (high - low + 0.0001), length)\nplot(vol_delta, "Volume Delta Momentum", color=vol_delta > 0 ? color.emerald : color.blue)\n`;
-      filename = 'aemeth_delta_volume_absorption_v3_4.pine';
-      title = 'Aemeth Delta Flow & Volume Absorption Pro v3.4';
-    } else if (isReversal) {
-      content = `//@version=5\nindicator("Aemeth Reversal Sniper Pro", overlay=true)\n// Proprietary Aemeth Reversal Algorithm - Locked to Candle 1\nrsi_len = input.int(14, "RSI Divergence Lookback")\nvrsi = ta.rsi(close[1], rsi_len)\nplotshape(ta.crossover(vrsi, 30), title="Bull Reversal", style=shape.triangleup, color=color.green, text="SNIPER BUY")\nplotshape(ta.crossunder(vrsi, 70), title="Bear Reversal", style=shape.triangledown, color=color.blue, text="SNIPER SELL")\n`;
-      filename = 'aemeth_reversal_sniper_v4_0.pine';
-      title = 'Aemeth Reversal Sniper Pro v4.0';
+    if (isIchimoku) {
+      content = `//@version=5\nindicator("Aemeth Ichimoku Cloud [Signals & SL/TP]", overlay=true)\n// ==========================================\n// Aemeth Ichimoku Cloud Indicator - Pine Script v5\n// ==========================================\nconversionPeriods = input.int(9, minval=1, title="Conversion Line Length")\nbasePeriods = input.int(26, minval=1, title="Base Line Length")\nlaggingSpan2Periods = input.int(52, minval=1, title="Leading Span B Length")\ndisplacement = input.int(26, minval=1, title="Displacement")\n\ndonchian(len) => math.avg(ta.lowest(len), ta.highest(len))\nconversionLine = donchian(conversionPeriods)\nbaseLine = donchian(basePeriods)\nleadLine1 = math.avg(conversionLine, baseLine)\nleadLine2 = donchian(laggingSpan2Periods)\n\nplot(conversionLine, color=color.blue, title="Conversion Line")\nplot(baseLine, color=color.red, title="Base Line")\np1 = plot(leadLine1, offset = displacement - 1, color=color.green, title="Lead 1")\np2 = plot(leadLine2, offset = displacement - 1, color=color.maroon, title="Lead 2")\nfill(p1, p2, color = leadLine1 > leadLine2 ? color.new(color.green, 90) : color.new(color.red, 90))\n\nbuy_signal = ta.crossover(conversionLine, baseLine) and close > leadLine1[displacement - 1]\nsell_signal = ta.crossunder(conversionLine, baseLine) and close < leadLine1[displacement - 1]\nplotshape(buy_signal, "BUY Signal", shape.labelup, location.belowbar, color.green, text="BUY", textcolor=color.white)\nplotshape(sell_signal, "SELL Signal", shape.labeldown, location.abovebar, color.red, text="SELL", textcolor=color.white)\n`;
+      filename = 'aemeth_ichimoku_cloud_v5.pine';
+      title = 'Aemeth Ichimoku Cloud Indicator';
+    } else if (isAiSignal) {
+      content = `//@version=5\nindicator("Aemeth AI Signal V1 [Confidence & Targets]", overlay=true)\n// ==========================================\n// Aemeth AI Signal V1 - Pine Script v5\n// ==========================================\nlength = input.int(14, "AI Sensitivity")\natr_mult = input.float(1.5, "ATR Multiplier")\n\natr = ta.atr(length)\nsrc = close\nup = src - (atr_mult * atr)\ndn = src + (atr_mult * atr)\n\nlong_cond = ta.crossover(src, dn[1])\nshort_cond = ta.crossunder(src, up[1])\n\nplotshape(long_cond, "AI LONG", shape.triangleup, location.belowbar, color.green, size=size.small, text="AI LONG\\nGrade A")\nplotshape(short_cond, "AI SHORT", shape.triangledown, location.abovebar, color.red, size=size.small, text="AI SHORT\\nGrade A")\n`;
+      filename = 'aemeth_ai_signal_v1.pine';
+      title = 'Aemeth AI Signal V1';
+    } else if (isMfi) {
+      content = `//@version=5\nindicator("Aemeth MFI Reversal [Momentum Turning Point]", overlay=true)\n// ==========================================\n// Aemeth MFI Reversal Indicator - Pine Script v5\n// ==========================================\nmfi_len = input.int(14, "MFI Length")\nmfi_val = ta.mfi(close, mfi_len)\nbull_rev = ta.crossover(mfi_val, 20)\nbear_rev = ta.crossunder(mfi_val, 80)\nplotshape(bull_rev, "MFI BUY", shape.labelup, location.belowbar, color.green, text="MFI BUY\\nSL/TP1-3", textcolor=color.white)\nplotshape(bear_rev, "MFI SELL", shape.labeldown, location.abovebar, color.red, text="MFI SELL\\nSL/TP1-3", textcolor=color.white)\n`;
+      filename = 'aemeth_mfi_reversal_v5.pine';
+      title = 'Aemeth MFI Reversal Indicator';
+    } else if (isPsar) {
+      content = `//@version=5\nindicator("Aemeth Parabolic SAR [Trend & Levels]", overlay=true)\n// ==========================================\n// Aemeth Parabolic SAR Indicator - Pine Script v5\n// ==========================================\nstart = input.float(0.02, "Start")\ninc = input.float(0.02, "Increment")\nmax_val = input.float(0.2, "Maximum")\nsar = ta.sar(start, inc, max_val)\nplot(sar, "Parabolic SAR", style=plot.style_circles, color=sar < close ? color.green : color.red, linewidth=2)\n`;
+      filename = 'aemeth_parabolic_sar_v5.pine';
+      title = 'Aemeth Parabolic SAR Indicator';
+    } else if (isTrendSr) {
+      content = `//@version=5\nindicator("Aemeth Trendline Breakout + S/R + UT Bot", overlay=true)\n// ==========================================\n// Aemeth Trendline Breakout + S/R + UT Bot - Pine Script v5\n// ==========================================\na = input.int(1, "Key Value")\nc = input.int(10, "ATR Period")\nxATR = ta.atr(c)\nnLoss = a * xATR\nsrc = close\nxATRTrailingStop = 0.0\nxATRTrailingStop := src > nz(xATRTrailingStop[1], 0) ? (src - nLoss < nz(xATRTrailingStop[1], 0) ? nz(xATRTrailingStop[1], 0) : src - nLoss) : (src + nLoss > nz(xATRTrailingStop[1], 0) ? nz(xATRTrailingStop[1], 0) : src + nLoss)\nplot(xATRTrailingStop, color=src > xATRTrailingStop ? color.green : color.red, title="Trailing Stop")\n`;
+      filename = 'aemeth_trendline_breakout_sr_utbot_v5.pine';
+      title = 'Aemeth Trendline Breakout + S/R + UT Bot';
     }
 
     return {

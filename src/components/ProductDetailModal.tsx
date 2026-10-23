@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { X, ShieldCheck, Check, Code, Lock, Layers, Zap, AlertTriangle, ArrowRight, GitCommit, Calendar, Cpu, ChevronDown } from 'lucide-react';
+import { X, ShieldCheck, Check, Code, Lock, Layers, Zap, AlertTriangle, ArrowRight, GitCommit, Calendar, Cpu, ChevronDown, Package, ListChecks } from 'lucide-react';
 import { useTranslation } from '../i18n/LanguageContext';
+import { getPriceAmount } from '../utils/currency';
 import type { Product } from '../types/marketplace';
 
 interface ProductDetailModalProps {
@@ -176,6 +177,42 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </div>
           </div>
 
+          {/* Technical Specs List */}
+          {((lang === 'id' ? product.technical_specs_id || product.technical_specs : product.technical_specs_en || product.technical_specs) || []).length > 0 && (
+            <div className="bg-[#070b14] border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300 font-mono flex items-center gap-1.5">
+                <ListChecks className="w-4 h-4 text-blue-400" />
+                <span>{lang === 'id' ? 'Spesifikasi Teknis' : 'Technical Specifications'}</span>
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                {(lang === 'id' ? product.technical_specs_id || product.technical_specs : product.technical_specs_en || product.technical_specs)?.map((spec, i) => (
+                  <div key={i} className="flex items-center justify-between bg-[#0b1120] p-2.5 rounded-xl border border-slate-800/80">
+                    <span className="text-slate-400 font-medium">{spec.label}</span>
+                    <strong className="text-white font-mono text-[11px] text-right">{spec.value}</strong>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Yang Kamu Dapatkan (What You Get) */}
+          {((lang === 'id' ? product.package_includes_id || product.package_includes : product.package_includes_en || product.package_includes) || []).length > 0 && (
+            <div className="bg-[#070b14] border border-blue-500/20 rounded-2xl p-4 sm:p-5 space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-blue-300 font-mono flex items-center gap-1.5">
+                <Package className="w-4 h-4 text-blue-400" />
+                <span>{lang === 'id' ? 'Yang Kamu Dapatkan' : 'What You Receive'}</span>
+              </h4>
+              <ul className="space-y-2 text-xs text-slate-200">
+                {(lang === 'id' ? product.package_includes_id || product.package_includes : product.package_includes_en || product.package_includes)?.map((inc, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <span className="leading-relaxed">{inc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* Delivery Method Explanation */}
           <div className="rounded-2xl bg-[#070b14] border border-slate-800 p-4 space-y-2">
             <h4 className="text-xs font-bold text-white flex items-center gap-1.5 font-heading">
@@ -199,30 +236,42 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             )}
           </div>
 
-          {/* Risk Disclaimer */}
-          <div className="flex items-start gap-2.5 text-[11px] text-slate-400 bg-black/40 p-3 rounded-xl border border-slate-800">
+          {/* Catatan / Risk Disclaimer */}
+          <div className="flex items-start gap-2.5 text-[11px] text-slate-300 bg-black/40 p-3.5 rounded-xl border border-slate-800 leading-relaxed">
             <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-            <p>
-              <strong>{t.productDetail.riskDisclaimerTitle}:</strong> {t.productDetail.riskDisclaimerDesc}
-            </p>
+            <div>
+              <strong className="text-white block mb-0.5 font-heading">{lang === 'id' ? 'Catatan Penting:' : 'Important Notice:'}</strong>
+              <p>
+                {lang === 'id'
+                  ? 'Indikator ini merupakan alat bantu analisis teknikal dan tidak menjamin keuntungan. Selalu lakukan pengujian serta pengelolaan risiko secara mandiri. Source code diberikan sesuai ketentuan lisensi produk Aemeth. Dilarang mendistribusikan ulang atau menjual kembali kode tanpa izin.'
+                  : 'This indicator is a technical analysis visualization tool and does not guarantee financial profit. Always conduct your own backtesting and apply prudent risk management. Source code is licensed for single-user personal use; unauthorized redistribution or resale is prohibited.'}
+              </p>
+            </div>
           </div>
 
         </div>
 
         {/* Modal Footer / Checkout CTA */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-slate-800 bg-[#070b14]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between px-5 sm:px-6 py-4 border-t border-slate-800 bg-[#070b14] gap-3">
           <div>
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-3xl font-extrabold font-heading text-white">
-                ${(product.price_cents / 100).toFixed(0)}
-              </span>
-              <span className="text-xs font-mono text-slate-400">USD</span>
-              {product.discount_cents ? (
-                <span className="text-xs line-through text-slate-500 font-mono ml-2">
-                  ${((product.price_cents + product.discount_cents) / 100).toFixed(0)}
-                </span>
-              ) : null}
-            </div>
+            {(() => {
+              const pInfo = getPriceAmount(product.price_cents, lang, product.price_idr);
+              return (
+                <div className="flex items-baseline gap-1.5 flex-wrap">
+                  <span className="text-2xl sm:text-3xl font-extrabold font-heading text-white">
+                    {pInfo.amount}
+                  </span>
+                  <span className="text-xs font-mono text-slate-400">{pInfo.currency}</span>
+                  {product.discount_cents ? (
+                    <span className="text-xs line-through text-slate-500 font-mono ml-2">
+                      {lang === 'id' && product.discount_idr && product.price_idr
+                        ? `Rp ${(product.price_idr + product.discount_idr).toLocaleString('id-ID')}`
+                        : `$${((product.price_cents + product.discount_cents) / 100).toFixed(0)}`}
+                    </span>
+                  ) : null}
+                </div>
+              );
+            })()}
             <span className="text-[10px] text-emerald-400 flex items-center gap-1 font-mono">
               <Check className="w-3 h-3" /> {t.productDetail.pricingLabel}
             </span>
@@ -233,7 +282,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               onClose();
               onBuy(product);
             }}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-bold px-6 py-3 rounded-full shadow-lg shadow-blue-500/25 transition-all cursor-pointer"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-bold px-6 py-3 rounded-full shadow-lg shadow-blue-500/25 transition-all cursor-pointer"
           >
             <span>{t.productDetail.proceedToCheckout}</span>
             <ArrowRight className="w-4 h-4" />

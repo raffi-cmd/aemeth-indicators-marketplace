@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Search, Filter, ShieldCheck, Code, Lock, Layers, ArrowRight, Eye, Check } from 'lucide-react';
 import { useTranslation } from '../i18n/LanguageContext';
+import { getPriceAmount } from '../utils/currency';
 import type { Product } from '../types/marketplace';
 
 interface CatalogProps {
@@ -250,28 +251,35 @@ export const Catalog: React.FC<CatalogProps> = ({
                     </ul>
 
                     {/* Price and CTA row */}
-                    <div className="pt-4 border-t border-slate-800 flex items-center justify-between gap-3">
+                    <div className="pt-4 border-t border-slate-800 flex items-center justify-between gap-2">
                       <div>
-                        <div className="flex items-baseline gap-1.5">
-                          <span className="text-2xl font-extrabold font-heading text-white">
-                            ${(product.price_cents / 100).toFixed(0)}
-                          </span>
-                          <span className="text-[11px] font-mono text-slate-400">USD</span>
-                          {product.discount_cents ? (
-                            <span className="text-xs line-through text-slate-500 font-mono ml-1">
-                              ${((product.price_cents + product.discount_cents) / 100).toFixed(0)}
-                            </span>
-                          ) : null}
-                        </div>
+                        {(() => {
+                          const pInfo = getPriceAmount(product.price_cents, lang, product.price_idr);
+                          return (
+                            <div className="flex items-baseline gap-1.5 flex-wrap">
+                              <span className="text-xl sm:text-2xl font-extrabold font-heading text-white">
+                                {pInfo.amount}
+                              </span>
+                              <span className="text-[10px] sm:text-[11px] font-mono text-slate-400">{pInfo.currency}</span>
+                              {product.discount_cents ? (
+                                <span className="text-xs line-through text-slate-500 font-mono">
+                                  {lang === 'id' && product.discount_idr && product.price_idr
+                                    ? `Rp ${(product.price_idr + product.discount_idr).toLocaleString('id-ID')}`
+                                    : `$${((product.price_cents + product.discount_cents) / 100).toFixed(0)}`}
+                                </span>
+                              ) : null}
+                            </div>
+                          );
+                        })()}
                         <span className="text-[10px] text-slate-500 block">
                           {t.catalog.lifetimeUpdates}
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                         <button
                           onClick={() => onSelectProduct(product)}
-                          className="p-2.5 rounded-full bg-[#070b14] hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition-colors cursor-pointer"
+                          className="p-2 sm:p-2.5 rounded-full bg-[#070b14] hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition-colors cursor-pointer"
                           title={t.catalog.viewDetails}
                         >
                           <Eye className="w-4 h-4" />
@@ -279,7 +287,7 @@ export const Catalog: React.FC<CatalogProps> = ({
 
                         <button
                           onClick={() => onQuickBuy(product)}
-                          className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-4 py-2.5 rounded-full shadow-md shadow-blue-500/20 transition-all cursor-pointer"
+                          className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full shadow-md shadow-blue-500/20 transition-all cursor-pointer whitespace-nowrap"
                         >
                           <span>{t.catalog.getAccess}</span>
                           <ArrowRight className="w-3.5 h-3.5" />
