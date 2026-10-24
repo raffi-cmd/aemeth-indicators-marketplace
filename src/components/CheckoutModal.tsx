@@ -22,6 +22,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const [customerEmail, setCustomerEmail] = useState('');
   const [tradingviewUsername, setTradingviewUsername] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(true);
+  const [licenseAccepted, setLicenseAccepted] = useState(true);
   const [config, setConfig] = useState<SiteSettings | null>(null);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,6 +36,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   
   const [isCopied, setIsCopied] = useState<string | null>(null);
   const [isComplete, setIsComplete] = useState(false);
+
+  // Check if this is a bundle checkout (e.g. bundle product or single bundle)
+  const bundleProduct = products.find((p) => p.type === 'bundle' || p.bundle_type);
+  const isBundle = !!bundleProduct;
 
   // Check if any selected product requires TradingView username
   const requiresTvUsername = products.some(
@@ -83,6 +88,15 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       return;
     }
 
+    if (!licenseAccepted) {
+      setError(
+        lang === 'id'
+          ? 'Anda wajib menyetujui Ketentuan Lisensi Permanen Source Code.'
+          : 'You must accept the Permanent Source Code License Agreement.'
+      );
+      return;
+    }
+
     setIsSubmitting(true);
     setError(null);
 
@@ -92,6 +106,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         payment_method: paymentMethod,
         customer_email: customerEmail.trim(),
         customer_tv_username: tradingviewUsername.trim() || undefined,
+        bundle_type: bundleProduct?.bundle_type,
+        license_accepted: true,
       });
 
       if (!res.success || !res.order) {
@@ -367,6 +383,29 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <span className="text-xs font-bold">{t.checkout.paypal}</span>
                     <span className="text-[10px] text-slate-400 mt-0.5">{t.checkout.paypalDesc}</span>
                   </button>
+                </div>
+              </div>
+
+              {/* License Agreement Box & Checkbox */}
+              <div className="bg-blue-950/20 border border-blue-500/30 rounded-2xl p-4 space-y-3">
+                <div className="flex items-center gap-2 text-xs font-bold text-blue-300 font-mono">
+                  <ShieldCheck className="w-4 h-4 text-blue-400" />
+                  <span>{t.checkout.licenseAgreementTitle}</span>
+                </div>
+                <p className="text-[11px] text-slate-300 leading-relaxed font-light">
+                  {t.checkout.licenseScopeNotice}
+                </p>
+                <div className="flex items-start gap-2 pt-1 text-xs text-slate-200">
+                  <input
+                    type="checkbox"
+                    id="license-check"
+                    checked={licenseAccepted}
+                    onChange={(e) => setLicenseAccepted(e.target.checked)}
+                    className="mt-0.5 rounded border-slate-700 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                  />
+                  <label htmlFor="license-check" className="cursor-pointer font-medium text-white">
+                    {t.checkout.licenseAgreementLabel}
+                  </label>
                 </div>
               </div>
 

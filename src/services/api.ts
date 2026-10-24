@@ -1,4 +1,13 @@
-import type { Product, Order, Delivery, SiteSettings, AuditLog } from '../types/marketplace';
+import type { Product, Order, OrderItem, Delivery, SiteSettings, AuditLog } from '../types/marketplace';
+import {
+  PRODUCT_PRICING,
+  getProductPrice,
+  calculateBundlePrice,
+  resolveProductId,
+  isLaunchPromoActive,
+  LICENSE_CONFIG,
+  BUNDLE_DEFINITIONS,
+} from '../config/pricing';
 
 const API_BASE = '/api';
 
@@ -71,301 +80,47 @@ plotshape(aligned_bull and not aligned_bull[1], title="Bull Cascade", style=shap
 plotshape(aligned_bear and not aligned_bear[1], title="Bear Cascade", style=shape.triangledown, location=location.abovebar, color=#3b82f6, size=size.small, text="BEAR CASCADE")
 `;
 
+// Helper to inject central pricing into single products
+function injectPricing(p: Omit<Product, 'price_cents' | 'price_idr' | 'normal_price_idr' | 'promo_price_idr' | 'is_promo_active' | 'discount_percent' | 'discount_idr' | 'discount_cents'>): Product {
+  const priceInfo = getProductPrice(p.id);
+  if (!priceInfo) {
+    return {
+      ...p,
+      price_idr: 149000,
+      normal_price_idr: 199000,
+      promo_price_idr: 149000,
+      is_promo_active: true,
+      discount_percent: 25,
+      price_cents: 1490,
+      discount_idr: 50000,
+      discount_cents: 510,
+    };
+  }
+
+  return {
+    ...p,
+    version: priceInfo.version || p.version,
+    price_idr: priceInfo.effectivePriceIdr,
+    normal_price_idr: priceInfo.normalPriceIdr,
+    promo_price_idr: priceInfo.promoPriceIdr,
+    is_promo_active: priceInfo.isPromoActive,
+    discount_percent: priceInfo.discountPercent,
+    discount_idr: priceInfo.discountIdr,
+    price_cents: priceInfo.effectivePriceCents,
+    discount_cents: priceInfo.isPromoActive ? (priceInfo.normalPriceCents - priceInfo.effectivePriceCents) : 0,
+  };
+}
+
 // -------------------------------------------------------------
-// BILINGUAL PRODUCTS CATALOG
+// BILINGUAL PRODUCTS CATALOG (Single Source of Truth Connected)
 // -------------------------------------------------------------
-export const BILINGUAL_PRODUCTS: Product[] = [
-  {
-    id: 'prd_ichimoku_001',
-    slug: 'aemeth-ichimoku-cloud',
-    title: 'Aemeth Ichimoku Cloud Indicator',
-    title_id: 'Aemeth Ichimoku Cloud Indicator',
-    title_en: 'Aemeth Ichimoku Cloud Indicator',
-    short_desc: 'Indikator TradingView yang membantu trader mengidentifikasi potensi peluang BUY dan SELL melalui analisis Ichimoku Cloud dengan level Entry, SL, dan TP1-TP3.',
-    short_desc_id: 'Indikator TradingView yang membantu trader mengidentifikasi potensi peluang BUY dan SELL melalui analisis Ichimoku Cloud dengan level Entry, SL, dan TP1-TP3.',
-    short_desc_en: 'TradingView indicator helping traders identify potential BUY & SELL opportunities via Ichimoku Cloud analysis with Entry, SL, and TP1-TP3 targets.',
-    long_desc: 'Aemeth Ichimoku Cloud Indicator adalah indikator TradingView yang membantu trader mengidentifikasi potensi peluang BUY dan SELL melalui analisis Ichimoku Cloud.\n\nIndikator menampilkan informasi Entry, Stop Loss (SL), serta tiga target Take Profit (TP1, TP2, dan TP3) secara visual langsung pada chart. Dilengkapi dashboard ringkas untuk memantau status sinyal terakhir dan fitur alert untuk membantu memantau kondisi pasar.\n\nCocok bagi trader yang ingin menyusun analisis teknikal dengan tampilan yang lebih terstruktur dan praktis.',
-    long_desc_id: 'Aemeth Ichimoku Cloud Indicator adalah indikator TradingView yang membantu trader mengidentifikasi potensi peluang BUY dan SELL melalui analisis Ichimoku Cloud.\n\nIndikator menampilkan informasi Entry, Stop Loss (SL), serta tiga target Take Profit (TP1, TP2, dan TP3) secara visual langsung pada chart. Dilengkapi dashboard ringkas untuk memantau status sinyal terakhir dan fitur alert untuk membantu memantau kondisi pasar.\n\nCocok bagi trader yang ingin menyusun analisis teknikal dengan tampilan yang lebih terstruktur dan praktis.',
-    long_desc_en: 'Aemeth Ichimoku Cloud Indicator is a TradingView tool that helps traders identify potential BUY and SELL setups through Ichimoku Cloud trend analysis.\n\nVisually plots Entry, Stop Loss (SL), and three Take Profit targets (TP1, TP2, TP3) directly on your chart. Features an on-chart signal status dashboard and customizable alert triggers for structured technical execution.',
-    type: 'open_source',
-    category: 'trend',
-    price_cents: 7900, // $79
-    price_idr: 1250000, // Rp 1.250.000
-    discount_cents: 0,
-    discount_idr: 0,
-    version: '5.2.0',
-    pine_version: 'v5',
-    release_date: '2026-03-15',
-    changelog: [
-      'v5.2.0: Pine Script v5 upgrade with dynamic cloud projections & TP1-TP3 targets',
-      'v5.0.0: Initial release of Aemeth Ichimoku Cloud engine'
-    ],
-    changelog_id: [
-      'v5.2.0: Peningkatan Pine Script v5 dengan proyeksi cloud dinamis & target TP1-TP3',
-      'v5.0.0: Rilis awal mesin Aemeth Ichimoku Cloud'
-    ],
-    changelog_en: [
-      'v5.2.0: Pine Script v5 upgrade with dynamic cloud projections & TP1-TP3 targets',
-      'v5.0.0: Initial release of Aemeth Ichimoku Cloud engine'
-    ],
-    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
-    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
-    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
-    features: [
-      'Sinyal BUY dan SELL berbasis Ichimoku Cloud.',
-      'Tampilan level Entry, Stop Loss, dan tiga target Take Profit (TP1, TP2, TP3).',
-      'Perhitungan target yang dapat disesuaikan.',
-      'Dashboard informasi status sinyal pada chart (termasuk counter bar sejak sinyal).',
-      'Fitur alert untuk kondisi sinyal tertentu.',
-      'Pengaturan indikator yang fleksibel.'
-    ],
-    features_id: [
-      'Sinyal BUY dan SELL berbasis Ichimoku Cloud.',
-      'Tampilan level Entry, Stop Loss, dan tiga target Take Profit (TP1, TP2, TP3).',
-      'Perhitungan target yang dapat disesuaikan.',
-      'Dashboard informasi status sinyal pada chart (termasuk counter bar sejak sinyal).',
-      'Fitur alert untuk kondisi sinyal tertentu.',
-      'Pengaturan indikator yang fleksibel.'
-    ],
-    features_en: [
-      'BUY & SELL signals powered by Ichimoku Cloud analysis.',
-      'Direct on-chart visualization of Entry, Stop Loss, and TP1, TP2, TP3 levels.',
-      'Customizable target calculation methodology.',
-      'On-chart signal dashboard including bar duration counter since trigger.',
-      'TradingView alerts for specific signal and exit conditions.',
-      'Flexible indicator parameters and display styling.'
-    ],
-    technical_specs_id: [
-      { label: 'Platform', value: 'TradingView' },
-      { label: 'Bahasa', value: 'Pine Script v5' },
-      { label: 'Tipe', value: 'Overlay Indicator' },
-      { label: 'Sistem Analisis', value: 'Ichimoku Cloud' },
-      { label: 'Sinyal', value: 'BUY / SELL' },
-      { label: 'Level Ditampilkan', value: 'Entry, SL, TP1, TP2, TP3' },
-      { label: 'Fitur Tambahan', value: 'Dashboard & Alert' }
-    ],
-    technical_specs_en: [
-      { label: 'Platform', value: 'TradingView' },
-      { label: 'Language', value: 'Pine Script v5' },
-      { label: 'Type', value: 'Overlay Indicator' },
-      { label: 'Analysis System', value: 'Ichimoku Cloud' },
-      { label: 'Signals', value: 'BUY / SELL' },
-      { label: 'Levels Displayed', value: 'Entry, SL, TP1, TP2, TP3' },
-      { label: 'Additional Features', value: 'Dashboard & Alerts' }
-    ],
-    package_includes_id: [
-      'Source code indikator Pine Script (.pine & .txt).',
-      'Panduan pemasangan di TradingView (Pine Editor).',
-      'Bantuan instalasi dari tim Aemeth jika diperlukan.'
-    ],
-    package_includes_en: [
-      'Complete Pine Script indicator source code (.pine & .txt).',
-      'TradingView step-by-step installation walkthrough.',
-      'Personal installation assistance from the Aemeth support desk.'
-    ],
-    tradingview_script_id: 'aemeth_ichimoku_cloud_v5',
-    is_published: true,
-    thumbnail_url: './products/ichimoku.jpg',
-    preview_images: ['./products/ichimoku.jpg'],
-    created_at: new Date('2026-03-15').toISOString(),
-  },
-  {
-    id: 'prd_aisignal_002',
-    slug: 'aemeth-ai-signal-v1',
-    title: 'Aemeth AI Signal V1',
-    title_id: 'Aemeth AI Signal V1',
-    title_en: 'Aemeth AI Signal V1',
-    short_desc: 'Membaca potensi peluang LONG dan SHORT melalui visualisasi sinyal, zona SL/TP1-TP3, serta badge Grade & AI Confidence.',
-    short_desc_id: 'Membaca potensi peluang LONG dan SHORT melalui visualisasi sinyal, zona SL/TP1-TP3, serta badge Grade & AI Confidence.',
-    short_desc_en: 'Detects high-conviction LONG & SHORT setups with on-chart SL/TP zones, Grade evaluation, and AI Confidence telemetry.',
-    long_desc: 'Aemeth AI Signal V1 adalah indikator TradingView yang dirancang untuk membantu trader membaca potensi peluang LONG dan SHORT melalui visualisasi sinyal dan level trading langsung pada chart.\n\nDengan tampilan zona Stop Loss (SL), tiga target Take Profit (TP1–TP3), serta informasi Grade dan AI Confidence, indikator ini membantu menyajikan informasi analisis pasar dalam format visual yang lebih terstruktur.\n\nCocok bagi trader yang menginginkan tampilan sinyal, level risiko, dan target harga dalam satu chart.',
-    long_desc_id: 'Aemeth AI Signal V1 adalah indikator TradingView yang dirancang untuk membantu trader membaca potensi peluang LONG dan SHORT melalui visualisasi sinyal dan level trading langsung pada chart.\n\nDengan tampilan zona Stop Loss (SL), tiga target Take Profit (TP1–TP3), serta informasi Grade dan AI Confidence, indikator ini membantu menyajikan informasi analisis pasar dalam format visual yang lebih terstruktur.\n\nCocok bagi trader yang menginginkan tampilan sinyal, level risiko, dan target harga dalam satu chart.',
-    long_desc_en: 'Aemeth AI Signal V1 is an advanced TradingView indicator built to help traders analyze potential LONG and SHORT opportunities via structured visual level mapping.\n\nFeaturing dynamic Stop Loss (SL) zones, three Take Profit target boundaries (TP1–TP3), and on-chart Grade and AI Confidence badges for clear risk-reward planning.',
-    type: 'open_source',
-    category: 'momentum',
-    price_cents: 8900, // $89
-    price_idr: 1400000, // Rp 1.400.000
-    discount_cents: 0,
-    discount_idr: 0,
-    version: '1.2.0',
-    pine_version: 'v5',
-    release_date: '2026-03-20',
-    changelog: [
-      'v1.2.0: Added Grade evaluation & AI Confidence telemetry badges',
-      'v1.0.0: Initial release of Aemeth AI Signal suite'
-    ],
-    changelog_id: [
-      'v1.2.0: Penambahan evaluasi Grade & badge telemetri AI Confidence',
-      'v1.0.0: Rilis awal suite Aemeth AI Signal'
-    ],
-    changelog_en: [
-      'v1.2.0: Added Grade evaluation & AI Confidence telemetry badges',
-      'v1.0.0: Initial release of Aemeth AI Signal suite'
-    ],
-    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
-    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
-    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
-    features: [
-      'LONG & SHORT Signals — menampilkan sinyal arah pasar.',
-      'SL & TP Zones — visualisasi area Stop Loss dan tiga target Take Profit (TP1-TP3).',
-      'Grade Badge — indikator penilaian kondisi sinyal (Grade A, B, C).',
-      'AI Confidence Badge — kategori tingkat confidence yang ditampilkan pada chart.',
-      'Dynamic Visuals — tampilan zona dan penanda yang mengikuti perkembangan chart.',
-      'Configurable Settings — pengaturan indikator yang dapat disesuaikan.',
-      'Trade Visualization — membantu memantau perkembangan level dan target pada chart.'
-    ],
-    features_id: [
-      'LONG & SHORT Signals — menampilkan sinyal arah pasar.',
-      'SL & TP Zones — visualisasi area Stop Loss dan tiga target Take Profit (TP1-TP3).',
-      'Grade Badge — indikator penilaian kondisi sinyal (Grade A, B, C).',
-      'AI Confidence Badge — kategori tingkat confidence yang ditampilkan pada chart.',
-      'Dynamic Visuals — tampilan zona dan penanda yang mengikuti perkembangan chart.',
-      'Configurable Settings — pengaturan indikator yang dapat disesuaikan.',
-      'Trade Visualization — membantu memantau perkembangan level dan target pada chart.'
-    ],
-    features_en: [
-      'LONG & SHORT Signals — clear market direction markers.',
-      'SL & TP Zones — visual Stop Loss area and 3 Take Profit target zones.',
-      'Grade Badge — signal quality evaluation metrics.',
-      'AI Confidence Badge — telemetry confidence scoring displayed directly on chart.',
-      'Dynamic Visuals — level boxes and tracking bands following market progression.',
-      'Configurable Settings — adjustable signal confirmation and risk parameters.',
-      'Trade Visualization — structured on-chart risk-to-reward ratio layout.'
-    ],
-    technical_specs_id: [
-      { label: 'Platform', value: 'TradingView' },
-      { label: 'Bahasa', value: 'Pine Script v5' },
-      { label: 'Tipe', value: 'Overlay Indicator' },
-      { label: 'Arah Sinyal', value: 'LONG / SHORT' },
-      { label: 'Visualisasi', value: 'Entry, SL, TP1, TP2, TP3' },
-      { label: 'Informasi Tambahan', value: 'Grade & AI Confidence' },
-      { label: 'Pengaturan', value: 'Konfirmasi sinyal & parameter fleksibel' }
-    ],
-    technical_specs_en: [
-      { label: 'Platform', value: 'TradingView' },
-      { label: 'Language', value: 'Pine Script v5' },
-      { label: 'Type', value: 'Overlay Indicator' },
-      { label: 'Signal Direction', value: 'LONG / SHORT' },
-      { label: 'Visualization', value: 'Entry, SL, TP1, TP2, TP3' },
-      { label: 'Additional Info', value: 'Grade & AI Confidence' },
-      { label: 'Settings', value: 'Signal confirmation & customizable params' }
-    ],
-    package_includes_id: [
-      'Source code Pine Script (.pine & .txt).',
-      'Panduan pemasangan di TradingView.',
-      'Bantuan instalasi dari Aemeth jika diperlukan.'
-    ],
-    package_includes_en: [
-      'Pine Script source code (.pine & .txt).',
-      'TradingView setup and installation guide.',
-      'Direct installation support from Aemeth if required.'
-    ],
-    tradingview_script_id: 'aemeth_ai_signal_v1',
-    is_published: true,
-    thumbnail_url: './products/ai-signal.jpg',
-    preview_images: ['./products/ai-signal.jpg'],
-    created_at: new Date('2026-03-20').toISOString(),
-  },
-  {
-    id: 'prd_mfi_003',
-    slug: 'aemeth-mfi-reversal',
-    title: 'Aemeth MFI Reversal Indicator',
-    title_id: 'Aemeth MFI Reversal Indicator',
-    title_en: 'Aemeth MFI Reversal Indicator',
-    short_desc: 'Mengidentifikasi potensi pembalikan momentum pasar melalui Money Flow Index (MFI) dengan level Entry, SL, dan TP1-TP3.',
-    short_desc_id: 'Mengidentifikasi potensi pembalikan momentum pasar melalui Money Flow Index (MFI) dengan level Entry, SL, dan TP1-TP3.',
-    short_desc_en: 'Identifies potential market momentum turning points via Money Flow Index (MFI) with Entry, SL, and TP1-TP3 projection.',
-    long_desc: 'Aemeth MFI Reversal adalah indikator TradingView yang membantu trader mengidentifikasi potensi pembalikan momentum pasar melalui Money Flow Index (MFI).\n\nIndikator menampilkan sinyal BUY dan SELL, lengkap dengan level Entry, Stop Loss (SL), serta tiga target Take Profit (TP1, TP2, dan TP3). Dashboard informatif dan penanda visual membantu trader memantau level trading langsung pada chart.\n\nDirancang untuk membantu analisis teknikal menjadi lebih terstruktur dan praktis.',
-    long_desc_id: 'Aemeth MFI Reversal adalah indikator TradingView yang membantu trader mengidentifikasi potensi pembalikan momentum pasar melalui Money Flow Index (MFI).\n\nIndikator menampilkan sinyal BUY dan SELL, lengkap dengan level Entry, Stop Loss (SL), serta tiga target Take Profit (TP1, TP2, dan TP3). Dashboard informatif dan penanda visual membantu trader memantau level trading langsung pada chart.\n\nDirancang untuk membantu analisis teknikal menjadi lebih terstruktur dan praktis.',
-    long_desc_en: 'Aemeth MFI Reversal helps traders anticipate institutional momentum inflections using volume-weighted Money Flow Index (MFI).\n\nDisplays clean BUY and SELL triggers with Entry, Stop Loss (SL), and TP1, TP2, TP3 targets, paired with an informative dashboard and TradingView alerts.',
-    type: 'open_source',
-    category: 'reversal',
-    price_cents: 6900, // $69
-    price_idr: 1100000, // Rp 1.100.000
-    discount_cents: 0,
-    discount_idr: 0,
-    version: '2.4.0',
-    pine_version: 'v5',
-    release_date: '2026-03-10',
-    changelog: [
-      'v2.4.0: Dynamic MFI exhaustion threshold tuning and ATR distance logic',
-      'v2.0.0: Initial Pine Script v5 rewrite'
-    ],
-    changelog_id: [
-      'v2.4.0: Penyesuaian ambang kelelahan MFI dinamis & kalkulasi jarak ATR',
-      'v2.0.0: Rilis arsitektur Pine Script v5'
-    ],
-    changelog_en: [
-      'v2.4.0: Dynamic MFI exhaustion threshold tuning and ATR distance logic',
-      'v2.0.0: Initial Pine Script v5 rewrite'
-    ],
-    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
-    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
-    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
-    features: [
-      'BUY & SELL Signals — penanda potensi perubahan momentum pasar.',
-      'Entry, SL & TP — visualisasi level masuk, batas risiko, dan tiga target harga.',
-      'ATR & Fixed Distance — pilihan metode perhitungan jarak level trading.',
-      'Dashboard Sinyal — ringkasan status sinyal dan level harga terakhir.',
-      'TradingView Alerts — notifikasi untuk kondisi sinyal bullish dan bearish.',
-      'Customizable Settings — pengaturan yang dapat disesuaikan dengan kebutuhan pengguna.'
-    ],
-    features_id: [
-      'BUY & SELL Signals — penanda potensi perubahan momentum pasar.',
-      'Entry, SL & TP — visualisasi level masuk, batas risiko, dan tiga target harga.',
-      'ATR & Fixed Distance — pilihan metode perhitungan jarak level trading.',
-      'Dashboard Sinyal — ringkasan status sinyal dan level harga terakhir.',
-      'TradingView Alerts — notifikasi untuk kondisi sinyal bullish dan bearish.',
-      'Customizable Settings — pengaturan yang dapat disesuaikan dengan kebutuhan pengguna.'
-    ],
-    features_en: [
-      'BUY & SELL Signals — institutional volume-momentum inflection markers.',
-      'Entry, SL & TP — clear visual entry line, protective stop, and 3 targets.',
-      'ATR & Fixed Distance — flexible risk calculation methods.',
-      'Signal Dashboard — live summary of active signal state on chart.',
-      'TradingView Alerts — notifications for bullish and bearish setups.',
-      'Customizable Settings — adaptable to various timeframes and instruments.'
-    ],
-    technical_specs_id: [
-      { label: 'Platform', value: 'TradingView' },
-      { label: 'Bahasa', value: 'Pine Script v5' },
-      { label: 'Tipe', value: 'Overlay Indicator' },
-      { label: 'Metode Analisis', value: 'Money Flow Index (MFI)' },
-      { label: 'Sinyal', value: 'BUY / SELL' },
-      { label: 'Visualisasi', value: 'Entry, SL, TP1, TP2, TP3' },
-      { label: 'Fitur Tambahan', value: 'Dashboard & Alert' }
-    ],
-    technical_specs_en: [
-      { label: 'Platform', value: 'TradingView' },
-      { label: 'Language', value: 'Pine Script v5' },
-      { label: 'Type', value: 'Overlay Indicator' },
-      { label: 'Analysis Method', value: 'Money Flow Index (MFI)' },
-      { label: 'Signals', value: 'BUY / SELL' },
-      { label: 'Visualization', value: 'Entry, SL, TP1, TP2, TP3' },
-      { label: 'Additional Features', value: 'Dashboard & Alerts' }
-    ],
-    package_includes_id: [
-      'Source code Pine Script (.pine & .txt).',
-      'Panduan pemasangan di TradingView.',
-      'Bantuan instalasi dari Aemeth jika diperlukan.'
-    ],
-    package_includes_en: [
-      'Pine Script source code (.pine & .txt).',
-      'TradingView installation walkthrough.',
-      'Direct installation support from Aemeth if required.'
-    ],
-    tradingview_script_id: 'aemeth_mfi_reversal_v5',
-    is_published: true,
-    thumbnail_url: './products/mfi.jpg',
-    preview_images: ['./products/mfi.jpg'],
-    created_at: new Date('2026-03-10').toISOString(),
-  },
-  {
-    id: 'prd_psar_004',
+const SINGLE_INDICATORS: Product[] = [
+  injectPricing({
+    id: 'parabolic-sar',
     slug: 'aemeth-parabolic-sar',
-    title: 'Aemeth Parabolic SAR Indicator',
-    title_id: 'Aemeth Parabolic SAR Indicator',
-    title_en: 'Aemeth Parabolic SAR Indicator',
+    title: 'Aemeth Parabolic SAR',
+    title_id: 'Aemeth Parabolic SAR',
+    title_en: 'Aemeth Parabolic SAR',
     short_desc: 'Mengamati perubahan arah tren dan potensi sinyal BUY maupun SELL melalui Parabolic SAR dengan visualisasi titik & level TP1-TP3.',
     short_desc_id: 'Mengamati perubahan arah tren dan potensi sinyal BUY maupun SELL melalui Parabolic SAR dengan visualisasi titik & level TP1-TP3.',
     short_desc_en: 'Tracks trend flips and BUY/SELL signals via Parabolic SAR with SAR dots and automated Entry/SL/TP1-TP3 dashboard.',
@@ -374,10 +129,6 @@ export const BILINGUAL_PRODUCTS: Product[] = [
     long_desc_en: 'Aemeth Parabolic SAR Indicator helps traders capture clean trend transitions and momentum shifts on TradingView.\n\nPlots Parabolic SAR dots on chart with clear Entry, Stop Loss (SL), and TP1, TP2, TP3 targets, status dashboard, and customizable alerts.',
     type: 'open_source',
     category: 'trend',
-    price_cents: 6900, // $69
-    price_idr: 1100000, // Rp 1.100.000
-    discount_cents: 0,
-    discount_idr: 0,
     version: '3.1.0',
     pine_version: 'v5',
     release_date: '2026-03-05',
@@ -456,9 +207,282 @@ export const BILINGUAL_PRODUCTS: Product[] = [
     thumbnail_url: './products/parabolic-sar.jpg',
     preview_images: ['./products/parabolic-sar.jpg'],
     created_at: new Date('2026-03-05').toISOString(),
-  },
-  {
-    id: 'prd_trendsr_005',
+  }),
+  injectPricing({
+    id: 'mfi-reversal',
+    slug: 'aemeth-mfi-reversal',
+    title: 'Aemeth MFI Reversal',
+    title_id: 'Aemeth MFI Reversal',
+    title_en: 'Aemeth MFI Reversal',
+    short_desc: 'Mengidentifikasi potensi pembalikan momentum pasar melalui Money Flow Index (MFI) dengan level Entry, SL, dan TP1-TP3.',
+    short_desc_id: 'Mengidentifikasi potensi pembalikan momentum pasar melalui Money Flow Index (MFI) dengan level Entry, SL, dan TP1-TP3.',
+    short_desc_en: 'Identifies potential market momentum turning points via Money Flow Index (MFI) with Entry, SL, and TP1-TP3 projection.',
+    long_desc: 'Aemeth MFI Reversal adalah indikator TradingView yang membantu trader mengidentifikasi potensi pembalikan momentum pasar melalui Money Flow Index (MFI).\n\nIndikator menampilkan sinyal BUY dan SELL, lengkap dengan level Entry, Stop Loss (SL), serta tiga target Take Profit (TP1, TP2, dan TP3). Dashboard informatif dan penanda visual membantu trader memantau level trading langsung pada chart.\n\nDirancang untuk membantu analisis teknikal menjadi lebih terstruktur dan praktis.',
+    long_desc_id: 'Aemeth MFI Reversal adalah indikator TradingView yang membantu trader mengidentifikasi potensi pembalikan momentum pasar melalui Money Flow Index (MFI).\n\nIndikator menampilkan sinyal BUY dan SELL, lengkap dengan level Entry, Stop Loss (SL), serta tiga target Take Profit (TP1, TP2, dan TP3). Dashboard informatif dan penanda visual membantu trader memantau level trading langsung pada chart.\n\nDirancang untuk membantu analisis teknikal menjadi lebih terstruktur dan praktis.',
+    long_desc_en: 'Aemeth MFI Reversal helps traders anticipate institutional momentum inflections using volume-weighted Money Flow Index (MFI).\n\nDisplays clean BUY and SELL triggers with Entry, Stop Loss (SL), and TP1, TP2, TP3 targets, paired with an informative dashboard and TradingView alerts.',
+    type: 'open_source',
+    category: 'reversal',
+    version: '2.4.0',
+    pine_version: 'v5',
+    release_date: '2026-03-10',
+    changelog: [
+      'v2.4.0: Dynamic MFI exhaustion threshold tuning and ATR distance logic',
+      'v2.0.0: Initial Pine Script v5 rewrite'
+    ],
+    changelog_id: [
+      'v2.4.0: Penyesuaian ambang kelelahan MFI dinamis & kalkulasi jarak ATR',
+      'v2.0.0: Rilis arsitektur Pine Script v5'
+    ],
+    changelog_en: [
+      'v2.4.0: Dynamic MFI exhaustion threshold tuning and ATR distance logic',
+      'v2.0.0: Initial Pine Script v5 rewrite'
+    ],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'BUY & SELL Signals — penanda potensi perubahan momentum pasar.',
+      'Entry, SL & TP — visualisasi level masuk, batas risiko, dan tiga target harga.',
+      'ATR & Fixed Distance — pilihan metode perhitungan jarak level trading.',
+      'Dashboard Sinyal — ringkasan status sinyal dan level harga terakhir.',
+      'TradingView Alerts — notifikasi untuk kondisi sinyal bullish dan bearish.',
+      'Customizable Settings — pengaturan yang dapat disesuaikan dengan kebutuhan pengguna.'
+    ],
+    features_id: [
+      'BUY & SELL Signals — penanda potensi perubahan momentum pasar.',
+      'Entry, SL & TP — visualisasi level masuk, batas risiko, dan tiga target harga.',
+      'ATR & Fixed Distance — pilihan metode perhitungan jarak level trading.',
+      'Dashboard Sinyal — ringkasan status sinyal dan level harga terakhir.',
+      'TradingView Alerts — notifikasi untuk kondisi sinyal bullish dan bearish.',
+      'Customizable Settings — pengaturan yang dapat disesuaikan dengan kebutuhan pengguna.'
+    ],
+    features_en: [
+      'BUY & SELL Signals — institutional volume-momentum inflection markers.',
+      'Entry, SL & TP — clear visual entry line, protective stop, and 3 targets.',
+      'ATR & Fixed Distance — flexible risk calculation methods.',
+      'Signal Dashboard — live summary of active signal state on chart.',
+      'TradingView Alerts — notifications for bullish and bearish setups.',
+      'Customizable Settings — adaptable to various timeframes and instruments.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Overlay Indicator' },
+      { label: 'Metode Analisis', value: 'Money Flow Index (MFI)' },
+      { label: 'Sinyal', value: 'BUY / SELL' },
+      { label: 'Visualisasi', value: 'Entry, SL, TP1, TP2, TP3' },
+      { label: 'Fitur Tambahan', value: 'Dashboard & Alert' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Overlay Indicator' },
+      { label: 'Analysis Method', value: 'Money Flow Index (MFI)' },
+      { label: 'Signals', value: 'BUY / SELL' },
+      { label: 'Visualization', value: 'Entry, SL, TP1, TP2, TP3' },
+      { label: 'Additional Features', value: 'Dashboard & Alerts' }
+    ],
+    package_includes_id: [
+      'Source code Pine Script (.pine & .txt).',
+      'Panduan pemasangan di TradingView.',
+      'Bantuan instalasi dari Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView installation walkthrough.',
+      'Direct installation support from Aemeth if required.'
+    ],
+    tradingview_script_id: 'aemeth_mfi_reversal_v5',
+    is_published: true,
+    thumbnail_url: './products/mfi.jpg',
+    preview_images: ['./products/mfi.jpg'],
+    created_at: new Date('2026-03-10').toISOString(),
+  }),
+  injectPricing({
+    id: 'ichimoku-cloud',
+    slug: 'aemeth-ichimoku-cloud',
+    title: 'Aemeth Ichimoku Cloud',
+    title_id: 'Aemeth Ichimoku Cloud',
+    title_en: 'Aemeth Ichimoku Cloud',
+    short_desc: 'Indikator TradingView yang membantu trader mengidentifikasi potensi peluang BUY dan SELL melalui analisis Ichimoku Cloud dengan level Entry, SL, dan TP1-TP3.',
+    short_desc_id: 'Indikator TradingView yang membantu trader mengidentifikasi potensi peluang BUY dan SELL melalui analisis Ichimoku Cloud dengan level Entry, SL, dan TP1-TP3.',
+    short_desc_en: 'TradingView indicator helping traders identify potential BUY & SELL opportunities via Ichimoku Cloud analysis with Entry, SL, and TP1-TP3 targets.',
+    long_desc: 'Aemeth Ichimoku Cloud Indicator adalah indikator TradingView yang membantu trader mengidentifikasi potensi peluang BUY dan SELL melalui analisis Ichimoku Cloud.\n\nIndikator menampilkan informasi Entry, Stop Loss (SL), serta tiga target Take Profit (TP1, TP2, dan TP3) secara visual langsung pada chart. Dilengkapi dashboard ringkas untuk memantau status sinyal terakhir dan fitur alert untuk membantu memantau kondisi pasar.\n\nCocok bagi trader yang ingin menyusun analisis teknikal dengan tampilan yang lebih terstruktur dan praktis.',
+    long_desc_id: 'Aemeth Ichimoku Cloud Indicator adalah indikator TradingView yang membantu trader mengidentifikasi potensi peluang BUY dan SELL melalui analisis Ichimoku Cloud.\n\nIndikator menampilkan informasi Entry, Stop Loss (SL), serta tiga target Take Profit (TP1, TP2, dan TP3) secara visual langsung pada chart. Dilengkapi dashboard ringkas untuk memantau status sinyal terakhir dan fitur alert untuk membantu memantau kondisi pasar.\n\nCocok bagi trader yang ingin menyusun analisis teknikal dengan tampilan yang lebih terstruktur dan praktis.',
+    long_desc_en: 'Aemeth Ichimoku Cloud Indicator is a TradingView tool that helps traders identify potential BUY and SELL setups through Ichimoku Cloud trend analysis.\n\nVisually plots Entry, Stop Loss (SL), and three Take Profit targets (TP1, TP2, TP3) directly on your chart. Features an on-chart signal status dashboard and customizable alert triggers for structured technical execution.',
+    type: 'open_source',
+    category: 'trend',
+    version: '5.2.0',
+    pine_version: 'v5',
+    release_date: '2026-03-15',
+    changelog: [
+      'v5.2.0: Pine Script v5 upgrade with dynamic cloud projections & TP1-TP3 targets',
+      'v5.0.0: Initial release of Aemeth Ichimoku Cloud engine'
+    ],
+    changelog_id: [
+      'v5.2.0: Peningkatan Pine Script v5 dengan proyeksi cloud dinamis & target TP1-TP3',
+      'v5.0.0: Rilis awal mesin Aemeth Ichimoku Cloud'
+    ],
+    changelog_en: [
+      'v5.2.0: Pine Script v5 upgrade with dynamic cloud projections & TP1-TP3 targets',
+      'v5.0.0: Initial release of Aemeth Ichimoku Cloud engine'
+    ],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'Sinyal BUY dan SELL berbasis Ichimoku Cloud.',
+      'Tampilan level Entry, Stop Loss, dan tiga target Take Profit (TP1, TP2, TP3).',
+      'Perhitungan target yang dapat disesuaikan.',
+      'Dashboard informasi status sinyal pada chart (termasuk counter bar sejak sinyal).',
+      'Fitur alert untuk kondisi sinyal tertentu.',
+      'Pengaturan indikator yang fleksibel.'
+    ],
+    features_id: [
+      'Sinyal BUY dan SELL berbasis Ichimoku Cloud.',
+      'Tampilan level Entry, Stop Loss, dan tiga target Take Profit (TP1, TP2, TP3).',
+      'Perhitungan target yang dapat disesuaikan.',
+      'Dashboard informasi status sinyal pada chart (termasuk counter bar sejak sinyal).',
+      'Fitur alert untuk kondisi sinyal tertentu.',
+      'Pengaturan indikator yang fleksibel.'
+    ],
+    features_en: [
+      'BUY & SELL signals powered by Ichimoku Cloud analysis.',
+      'Direct on-chart visualization of Entry, Stop Loss, and TP1, TP2, TP3 levels.',
+      'Customizable target calculation methodology.',
+      'On-chart signal dashboard including bar duration counter since trigger.',
+      'TradingView alerts for specific signal and exit conditions.',
+      'Flexible indicator parameters and display styling.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Overlay Indicator' },
+      { label: 'Sistem Analisis', value: 'Ichimoku Cloud' },
+      { label: 'Sinyal', value: 'BUY / SELL' },
+      { label: 'Level Ditampilkan', value: 'Entry, SL, TP1, TP2, TP3' },
+      { label: 'Fitur Tambahan', value: 'Dashboard & Alert' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Overlay Indicator' },
+      { label: 'Analysis System', value: 'Ichimoku Cloud' },
+      { label: 'Signals', value: 'BUY / SELL' },
+      { label: 'Levels Displayed', value: 'Entry, SL, TP1, TP2, TP3' },
+      { label: 'Additional Features', value: 'Dashboard & Alerts' }
+    ],
+    package_includes_id: [
+      'Source code indikator Pine Script (.pine & .txt).',
+      'Panduan pemasangan di TradingView (Pine Editor).',
+      'Bantuan instalasi dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Complete Pine Script indicator source code (.pine & .txt).',
+      'TradingView step-by-step installation walkthrough.',
+      'Personal installation assistance from the Aemeth support desk.'
+    ],
+    tradingview_script_id: 'aemeth_ichimoku_cloud_v5',
+    is_published: true,
+    thumbnail_url: './products/ichimoku.jpg',
+    preview_images: ['./products/ichimoku.jpg'],
+    created_at: new Date('2026-03-15').toISOString(),
+  }),
+  injectPricing({
+    id: 'ai-signal-v1',
+    slug: 'aemeth-ai-signal-v1',
+    title: 'Aemeth AI Signal V1',
+    title_id: 'Aemeth AI Signal V1',
+    title_en: 'Aemeth AI Signal V1',
+    short_desc: 'Membaca potensi peluang LONG dan SHORT melalui visualisasi sinyal, zona SL/TP1-TP3, serta badge Grade & AI Confidence.',
+    short_desc_id: 'Membaca potensi peluang LONG dan SHORT melalui visualisasi sinyal, zona SL/TP1-TP3, serta badge Grade & AI Confidence.',
+    short_desc_en: 'Detects high-conviction LONG & SHORT setups with on-chart SL/TP zones, Grade evaluation, and AI Confidence telemetry.',
+    long_desc: 'Aemeth AI Signal V1 adalah indikator TradingView yang dirancang untuk membantu trader membaca potensi peluang LONG dan SHORT melalui visualisasi sinyal dan level trading langsung pada chart.\n\nDengan tampilan zona Stop Loss (SL), tiga target Take Profit (TP1–TP3), serta informasi Grade dan AI Confidence, indikator ini membantu menyajikan informasi analisis pasar dalam format visual yang lebih terstruktur.\n\nCocok bagi trader yang menginginkan tampilan sinyal, level risiko, dan target harga dalam satu chart.',
+    long_desc_id: 'Aemeth AI Signal V1 adalah indikator TradingView yang dirancang untuk membantu trader membaca potensi peluang LONG dan SHORT melalui visualisasi sinyal dan level trading langsung pada chart.\n\nDengan tampilan zona Stop Loss (SL), tiga target Take Profit (TP1–TP3), serta informasi Grade dan AI Confidence, indikator ini membantu menyajikan informasi analisis pasar dalam format visual yang lebih terstruktur.\n\nCocok bagi trader yang menginginkan tampilan sinyal, level risiko, dan target harga dalam satu chart.',
+    long_desc_en: 'Aemeth AI Signal V1 is an advanced TradingView indicator built to help traders analyze potential LONG and SHORT opportunities via structured visual level mapping.\n\nFeaturing dynamic Stop Loss (SL) zones, three Take Profit target boundaries (TP1–TP3), and on-chart Grade and AI Confidence badges for clear risk-reward planning.',
+    type: 'open_source',
+    category: 'momentum',
+    version: '1.2.0',
+    pine_version: 'v5',
+    release_date: '2026-03-20',
+    changelog: [
+      'v1.2.0: Added Grade evaluation & AI Confidence telemetry badges',
+      'v1.0.0: Initial release of Aemeth AI Signal suite'
+    ],
+    changelog_id: [
+      'v1.2.0: Penambahan evaluasi Grade & badge telemetri AI Confidence',
+      'v1.0.0: Rilis awal suite Aemeth AI Signal'
+    ],
+    changelog_en: [
+      'v1.2.0: Added Grade evaluation & AI Confidence telemetry badges',
+      'v1.0.0: Initial release of Aemeth AI Signal suite'
+    ],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'LONG & SHORT Signals — menampilkan sinyal arah pasar.',
+      'SL & TP Zones — visualisasi area Stop Loss dan tiga target Take Profit (TP1-TP3).',
+      'Grade Badge — indikator penilaian kondisi sinyal (Grade A, B, C).',
+      'AI Confidence Badge — kategori tingkat confidence yang ditampilkan pada chart.',
+      'Dynamic Visuals — tampilan zona dan penanda yang mengikuti perkembangan chart.',
+      'Configurable Settings — pengaturan indikator yang dapat disesuaikan.',
+      'Trade Visualization — membantu memantau perkembangan level dan target pada chart.'
+    ],
+    features_id: [
+      'LONG & SHORT Signals — menampilkan sinyal arah pasar.',
+      'SL & TP Zones — visualisasi area Stop Loss dan tiga target Take Profit (TP1-TP3).',
+      'Grade Badge — indikator penilaian kondisi sinyal (Grade A, B, C).',
+      'AI Confidence Badge — kategori tingkat confidence yang ditampilkan pada chart.',
+      'Dynamic Visuals — tampilan zona dan penanda yang mengikuti perkembangan chart.',
+      'Configurable Settings — pengaturan indikator yang dapat disesuaikan.',
+      'Trade Visualization — membantu memantau perkembangan level dan target pada chart.'
+    ],
+    features_en: [
+      'LONG & SHORT Signals — clear market direction markers.',
+      'SL & TP Zones — visual Stop Loss area and 3 Take Profit target zones.',
+      'Grade Badge — signal quality evaluation metrics.',
+      'AI Confidence Badge — telemetry confidence scoring displayed directly on chart.',
+      'Dynamic Visuals — level boxes and tracking bands following market progression.',
+      'Configurable Settings — adjustable signal confirmation and risk parameters.',
+      'Trade Visualization — structured on-chart risk-to-reward ratio layout.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Overlay Indicator' },
+      { label: 'Arah Sinyal', value: 'LONG / SHORT' },
+      { label: 'Visualisasi', value: 'Entry, SL, TP1, TP2, TP3' },
+      { label: 'Informasi Tambahan', value: 'Grade & AI Confidence' },
+      { label: 'Pengaturan', value: 'Konfirmasi sinyal & parameter fleksibel' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Overlay Indicator' },
+      { label: 'Signal Direction', value: 'LONG / SHORT' },
+      { label: 'Visualization', value: 'Entry, SL, TP1, TP2, TP3' },
+      { label: 'Additional Info', value: 'Grade & AI Confidence' },
+      { label: 'Settings', value: 'Signal confirmation & customizable params' }
+    ],
+    package_includes_id: [
+      'Source code Pine Script (.pine & .txt).',
+      'Panduan pemasangan di TradingView.',
+      'Bantuan instalasi dari Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and installation guide.',
+      'Direct installation support from Aemeth if required.'
+    ],
+    tradingview_script_id: 'aemeth_ai_signal_v1',
+    is_published: true,
+    thumbnail_url: './products/ai-signal.jpg',
+    preview_images: ['./products/ai-signal.jpg'],
+    created_at: new Date('2026-03-20').toISOString(),
+  }),
+  injectPricing({
+    id: 'trendline-sr-utbot',
     slug: 'aemeth-trendline-breakout-sr-utbot',
     title: 'Aemeth Trendline Breakout + S/R + UT Bot',
     title_id: 'Aemeth Trendline Breakout + S/R + UT Bot',
@@ -471,10 +495,6 @@ export const BILINGUAL_PRODUCTS: Product[] = [
     long_desc_en: 'Aemeth Trendline Breakout + S/R + UT Bot fuses trendline breakout detection, horizontal Support & Resistance structures, and UT Bot trailing stop signals into a single unified TradingView overlay.\n\nDesigned to help traders spot high-probability continuation and reversal breakouts with adaptive trailing lines and custom alert conditions.',
     type: 'open_source',
     category: 'trend',
-    price_cents: 9900, // $99
-    price_idr: 1550000, // Rp 1.550.000
-    discount_cents: 0,
-    discount_idr: 0,
     version: '4.2.0',
     pine_version: 'v5',
     release_date: '2026-03-25',
@@ -548,77 +568,127 @@ export const BILINGUAL_PRODUCTS: Product[] = [
     thumbnail_url: './products/trendline-sr-utbot.jpg',
     preview_images: ['./products/trendline-sr-utbot.jpg'],
     created_at: new Date('2026-03-25').toISOString(),
-  },
-  {
-    id: 'prd_bundle_006',
-    slug: 'aemeth-complete-suite',
-    title: 'Aemeth Complete Indicator Suite (All 5 Indicators)',
-    title_id: 'Aemeth Complete Indicator Suite (Paket Lengkap 5 Indikator)',
-    title_en: 'Aemeth Complete Indicator Suite (All 5 Indicators)',
-    short_desc: 'Paket terlengkap: Ichimoku Cloud, AI Signal V1, MFI Reversal, Parabolic SAR, dan Trendline Breakout + S/R + UT Bot dengan diskon 40%.',
-    short_desc_id: 'Paket terlengkap: Ichimoku Cloud, AI Signal V1, MFI Reversal, Parabolic SAR, dan Trendline Breakout + S/R + UT Bot dengan diskon 40%.',
-    short_desc_en: 'Complete 5-indicator institutional arsenal: Ichimoku Cloud, AI Signal V1, MFI Reversal, Parabolic SAR, and Trendline S/R UT Bot with 40% discount.',
-    long_desc: 'Dapatkan seluruh indikator trading unggulan Aemeth dalam satu paket hemat. Mencakup seluruh 5 source code Pine Script (.pine & .txt) lengkap dengan panduan instalasi step-by-step dan dukungan prioritas.',
-    long_desc_id: 'Dapatkan seluruh indikator trading unggulan Aemeth dalam satu paket hemat. Mencakup seluruh 5 source code Pine Script (.pine & .txt) lengkap dengan panduan instalasi step-by-step dan dukungan prioritas.',
-    long_desc_en: 'Get all 5 flagship Aemeth trading indicators in one comprehensive package. Includes instant uncompiled Pine Script source code downloads (.pine & .txt) for all 5 algorithms, lifetime minor updates, and personal installation support.',
+  }),
+];
+
+// Helper to construct dynamic bundles using the central bundle calculation
+function createBundleProduct(
+  bundleType: 'starter' | 'pro' | 'ultimate',
+  defaultProductIds: string[],
+  slug: string,
+  titleId: string,
+  titleEn: string,
+  descId: string,
+  descEn: string
+): Product {
+  const calc = calculateBundlePrice(bundleType, defaultProductIds);
+  const def = BUNDLE_DEFINITIONS[bundleType];
+
+  return {
+    id: `bundle-${bundleType}`,
+    slug,
+    title: titleId,
+    title_id: titleId,
+    title_en: titleEn,
+    short_desc: descId,
+    short_desc_id: descId,
+    short_desc_en: descEn,
+    long_desc: `${descId}\n\nSeluruh indikator dalam paket ini disertakan dengan kode sumber uncompiled Pine Script (.pine & .txt), panduan instalasi lengkap, dan lisensi permanen penggunaan pribadi.`,
+    long_desc_id: `${descId}\n\nSeluruh indikator dalam paket ini disertakan dengan kode sumber uncompiled Pine Script (.pine & .txt), panduan instalasi lengkap, dan lisensi permanen penggunaan pribadi.`,
+    long_desc_en: `${descEn}\n\nAll indicators in this package include uncompiled Pine Script source code (.pine & .txt), step-by-step setup guides, and perpetual single-user personal licenses.`,
     type: 'bundle',
     category: 'bundle',
-    price_cents: 24500, // $245
-    price_idr: 3900000, // Rp 3.900.000 (hemat dari ~Rp 6.400.000)
-    discount_cents: 16000,
-    discount_idr: 2500000,
+    bundle_type: bundleType,
+    price_cents: Math.round(calc.finalPriceIdr / 160),
+    price_idr: calc.finalPriceIdr,
+    normal_price_idr: calc.totalNormalPriceIdr,
+    promo_price_idr: calc.finalPriceIdr,
+    is_promo_active: isLaunchPromoActive(),
+    discount_percent: calc.totalSavingsPercent,
+    discount_idr: calc.totalSavingsIdr,
+    discount_cents: Math.round(calc.totalSavingsIdr / 160),
     version: '2026.2',
     pine_version: 'v5',
     release_date: '2026-03-25',
-    changelog: [
-      '2026.2: Complete bundle suite release with all 5 new indicators'
-    ],
-    changelog_id: [
-      '2026.2: Rilis paket bundle lengkap 5 indikator baru Aemeth'
-    ],
-    changelog_en: [
-      '2026.2: Complete bundle suite release with all 5 new indicators'
-    ],
+    changelog: ['2026.2: Complete verified bundle package release with dynamic discounting'],
+    changelog_id: ['2026.2: Rilis paket bundling resmi dengan diskon dinamis'],
+    changelog_en: ['2026.2: Official bundle package release with dynamic discounting'],
     compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
     compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
     compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
     features: [
-      '5 File Kode Sumber Pine Script Lengkap (.pine & .txt) Sekaligus',
-      'Hemat Signifikan Lebih Dari 40% Dibanding Membeli Satuan',
-      'Mencakup Indikator Trend, Sinyal AI, Reversal MFI, SAR, dan Trendline Breakout',
-      'Panduan Instalasi Step-by-Step Khusus 5 Indikator',
-      'Dukungan Bantuan Instalasi Prioritas dari Tim Aemeth'
+      `${calc.productCount} File Kode Sumber Pine Script (.pine & .txt) Sekaligus`,
+      `Tambahan Diskon Bundling ${Math.round(def.discountRate * 100)}% dari Harga Aktif`,
+      'Panduan Pemasangan Step-by-Step Pine Editor TradingView',
+      'Bantuan Instalasi Resmi dari Tim Aemeth',
+      'Lisensi Permanen untuk Versi yang Dibeli'
     ],
     features_id: [
-      '5 File Kode Sumber Pine Script Lengkap (.pine & .txt) Sekaligus',
-      'Hemat Signifikan Lebih Dari 40% Dibanding Membeli Satuan',
-      'Mencakup Indikator Trend, Sinyal AI, Reversal MFI, SAR, dan Trendline Breakout',
-      'Panduan Instalasi Step-by-Step Khusus 5 Indikator',
-      'Dukungan Bantuan Instalasi Prioritas dari Tim Aemeth'
+      `${calc.productCount} File Kode Sumber Pine Script (.pine & .txt) Sekaligus`,
+      `Tambahan Diskon Bundling ${Math.round(def.discountRate * 100)}% dari Harga Aktif`,
+      'Panduan Pemasangan Step-by-Step Pine Editor TradingView',
+      'Bantuan Instalasi Resmi dari Tim Aemeth',
+      'Lisensi Permanen untuk Versi yang Dibeli'
     ],
     features_en: [
-      'All 5 Complete Pine Script Source Codebases (.pine & .txt)',
-      'Substantial 40% Discount Compared to Individual Purchases',
-      'Covers Ichimoku, AI Signal, MFI Reversal, Parabolic SAR, and Trendline S/R UT Bot',
-      'Step-by-Step Multi-Indicator Setup Guide',
-      'Priority Personal Installation Assistance from Aemeth Desk'
+      `All ${calc.productCount} Pine Script source codebases (.pine & .txt)`,
+      `Additional ${Math.round(def.discountRate * 100)}% bundle package discount`,
+      'Step-by-step TradingView Pine Editor walkthrough',
+      'Official technical setup support from Aemeth team',
+      'Perpetual single-user personal license'
     ],
     package_includes_id: [
-      '5 Source code indikator Pine Script (.pine & .txt).',
+      `${calc.productCount} Source code indikator Pine Script (.pine & .txt).`,
       'Panduan pemasangan lengkap di TradingView.',
       'Bantuan instalasi dari Aemeth jika diperlukan.'
     ],
     package_includes_en: [
-      '5 Pine Script indicator source codes (.pine & .txt).',
+      `${calc.productCount} Pine Script source code files (.pine & .txt).`,
       'Comprehensive TradingView installation guide.',
       'Personal installation assistance from Aemeth support.'
     ],
-    included_product_ids: ['prd_ichimoku_001', 'prd_aisignal_002', 'prd_mfi_003', 'prd_psar_004', 'prd_trendsr_005'],
+    included_product_ids: defaultProductIds,
     is_published: true,
     thumbnail_url: './products/trendline-sr-utbot.jpg',
     preview_images: ['./products/trendline-sr-utbot.jpg'],
     created_at: new Date('2026-03-25').toISOString(),
-  },
+  };
+}
+
+// 3 Standard Bundle Packages
+const BUNDLE_PRODUCTS: Product[] = [
+  createBundleProduct(
+    'starter',
+    ['parabolic-sar', 'mfi-reversal'],
+    'starter-pack',
+    'Aemeth Starter Pack (Pilihan 2 Indikator)',
+    'Aemeth Starter Pack (Select 2 Indicators)',
+    'Pilih 2 indikator trading berbeda pilihanmu dengan tambahan diskon 15% dari harga aktif.',
+    'Select any 2 indicators of your choice with an additional 15% bundle discount.'
+  ),
+  createBundleProduct(
+    'pro',
+    ['parabolic-sar', 'mfi-reversal', 'ichimoku-cloud'],
+    'pro-pack',
+    'Aemeth Pro Pack (Pilihan 3 Indikator)',
+    'Aemeth Pro Pack (Select 3 Indicators)',
+    'Pilih 3 indikator trading berbeda untuk analisa teknikal komprehensif dengan tambahan diskon 20%.',
+    'Select any 3 indicators for multi-strategy confluence with an additional 20% bundle discount.'
+  ),
+  createBundleProduct(
+    'ultimate',
+    ['parabolic-sar', 'mfi-reversal', 'ichimoku-cloud', 'ai-signal-v1', 'trendline-sr-utbot'],
+    'ultimate-pack',
+    'Aemeth Ultimate Pack (Semua 5 Indikator)',
+    'Aemeth Ultimate Pack (All 5 Indicators)',
+    'Seluruh 5 indikator unggulan Aemeth sekaligus dalam satu lisensi lengkap dengan diskon maksimal 25%.',
+    'All 5 flagship Aemeth trading indicators in one comprehensive suite with maximum 25% discount.'
+  ),
+];
+
+export const BILINGUAL_PRODUCTS: Product[] = [
+  ...SINGLE_INDICATORS,
+  ...BUNDLE_PRODUCTS,
 ];
 
 // Helper for local persistent storage
@@ -673,6 +743,8 @@ export const api = {
     payment_method: string;
     customer_email: string;
     customer_tv_username?: string;
+    bundle_type?: 'starter' | 'pro' | 'ultimate';
+    license_accepted?: boolean;
   }) {
     try {
       const res = await fetch(`${API_BASE}/orders`, {
@@ -683,36 +755,86 @@ export const api = {
       if (res.ok) return await res.json();
     } catch {}
 
-    // Secure guest token generation
+    // Fallback Client-Side Fulfillment
     const orderNum = 'AEM-' + Math.floor(1000000 + Math.random() * 9000000);
     const orderId = 'ord_' + Date.now();
     const accessToken = 'tok_guest_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
 
-    const customProds = getLocalStore<Product[]>('aemeth_custom_products', []);
-    const allProds = [...BILINGUAL_PRODUCTS, ...customProds];
-    const selected = allProds.filter((p) => data.product_ids.includes(p.id));
-    const totalCents = selected.reduce((sum, p) => sum + p.price_cents, 0);
+    const resolvedIds = data.product_ids.map(resolveProductId);
+    let totalIdr = 0;
+    let subtotalIdr = 0;
+    let bundleDiscountIdr = 0;
+    let totalSavingsIdr = 0;
+    let totalCents = 0;
+    let orderItems: OrderItem[] = [];
+
+    if (data.bundle_type) {
+      const bundleCalc = calculateBundlePrice(data.bundle_type, resolvedIds);
+      if (!bundleCalc.isValid) {
+        throw new Error(bundleCalc.error || 'Konfigurasi paket tidak valid');
+      }
+      totalIdr = bundleCalc.finalPriceIdr;
+      subtotalIdr = bundleCalc.totalNormalPriceIdr;
+      bundleDiscountIdr = bundleCalc.bundleDiscountAmountIdr;
+      totalSavingsIdr = bundleCalc.totalSavingsIdr;
+      totalCents = Math.round(totalIdr / 160);
+
+      orderItems = bundleCalc.selectedProducts.map((p) => ({
+        id: 'oi_' + Math.random().toString(36).slice(2, 10),
+        order_id: orderId,
+        product_id: p.id,
+        product_title: p.name,
+        product_type: 'open_source' as const,
+        unit_price_cents: p.effectivePriceCents,
+        product_version: p.version,
+        normal_price_idr: p.normalPriceIdr,
+        effective_price_idr: p.effectivePriceIdr,
+      }));
+    } else {
+      const uniqueIds = Array.from(new Set(resolvedIds));
+      for (const id of uniqueIds) {
+        const pPrice = getProductPrice(id);
+        if (pPrice) {
+          totalIdr += pPrice.effectivePriceIdr;
+          subtotalIdr += pPrice.normalPriceIdr;
+          totalSavingsIdr += pPrice.discountIdr;
+          totalCents += pPrice.effectivePriceCents;
+
+          orderItems.push({
+            id: 'oi_' + Math.random().toString(36).slice(2, 10),
+            order_id: orderId,
+            product_id: pPrice.id,
+            product_title: pPrice.name,
+            product_type: 'open_source' as const,
+            unit_price_cents: pPrice.effectivePriceCents,
+            product_version: pPrice.version,
+            normal_price_idr: pPrice.normalPriceIdr,
+            effective_price_idr: pPrice.effectivePriceIdr,
+          });
+        }
+      }
+    }
 
     const order: Order = {
       id: orderId,
       order_number: orderNum,
       access_token: accessToken,
       total_cents: totalCents,
-      currency: 'USD',
+      total_idr: totalIdr,
+      subtotal_idr: subtotalIdr,
+      bundle_type: data.bundle_type,
+      bundle_discount_idr: bundleDiscountIdr,
+      total_savings_idr: totalSavingsIdr,
+      license_version: LICENSE_CONFIG.version,
+      license_agreed_at: new Date().toISOString(),
+      currency: 'IDR',
       status: 'pending',
       payment_method: data.payment_method as any,
       customer_email: data.customer_email.trim().toLowerCase(),
       customer_tv_username: data.customer_tv_username?.trim() || undefined,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-      items: selected.map((p) => ({
-        id: 'oi_' + Math.random(),
-        order_id: orderId,
-        product_id: p.id,
-        product_title: p.title,
-        product_type: p.type,
-        unit_price_cents: p.price_cents,
-      })),
+      items: orderItems,
     };
 
     const orders = getLocalStore<Order[]>('aemeth_local_orders', []);
@@ -724,17 +846,7 @@ export const api = {
 
     return {
       success: true,
-      order: {
-        id: orderId,
-        order_number: orderNum,
-        access_token: accessToken,
-        total_cents: totalCents,
-        currency: 'USD',
-        status: 'pending',
-        payment_method: data.payment_method,
-        customer_email: data.customer_email,
-        customer_tv_username: data.customer_tv_username,
-      },
+      order,
     };
   },
 
@@ -902,11 +1014,12 @@ export const api = {
       if (res.ok) return await res.json();
     } catch {}
 
-    const isIchimoku = productId.includes('ichimoku');
-    const isAiSignal = productId.includes('aisignal');
-    const isMfi = productId.includes('mfi');
-    const isPsar = productId.includes('psar');
-    const isTrendSr = productId.includes('trendsr');
+    const resolved = resolveProductId(productId).toLowerCase();
+    const isIchimoku = resolved.includes('ichimoku');
+    const isAiSignal = resolved.includes('ai-signal') || resolved.includes('aisignal');
+    const isMfi = resolved.includes('mfi');
+    const isPsar = resolved.includes('parabolic-sar') || resolved.includes('psar');
+    const isTrendSr = resolved.includes('trendline') || resolved.includes('trendsr');
 
     let content = PINE_SCRIPT_LIQUIDITY;
     let filename = 'aemeth_ichimoku_cloud_v5.pine';

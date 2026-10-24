@@ -67,6 +67,32 @@ export interface TranslationDict {
     getAccess: string;
     lifetimeUpdates: string;
     antiRepaintLock: string;
+    launchPromoBadge: string;
+    savePercent: string;
+    normalPriceLabel: string;
+    promoPriceLabel: string;
+  };
+  bundles: {
+    sectionTag: string;
+    title: string;
+    subtitle: string;
+    starterTitle: string;
+    starterDesc: string;
+    proTitle: string;
+    proDesc: string;
+    ultimateTitle: string;
+    ultimateDesc: string;
+    selectPrompt: string;
+    twoRequired: string;
+    threeRequired: string;
+    allIncluded: string;
+    normalTotal: string;
+    promoSubtotal: string;
+    bundleDiscount: string;
+    totalDue: string;
+    totalSavings: string;
+    checkoutBundle: string;
+    licenseNotice: string;
   };
   productDetail: {
     openSourceBadge: string;
@@ -91,6 +117,11 @@ export interface TranslationDict {
     orderSummary: string;
     itemsToPurchase: string;
     totalDue: string;
+    bundleSummaryTitle: string;
+    normalSubtotal: string;
+    bundleDiscountLabel: string;
+    totalSavingsLabel: string;
+    savingsBadge: string;
     customerDetails: string;
     emailLabel: string;
     emailPlaceholder: string;
@@ -106,6 +137,9 @@ export interface TranslationDict {
     paypalDesc: string;
     termsAgreement: string;
     termsLink: string;
+    licenseAgreementTitle: string;
+    licenseAgreementLabel: string;
+    licenseScopeNotice: string;
     generateInvoice: string;
     validatingServer: string;
     orderReference: string;
@@ -327,6 +361,32 @@ export const translations: Record<Language, TranslationDict> = {
       getAccess: 'Beli Sekarang',
       lifetimeUpdates: 'Pembaruan versi gratis selamanya',
       antiRepaintLock: 'Anti-Repaint Candle 1',
+      launchPromoBadge: 'PROMO PELUNCURAN',
+      savePercent: 'HEMAT',
+      normalPriceLabel: 'Harga Normal',
+      promoPriceLabel: 'Harga Promo',
+    },
+    bundles: {
+      sectionTag: 'PAKET BUNDLING SPESIAL',
+      title: 'Hemat Maksimal dengan Paket Bundling',
+      subtitle: 'Dapatkan kombinasi indikator trading terbaik dengan diskon bundling hingga 25% di atas harga promo aktif.',
+      starterTitle: 'Starter Pack',
+      starterDesc: 'Pilih 2 indikator berbeda pilihanmu. Diskon bundling 15% dari subtotal aktif.',
+      proTitle: 'Pro Pack',
+      proDesc: 'Pilih 3 indikator berbeda untuk analisa teknikal komprehensif. Diskon bundling 20%.',
+      ultimateTitle: 'Ultimate Pack',
+      ultimateDesc: 'Seluruh 5 indikator aktif Aemeth sekaligus dalam satu lisensi lengkap dengan diskon 25%.',
+      selectPrompt: 'Pilih Indikator yang Diinginkan:',
+      twoRequired: 'Pilih tepat 2 indikator',
+      threeRequired: 'Pilih tepat 3 indikator',
+      allIncluded: 'Seluruh 5 indikator otomatis disertakan',
+      normalTotal: 'Harga Normal Total',
+      promoSubtotal: 'Subtotal Harga Promo',
+      bundleDiscount: 'Diskon Bundling Tambahan',
+      totalDue: 'Total yang Harus Dibayar',
+      totalSavings: 'Total Penghematan Anda',
+      checkoutBundle: 'Beli Paket Ini Sekarang',
+      licenseNotice: 'Masing-masing indikator dalam paket dilengkapi lisensi permanen penggunaan pribadi untuk versi yang dibeli dan source code (.pine & .txt).',
     },
     productDetail: {
       openSourceBadge: 'Open-Source Pine Script v5',
@@ -351,6 +411,11 @@ export const translations: Record<Language, TranslationDict> = {
       orderSummary: 'Ringkasan Pesanan',
       itemsToPurchase: 'Produk yang Dipilih',
       totalDue: 'Total Pembayaran',
+      bundleSummaryTitle: 'Rincian Paket Bundling',
+      normalSubtotal: 'Subtotal Harga Normal',
+      bundleDiscountLabel: 'Diskon Paket Bundling',
+      totalSavingsLabel: 'Total Penghematan',
+      savingsBadge: 'HEMAT',
       customerDetails: 'Informasi Pengiriman Digital',
       emailLabel: 'Alamat Email (Untuk Tanda Terima & Token Akses) *',
       emailPlaceholder: 'nama@domain.com',
@@ -366,6 +431,9 @@ export const translations: Record<Language, TranslationDict> = {
       paypalDesc: 'Kartu Debit/Kredit Internasional',
       termsAgreement: 'Saya menyetujui Ketentuan Layanan, Lisensi Produk Digital, dan memahami Peringatan Risiko Perdagangan.',
       termsLink: 'Buka Kebijakan',
+      licenseAgreementTitle: 'Ketentuan Lisensi Permanen Source Code',
+      licenseAgreementLabel: 'Saya menyetujui Lisensi Permanen Penggunaan Pribadi (Single-User) dan memahami bahwa kode sumber tidak boleh didistribusikan ulang atau dijual kembali.',
+      licenseScopeNotice: 'Pembelian memberikan hak lisensi permanen untuk versi spesifik yang dibeli. Tidak mencakup pembaruan versi mayor baru tanpa batas. Indikator adalah alat bantu analisis teknikal, bukan jaminan profit.',
       generateInvoice: 'Buat Tagihan & Instruksi Pembayaran',
       validatingServer: 'Memvalidasi Harga di Server...',
       orderReference: 'Nomor Referensi Pesanan',
@@ -590,6 +658,32 @@ export const translations: Record<Language, TranslationDict> = {
       getAccess: 'Buy Now',
       lifetimeUpdates: 'Lifetime minor updates included',
       antiRepaintLock: 'Anti-Repaint Candle 1',
+      launchPromoBadge: 'LAUNCH SPECIAL',
+      savePercent: 'SAVE',
+      normalPriceLabel: 'Regular Price',
+      promoPriceLabel: 'Promo Price',
+    },
+    bundles: {
+      sectionTag: 'SPECIAL BUNDLE PACKAGES',
+      title: 'Maximize Savings with Indicator Bundles',
+      subtitle: 'Acquire complementary trading indicator suites with up to 25% extra bundling discount on top of launch prices.',
+      starterTitle: 'Starter Pack',
+      starterDesc: 'Select any 2 indicators of your choice. 15% extra bundling discount applied to your subtotal.',
+      proTitle: 'Pro Pack',
+      proDesc: 'Select any 3 indicators for multi-strategy confluence. 20% extra bundling discount applied.',
+      ultimateTitle: 'Ultimate Pack',
+      ultimateDesc: 'All 5 active Aemeth indicators in one full institutional suite with a maximum 25% discount.',
+      selectPrompt: 'Select Desired Indicators:',
+      twoRequired: 'Choose exactly 2 indicators',
+      threeRequired: 'Choose exactly 3 indicators',
+      allIncluded: 'All 5 indicators automatically included',
+      normalTotal: 'Total Regular Price',
+      promoSubtotal: 'Active Promo Subtotal',
+      bundleDiscount: 'Bundle Package Discount',
+      totalDue: 'Total Amount to Pay',
+      totalSavings: 'Your Total Savings',
+      checkoutBundle: 'Get This Bundle Now',
+      licenseNotice: 'Every indicator in the bundle includes permanent single-user personal license for the purchased version and full source code (.pine & .txt).',
     },
     productDetail: {
       openSourceBadge: 'Open-Source Pine Script v5',
@@ -614,6 +708,11 @@ export const translations: Record<Language, TranslationDict> = {
       orderSummary: 'Order Summary',
       itemsToPurchase: 'Selected Indicators',
       totalDue: 'Total Due',
+      bundleSummaryTitle: 'Bundle Package Breakdown',
+      normalSubtotal: 'Regular Subtotal',
+      bundleDiscountLabel: 'Bundle Package Discount',
+      totalSavingsLabel: 'Total Savings',
+      savingsBadge: 'SAVE',
       customerDetails: 'Digital Delivery Details',
       emailLabel: 'Email Address (For Receipt & Order Access Token) *',
       emailPlaceholder: 'name@domain.com',
@@ -629,6 +728,9 @@ export const translations: Record<Language, TranslationDict> = {
       paypalDesc: 'Worldwide Credit / Debit Cards',
       termsAgreement: 'I accept the Terms of Service, Digital Product License, and understand the Trading Risk Disclosure.',
       termsLink: 'View Policies',
+      licenseAgreementTitle: 'Permanent Source Code License Terms',
+      licenseAgreementLabel: 'I accept the Permanent Single-User Personal License and understand that redistribution or resale of the source code is strictly prohibited.',
+      licenseScopeNotice: 'Purchase grants perpetual license for the specific version acquired. Does not include unlimited major rewrites. Indicators are analytical tools and do not guarantee profits.',
       generateInvoice: 'Generate Invoice & Payment Instructions',
       validatingServer: 'Validating Prices on Server...',
       orderReference: 'Order Reference Number',

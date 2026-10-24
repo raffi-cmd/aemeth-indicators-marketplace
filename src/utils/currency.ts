@@ -31,3 +31,7 @@ export function getPriceAmount(priceCents: number, lang: 'id' | 'en', explicitId
     currency: 'USD',
   };
 }
+
+export function formatIdr(amount: number): string {
+  return `Rp ${Math.round(amount).toLocaleString('id-ID')}`;
+}

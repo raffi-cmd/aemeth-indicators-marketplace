@@ -152,7 +152,153 @@ export function initDatabase() {
     );
   `);
 
+  // Migrate schema for IDR pricing, bundle types, and license terms
+  try {
+    db.exec(`
+      ALTER TABLE products ADD COLUMN price_idr INTEGER DEFAULT 0;
+      ALTER TABLE products ADD COLUMN normal_price_idr INTEGER DEFAULT 0;
+      ALTER TABLE products ADD COLUMN promo_price_idr INTEGER DEFAULT 0;
+    `);
+  } catch {}
+
+  try {
+    db.exec(`
+      ALTER TABLE orders ADD COLUMN total_idr INTEGER DEFAULT 0;
+      ALTER TABLE orders ADD COLUMN subtotal_idr INTEGER DEFAULT 0;
+      ALTER TABLE orders ADD COLUMN bundle_type TEXT;
+      ALTER TABLE orders ADD COLUMN bundle_discount_idr INTEGER DEFAULT 0;
+      ALTER TABLE orders ADD COLUMN total_savings_idr INTEGER DEFAULT 0;
+      ALTER TABLE orders ADD COLUMN license_version TEXT;
+      ALTER TABLE orders ADD COLUMN license_agreed_at TEXT;
+    `);
+  } catch {}
+
+  try {
+    db.exec(`
+      ALTER TABLE order_items ADD COLUMN product_version TEXT;
+      ALTER TABLE order_items ADD COLUMN normal_price_idr INTEGER DEFAULT 0;
+      ALTER TABLE order_items ADD COLUMN effective_price_idr INTEGER DEFAULT 0;
+    `);
+  } catch {}
+
   seedInitialData();
+  seedFiveIndicators();
+}
+
+function seedFiveIndicators() {
+  const insertOrReplaceProduct = db.prepare(`
+    INSERT OR REPLACE INTO products (
+      id, slug, title, short_desc, long_desc, type, category, price_cents, discount_cents,
+      version, features_json, tradingview_script_id, is_published, thumbnail_url, preview_images_json,
+      price_idr, normal_price_idr, promo_price_idr
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+
+  const prods = [
+    {
+      id: 'parabolic-sar',
+      slug: 'aemeth-parabolic-sar',
+      title: 'Aemeth Parabolic SAR',
+      short_desc: 'Deteksi pembalikan tren dan trailing stop dinamis berbasis akselerasi Parabolic SAR adaptif.',
+      long_desc: 'Indikator momentum dan trailing stop berbasis Parabolic SAR yang disempurnakan dengan filter noise pasar dan sinyal konfirmasi anti-repaint.',
+      type: 'open_source',
+      category: 'trend',
+      price_cents: 790,
+      discount_cents: 210,
+      version: '3.1.0',
+      features: ['Full Uncompiled Pine Script v5 Source Code', 'Adaptive Acceleration Factor', 'Anti-Repaint Candle 1 Confirmation', 'TradingView Alert Ready'],
+      thumb: 'https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80',
+      normal_idr: 99000,
+      promo_idr: 79000,
+    },
+    {
+      id: 'mfi-reversal',
+      slug: 'aemeth-mfi-reversal',
+      title: 'Aemeth MFI Reversal',
+      short_desc: 'Identifikasi titik jenuh beli dan jenuh jual berbasis Money Flow Index dengan konfirmasi volume institusional.',
+      long_desc: 'Algoritma pembalikan arah berbasis Money Flow Index (MFI) yang mendeteksi anomali volume dan divergensi tersembunyi pada swing high dan low.',
+      type: 'open_source',
+      category: 'reversal',
+      price_cents: 1490,
+      discount_cents: 510,
+      version: '2.4.0',
+      features: ['Full Editable Pine Script v5 Codebase', 'Money Flow Volume Divergence Scanner', 'Anti-Repaint Execution', 'Multi-Asset Support (Forex, Crypto, Saham)'],
+      thumb: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80',
+      normal_idr: 199000,
+      promo_idr: 149000,
+    },
+    {
+      id: 'ichimoku-cloud',
+      slug: 'aemeth-ichimoku-cloud',
+      title: 'Aemeth Ichimoku Cloud',
+      short_desc: 'Visualisasi Tenkan-sen, Kijun-sen, Senkou Span A/B, dan Chikou Span dengan sinyal breakout awan terverifikasi.',
+      long_desc: 'Sistem komprehensif Ichimoku Kinko Hyo modern dengan filter false breakout, projection support-resistance masa depan, dan sinyal beli/jual berbasis awan.',
+      type: 'open_source',
+      category: 'trend',
+      price_cents: 1490,
+      discount_cents: 510,
+      version: '5.2.0',
+      features: ['Full Pine Script v5 Source Code', 'Cloud Breakout & TK Cross Filters', 'Support / Resistance Zone Projections', 'Clean Minimalist Visuals'],
+      thumb: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80',
+      normal_idr: 199000,
+      promo_idr: 149000,
+    },
+    {
+      id: 'ai-signal-v1',
+      slug: 'aemeth-ai-signal-v1',
+      title: 'Aemeth AI Signal V1',
+      short_desc: 'Sistem sinyal berbasis machine learning proxy: KNN / Lorentzian Classification untuk mendeteksi arah pasar dengan akurasi tinggi.',
+      long_desc: 'Memanfaatkan klasifikasi Lorentzian probabilistik untuk memfilter noise acak di market forex dan crypto, memberikan sinyal entry terkonfirmasi.',
+      type: 'open_source',
+      category: 'trend',
+      price_cents: 1490,
+      discount_cents: 510,
+      version: '1.2.0',
+      features: ['Lorentzian Classification Proxy Algorithm', 'Multi-Feature Confluence Filter', 'Strict Closed-Bar Anti-Repaint Architecture', 'Risk-to-Reward Calculator'],
+      thumb: 'https://images.unsplash.com/photo-1535320903710-d993d3d77d29?auto=format&fit=crop&w=800&q=80',
+      normal_idr: 199000,
+      promo_idr: 149000,
+    },
+    {
+      id: 'trendline-sr-utbot',
+      slug: 'aemeth-trendline-breakout-sr-utbot',
+      title: 'Aemeth Trendline Breakout + S/R + UT Bot',
+      short_desc: 'Kombinasi otomatis auto-trendline, dynamic support/resistance zones, dan mesin sinyal volatilitas UT Bot.',
+      long_desc: 'Suite lengkap yang memproyeksikan trendline diagonal dinamis, support resistance horizontal kunci, dan trigger sinyal ATR-trailing UT Bot dalam satu chart.',
+      type: 'open_source',
+      category: 'trend',
+      price_cents: 2490,
+      discount_cents: 510,
+      version: '4.2.0',
+      features: ['Auto Dynamic Trendline Breakout Detection', 'Key Horizontal S/R Swing High/Low Zones', 'Integrated Volatility ATR UT Bot Alerts', 'Multi-Timeframe Confluence'],
+      thumb: 'https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80',
+      normal_idr: 299000,
+      promo_idr: 249000,
+    },
+  ];
+
+  for (const p of prods) {
+    insertOrReplaceProduct.run(
+      p.id,
+      p.slug,
+      p.title,
+      p.short_desc,
+      p.long_desc,
+      p.type,
+      p.category,
+      p.price_cents,
+      p.discount_cents,
+      p.version,
+      JSON.stringify(p.features),
+      `aemeth_${p.id.replace(/-/g, '_')}_script`,
+      1,
+      p.thumb,
+      JSON.stringify([p.thumb]),
+      p.promo_idr,
+      p.normal_idr,
+      p.promo_idr
+    );
+  }
 }
 
 // Scrypt password hasher

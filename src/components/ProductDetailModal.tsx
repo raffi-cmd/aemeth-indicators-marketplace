@@ -236,6 +236,21 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             )}
           </div>
 
+          {/* Permanent License Terms Callout */}
+          <div className="flex items-start gap-2.5 text-[11px] text-slate-300 bg-blue-950/30 p-3.5 rounded-xl border border-blue-500/30 leading-relaxed">
+            <ShieldCheck className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+            <div>
+              <strong className="text-white block mb-0.5 font-heading">
+                {lang === 'id' ? 'Ketentuan Lisensi Permanen Source Code (v1.0):' : 'Permanent Source Code License (v1.0):'}
+              </strong>
+              <p>
+                {lang === 'id'
+                  ? 'Lisensi bersifat permanen untuk versi yang dibeli dan berlaku untuk 1 pengguna (penggunaan pribadi). Dilarang mendistribusikan ulang, menjual kembali, atau mempublikasikan kode ke publik. Pembaruan versi besar (major version upgrade) tidak termasuk otomatis. Indikator adalah alat bantu analisis teknikal dan tidak menjamin profit finansial.'
+                  : 'Permanent personal license for the purchased version (single-user personal use). Redistribution, resale, or public publishing of the source code is strictly prohibited. Future major version upgrades are not included automatically. Technical analysis tool only; financial profit is not guaranteed.'}
+              </p>
+            </div>
+          </div>
+
           {/* Catatan / Risk Disclaimer */}
           <div className="flex items-start gap-2.5 text-[11px] text-slate-300 bg-black/40 p-3.5 rounded-xl border border-slate-800 leading-relaxed">
             <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
@@ -243,8 +258,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               <strong className="text-white block mb-0.5 font-heading">{lang === 'id' ? 'Catatan Penting:' : 'Important Notice:'}</strong>
               <p>
                 {lang === 'id'
-                  ? 'Indikator ini merupakan alat bantu analisis teknikal dan tidak menjamin keuntungan. Selalu lakukan pengujian serta pengelolaan risiko secara mandiri. Source code diberikan sesuai ketentuan lisensi produk Aemeth. Dilarang mendistribusikan ulang atau menjual kembali kode tanpa izin.'
-                  : 'This indicator is a technical analysis visualization tool and does not guarantee financial profit. Always conduct your own backtesting and apply prudent risk management. Source code is licensed for single-user personal use; unauthorized redistribution or resale is prohibited.'}
+                  ? 'Indikator ini merupakan alat bantu analisis teknikal dan tidak menjamin keuntungan. Selalu lakukan pengujian serta pengelolaan risiko secara mandiri.'
+                  : 'This indicator is a technical analysis visualization tool and does not guarantee financial profit. Always conduct your own backtesting and apply prudent risk management.'}
               </p>
             </div>
           </div>
@@ -255,6 +270,34 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between px-5 sm:px-6 py-4 border-t border-slate-800 bg-[#070b14] gap-3">
           <div>
             {(() => {
+              const normalIdr = product.normal_price_idr;
+              const promoIdr = product.promo_price_idr ?? product.price_idr;
+              const isPromo = product.is_promo_active && normalIdr && promoIdr && normalIdr > promoIdr;
+              const discountPercent = product.discount_percent || (isPromo ? Math.round(((normalIdr! - promoIdr!) / normalIdr!) * 100) : 0);
+
+              if (lang === 'id') {
+                return (
+                  <div>
+                    <div className="flex items-baseline gap-2 flex-wrap">
+                      <span className="text-2xl sm:text-3xl font-extrabold font-heading text-white">
+                        Rp {(promoIdr ?? (product.price_idr || 0)).toLocaleString('id-ID')}
+                      </span>
+                      <span className="text-xs font-mono text-slate-400">IDR</span>
+                      {isPromo && (
+                        <span className="text-xs line-through text-slate-500 font-mono">
+                          Rp {normalIdr.toLocaleString('id-ID')}
+                        </span>
+                      )}
+                      {isPromo && discountPercent > 0 && (
+                        <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">
+                          -{discountPercent}%
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              }
+
               const pInfo = getPriceAmount(product.price_cents, lang, product.price_idr);
               return (
                 <div className="flex items-baseline gap-1.5 flex-wrap">
@@ -264,9 +307,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   <span className="text-xs font-mono text-slate-400">{pInfo.currency}</span>
                   {product.discount_cents ? (
                     <span className="text-xs line-through text-slate-500 font-mono ml-2">
-                      {lang === 'id' && product.discount_idr && product.price_idr
-                        ? `Rp ${(product.price_idr + product.discount_idr).toLocaleString('id-ID')}`
-                        : `$${((product.price_cents + product.discount_cents) / 100).toFixed(0)}`}
+                      ${((product.price_cents + product.discount_cents) / 100).toFixed(0)}
                     </span>
                   ) : null}
                 </div>

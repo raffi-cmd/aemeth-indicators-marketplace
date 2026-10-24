@@ -36,6 +36,10 @@ export interface Product {
   category: ProductCategory;
   price_cents: number;
   price_idr?: number;
+  normal_price_idr?: number;
+  promo_price_idr?: number;
+  is_promo_active?: boolean;
+  discount_percent?: number;
   discount_cents?: number;
   discount_idr?: number;
   version: string;
@@ -61,6 +65,7 @@ export interface Product {
   thumbnail_url: string;
   preview_images?: string[];
   included_product_ids?: string[]; // for bundles
+  bundle_type?: 'starter' | 'pro' | 'ultimate';
   created_at: string;
 }
 
@@ -75,6 +80,9 @@ export interface OrderItem {
   product_title: string;
   product_type: ProductType;
   unit_price_cents: number;
+  product_version?: string;
+  normal_price_idr?: number;
+  effective_price_idr?: number;
 }
 
 export interface Order {
@@ -83,6 +91,13 @@ export interface Order {
   user_id?: string;
   access_token?: string;
   total_cents: number;
+  total_idr?: number;
+  subtotal_idr?: number;
+  bundle_type?: 'starter' | 'pro' | 'ultimate';
+  bundle_discount_idr?: number;
+  total_savings_idr?: number;
+  license_version?: string;
+  license_agreed_at?: string;
   currency: string;
   status: OrderStatus;
   payment_method: PaymentMethod;

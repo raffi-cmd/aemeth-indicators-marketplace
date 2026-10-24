@@ -6,6 +6,13 @@ import multer from 'multer';
 import { db } from '../db.ts';
 import { requireAuth, type AuthRequest } from '../auth.ts';
 
+import {
+  getProductPrice,
+  calculateBundlePrice,
+  resolveProductId,
+  LICENSE_CONFIG,
+} from '../../src/config/pricing.ts';
+
 export const orderRoutes = Router();
 
 // Configure multer for payment receipts
@@ -92,7 +99,15 @@ function provisionDelivery(order: any, product: any) {
 // POST create order (authenticated or guest with email)
 orderRoutes.post('/', (req: AuthRequest, res) => {
   try {
-    const { product_ids, payment_method, customer_email, customer_name, customer_tv_username } = req.body;
+    const {
+      product_ids,
+      payment_method,
+      customer_email,
+      customer_name,
+      customer_tv_username,
+      bundle_type,
+      license_accepted,
+    } = req.body;
 
     if (!Array.isArray(product_ids) || product_ids.length === 0) {
       return res.status(400).json({ success: false, error: 'At least one product must be selected' });
@@ -100,6 +115,15 @@ orderRoutes.post('/', (req: AuthRequest, res) => {
 
     if (!payment_method) {
       return res.status(400).json({ success: false, error: 'Payment method is required' });
+    }
+
+    // Check duplicate products
+    const uniqueIds = new Set(product_ids.map(resolveProductId));
+    if (uniqueIds.size !== product_ids.length) {
+      return res.status(400).json({
+        success: false,
+        error: 'Duplicate products detected in order. Each indicator can only be selected once.',
+      });
     }
 
     // Determine user
@@ -128,45 +152,118 @@ orderRoutes.post('/', (req: AuthRequest, res) => {
       }
     }
 
-    // Server-side price calculation (strictly ignore any client-sent price)
+    // Server-side authoritative price calculation (ignore any client-provided price)
+    let totalIdr = 0;
+    let subtotalIdr = 0;
+    let bundleDiscountIdr = 0;
+    let totalSavingsIdr = 0;
     let totalCents = 0;
     const itemsToInsert: any[] = [];
 
-    for (const pId of product_ids) {
-      const product = db.prepare('SELECT id, title, type, price_cents, is_published FROM products WHERE id = ?').get(pId) as any;
-      if (!product || !product.is_published) {
-        return res.status(400).json({ success: false, error: `Product not available: ${pId}` });
+    if (bundle_type) {
+      const bundleCalc = calculateBundlePrice(bundle_type, product_ids);
+      if (!bundleCalc.isValid) {
+        return res.status(400).json({ success: false, error: bundleCalc.error || 'Invalid bundle package configuration' });
       }
 
-      totalCents += product.price_cents;
-      itemsToInsert.push(product);
+      totalIdr = bundleCalc.finalPriceIdr;
+      subtotalIdr = bundleCalc.totalNormalPriceIdr;
+      bundleDiscountIdr = bundleCalc.bundleDiscountAmountIdr;
+      totalSavingsIdr = bundleCalc.totalSavingsIdr;
+      totalCents = Math.round(totalIdr / 160);
+
+      for (const prod of bundleCalc.selectedProducts) {
+        itemsToInsert.push({
+          id: prod.id,
+          title: prod.name,
+          type: 'open_source',
+          version: prod.version,
+          unit_price_cents: prod.effectivePriceCents,
+          normal_price_idr: prod.normalPriceIdr,
+          effective_price_idr: prod.effectivePriceIdr,
+        });
+      }
+    } else {
+      for (const rawId of product_ids) {
+        const resolvedId = resolveProductId(rawId);
+        const priceInfo = getProductPrice(resolvedId);
+
+        if (!priceInfo) {
+          return res.status(400).json({ success: false, error: `Product not available: ${rawId}` });
+        }
+
+        totalIdr += priceInfo.effectivePriceIdr;
+        subtotalIdr += priceInfo.normalPriceIdr;
+        totalSavingsIdr += priceInfo.discountIdr;
+        totalCents += priceInfo.effectivePriceCents;
+
+        itemsToInsert.push({
+          id: priceInfo.id,
+          title: priceInfo.name,
+          type: 'open_source',
+          version: priceInfo.version,
+          unit_price_cents: priceInfo.effectivePriceCents,
+          normal_price_idr: priceInfo.normalPriceIdr,
+          effective_price_idr: priceInfo.effectivePriceIdr,
+        });
+      }
     }
 
     const orderId = 'ord_' + crypto.randomUUID().replace(/-/g, '').slice(0, 16);
     const orderNumber = 'AEM-' + Math.floor(1000000 + Math.random() * 9000000);
+    const licenseAgreedAt = license_accepted ? new Date().toISOString() : null;
 
-    // Create Order
+    // Create Order with IDR and License fields
     db.prepare(`
-      INSERT INTO orders (id, order_number, user_id, total_cents, currency, status, payment_method, customer_email, customer_tv_username)
-      VALUES (?, ?, ?, ?, 'USD', 'pending', ?, ?, ?)
-    `).run(orderId, orderNumber, userId, totalCents, payment_method, email, tvUsername || null);
+      INSERT INTO orders (
+        id, order_number, user_id, total_cents, currency, status, payment_method, customer_email, customer_tv_username,
+        total_idr, subtotal_idr, bundle_type, bundle_discount_idr, total_savings_idr, license_version, license_agreed_at
+      ) VALUES (?, ?, ?, ?, 'IDR', 'pending', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      orderId,
+      orderNumber,
+      userId,
+      totalCents,
+      payment_method,
+      email,
+      tvUsername || null,
+      totalIdr,
+      subtotalIdr,
+      bundle_type || null,
+      bundleDiscountIdr,
+      totalSavingsIdr,
+      LICENSE_CONFIG.version,
+      licenseAgreedAt
+    );
 
-    // Create Order Items
+    // Create Order Items with IDR prices and version
     const insertItem = db.prepare(`
-      INSERT INTO order_items (id, order_id, product_id, product_title, product_type, unit_price_cents)
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO order_items (
+        id, order_id, product_id, product_title, product_type, unit_price_cents,
+        product_version, normal_price_idr, effective_price_idr
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
     for (const item of itemsToInsert) {
-      insertItem.run('oi_' + crypto.randomUUID().slice(0, 12), orderId, item.id, item.title, item.type, item.price_cents);
+      insertItem.run(
+        'oi_' + crypto.randomUUID().slice(0, 12),
+        orderId,
+        item.id,
+        item.title,
+        item.type,
+        item.unit_price_cents,
+        item.version,
+        item.normal_price_idr,
+        item.effective_price_idr
+      );
     }
 
     // Create Payment Record
     const paymentId = 'pay_' + crypto.randomUUID().slice(0, 12);
     db.prepare(`
       INSERT INTO payments (id, order_id, method, amount_cents, currency, status)
-      VALUES (?, ?, ?, ?, 'USD', 'awaiting_payment')
-    `).run(paymentId, orderId, payment_method, totalCents);
+      VALUES (?, ?, ?, ?, 'IDR', 'awaiting_payment')
+    `).run(paymentId, orderId, payment_method, totalIdr);
 
     res.status(201).json({
       success: true,
@@ -174,10 +271,16 @@ orderRoutes.post('/', (req: AuthRequest, res) => {
         id: orderId,
         order_number: orderNumber,
         total_cents: totalCents,
-        currency: 'USD',
+        total_idr: totalIdr,
+        subtotal_idr: subtotalIdr,
+        bundle_type: bundle_type || null,
+        bundle_discount_idr: bundleDiscountIdr,
+        total_savings_idr: totalSavingsIdr,
+        currency: 'IDR',
         status: 'pending',
         payment_method,
         customer_email: email,
+        license_version: LICENSE_CONFIG.version,
       },
     });
   } catch (err: any) {

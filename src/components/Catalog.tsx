@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Search, Filter, ShieldCheck, Code, Lock, Layers, ArrowRight, Eye, Check } from 'lucide-react';
+import { Search, Filter, ShieldCheck, Code, Lock, Layers, ArrowRight, Eye, Check, Tag } from 'lucide-react';
 import { useTranslation } from '../i18n/LanguageContext';
-import { getPriceAmount } from '../utils/currency';
+import { getPriceAmount, formatIdr } from '../utils/currency';
+import { BundleSection } from './BundleSection';
+import { calculateBundlePrice } from '../config/pricing';
 import type { Product } from '../types/marketplace';
 
 interface CatalogProps {
@@ -9,6 +11,7 @@ interface CatalogProps {
   isLoading: boolean;
   onSelectProduct: (product: Product) => void;
   onQuickBuy: (product: Product) => void;
+  onCheckoutBundle?: (bundleType: 'starter' | 'pro' | 'ultimate', selectedProductIds: string[]) => void;
 }
 
 export const Catalog: React.FC<CatalogProps> = ({
@@ -16,6 +19,7 @@ export const Catalog: React.FC<CatalogProps> = ({
   isLoading,
   onSelectProduct,
   onQuickBuy,
+  onCheckoutBundle,
 }) => {
   const { t, lang } = useTranslation();
   const [search, setSearch] = useState('');
@@ -52,8 +56,47 @@ export const Catalog: React.FC<CatalogProps> = ({
     { id: 'bundle', label: t.catalog.catBundle },
   ];
 
+  const handleBundleCheckout = (bundleType: 'starter' | 'pro' | 'ultimate', selectedProductIds: string[]) => {
+    if (onCheckoutBundle) {
+      onCheckoutBundle(bundleType, selectedProductIds);
+      return;
+    }
+    const calc = calculateBundlePrice(bundleType, selectedProductIds);
+    const bundleProduct: Product = {
+      id: `bundle-${bundleType}`,
+      slug: `${bundleType}-pack`,
+      title: calc.bundleName,
+      title_id: calc.bundleName,
+      title_en: calc.bundleName,
+      short_desc: `Paket bundling ${calc.productCount} indikator pilihan`,
+      short_desc_id: `Paket bundling ${calc.productCount} indikator pilihan`,
+      short_desc_en: `Bundle package of ${calc.productCount} selected indicators`,
+      long_desc: `Paket bundling ${calc.productCount} indikator pilihan dengan diskon bundling ${Math.round(calc.bundleDiscountRate * 100)}%`,
+      type: 'bundle',
+      category: 'bundle',
+      bundle_type: bundleType,
+      price_idr: calc.finalPriceIdr,
+      normal_price_idr: calc.totalNormalPriceIdr,
+      discount_idr: calc.totalSavingsIdr,
+      discount_percent: calc.totalSavingsPercent,
+      price_cents: Math.round(calc.finalPriceIdr / 160),
+      discount_cents: Math.round(calc.totalSavingsIdr / 160),
+      version: '2026.2',
+      is_published: true,
+      thumbnail_url: './products/trendline-sr-utbot.jpg',
+      included_product_ids: selectedProductIds,
+      created_at: new Date().toISOString(),
+      features: [
+        `${calc.productCount} File Kode Sumber Pine Script (.pine & .txt)`,
+        `Diskon Bundling ${Math.round(calc.bundleDiscountRate * 100)}%`,
+        'Lisensi Permanen untuk Versi yang Dibeli',
+      ],
+    };
+    onQuickBuy(bundleProduct);
+  };
+
   return (
-    <section id="catalog-section" className="w-full py-12">
+    <section id="catalog-section" className="w-full py-12 space-y-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Header Title */}
@@ -190,7 +233,7 @@ export const Catalog: React.FC<CatalogProps> = ({
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0b1120] via-transparent to-black/40"></div>
 
                     {/* Badge top-left */}
-                    <div className="absolute top-3.5 left-3.5 flex items-center gap-1.5">
+                    <div className="absolute top-3.5 left-3.5 flex items-center gap-1.5 flex-wrap max-w-[80%]">
                       {isOpenSource && (
                         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-[10px] font-bold text-emerald-300 font-mono">
                           <Code className="w-3 h-3" /> {t.catalog.openSourceType}
@@ -206,6 +249,12 @@ export const Catalog: React.FC<CatalogProps> = ({
                           <Layers className="w-3 h-3" /> {t.catalog.bundleType}
                         </span>
                       )}
+                      {product.is_promo_active && product.discount_percent ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-950/90 border border-red-500/50 text-[10px] font-extrabold text-red-300 font-mono">
+                          <Tag className="w-2.5 h-2.5 text-red-400" />
+                          {t.catalog.savePercent} {product.discount_percent}%
+                        </span>
+                      ) : null}
                     </div>
 
                     {/* Version Badges top-right */}
@@ -253,26 +302,29 @@ export const Catalog: React.FC<CatalogProps> = ({
                     {/* Price and CTA row */}
                     <div className="pt-4 border-t border-slate-800 flex items-center justify-between gap-2">
                       <div>
-                        {(() => {
-                          const pInfo = getPriceAmount(product.price_cents, lang, product.price_idr);
-                          return (
-                            <div className="flex items-baseline gap-1.5 flex-wrap">
-                              <span className="text-xl sm:text-2xl font-extrabold font-heading text-white">
-                                {pInfo.amount}
-                              </span>
-                              <span className="text-[10px] sm:text-[11px] font-mono text-slate-400">{pInfo.currency}</span>
-                              {product.discount_cents ? (
-                                <span className="text-xs line-through text-slate-500 font-mono">
-                                  {lang === 'id' && product.discount_idr && product.price_idr
-                                    ? `Rp ${(product.price_idr + product.discount_idr).toLocaleString('id-ID')}`
-                                    : `$${((product.price_cents + product.discount_cents) / 100).toFixed(0)}`}
-                                </span>
-                              ) : null}
-                            </div>
-                          );
-                        })()}
-                        <span className="text-[10px] text-slate-500 block">
-                          {t.catalog.lifetimeUpdates}
+                        <div className="flex items-baseline gap-1.5 flex-wrap">
+                          <span className="text-xl sm:text-2xl font-extrabold font-heading text-white">
+                            {lang === 'id' && product.price_idr
+                              ? formatIdr(product.price_idr)
+                              : `$${(product.price_cents / 100).toFixed(0)}`}
+                          </span>
+                          {product.is_promo_active && product.normal_price_idr && product.normal_price_idr > (product.price_idr || 0) && (
+                            <span className="text-xs line-through text-slate-500 font-mono ml-1">
+                              {lang === 'id'
+                                ? formatIdr(product.normal_price_idr)
+                                : `$${((product.price_cents + (product.discount_cents || 0)) / 100).toFixed(0)}`}
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-[10px] block mt-0.5">
+                          {product.is_promo_active ? (
+                            <span className="text-amber-400 font-mono font-semibold flex items-center gap-1">
+                              <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                              {t.catalog.launchPromoBadge}
+                            </span>
+                          ) : (
+                            <span className="text-slate-500">{t.catalog.lifetimeUpdates}</span>
+                          )}
                         </span>
                       </div>
 
@@ -303,6 +355,12 @@ export const Catalog: React.FC<CatalogProps> = ({
         )}
 
       </div>
+
+      {/* Special Bundle Packages Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <BundleSection products={products} onCheckoutBundle={handleBundleCheckout} />
+      </div>
+
     </section>
   );
 };
