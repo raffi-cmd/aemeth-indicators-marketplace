@@ -27,24 +27,24 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const features = (lang === 'id' ? product.features_id || product.features : product.features_en || product.features) || [];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-3xl bg-[#0b1120] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+      <div className="relative w-full max-w-3xl bg-[#0b1120] border border-slate-800 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl my-4 sm:my-8 max-w-full">
         
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-[#070b14]">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-800 bg-[#070b14]">
+          <div className="flex items-center gap-2 flex-wrap">
             {isOpenSource && (
-              <span className="px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-[10px] font-bold text-emerald-300 flex items-center gap-1 font-mono">
+              <span className="px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-[10px] font-bold text-emerald-300 flex items-center gap-1 font-mono">
                 <Code className="w-3 h-3" /> {t.productDetail.openSourceBadge}
               </span>
             )}
             {isPrivate && (
-              <span className="px-3 py-1 rounded-full bg-blue-950/80 border border-blue-500/30 text-[10px] font-bold text-blue-300 flex items-center gap-1 font-mono">
+              <span className="px-2.5 py-0.5 rounded-full bg-blue-950/80 border border-blue-500/30 text-[10px] font-bold text-blue-300 flex items-center gap-1 font-mono">
                 <Lock className="w-3 h-3" /> {t.productDetail.privateBadge}
               </span>
             )}
             {isBundle && (
-              <span className="px-3 py-1 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-extrabold flex items-center gap-1 font-mono">
+              <span className="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-extrabold flex items-center gap-1 font-mono">
                 <Layers className="w-3 h-3" /> {t.productDetail.bundleBadge}
               </span>
             )}
@@ -53,17 +53,17 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+            className="p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 sm:p-8 space-y-6 max-h-[80vh] overflow-y-auto">
+        <div className="p-4 sm:p-8 space-y-5 sm:space-y-6 max-h-[82vh] overflow-y-auto">
           
           {/* Header Image & Title */}
-          <div className="relative h-56 rounded-2xl overflow-hidden border border-slate-800 bg-black">
+          <div className="relative h-40 sm:h-56 rounded-2xl overflow-hidden border border-slate-800 bg-black">
             <img
               src={product.thumbnail_url}
               alt={title}
@@ -71,8 +71,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0b1120] via-transparent to-black/30"></div>
             
-            <div className="absolute bottom-4 left-4 right-4">
-              <h2 className="text-2xl sm:text-3xl font-extrabold font-heading text-white">
+            <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4">
+              <h2 className="text-xl sm:text-3xl font-extrabold font-heading text-white">
                 {title}
               </h2>
             </div>
@@ -267,7 +267,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         </div>
 
         {/* Modal Footer / Checkout CTA */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between px-5 sm:px-6 py-4 border-t border-slate-800 bg-[#070b14] gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-t border-slate-800 bg-[#070b14] gap-3">
           <div>
             {(() => {
               const normalIdr = product.normal_price_idr;

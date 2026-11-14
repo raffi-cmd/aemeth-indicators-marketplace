@@ -24,32 +24,32 @@ export const Hero: React.FC<HeroProps> = ({ onExplore, onHowItWorks, onViewBundl
           <div className="lg:col-span-7 space-y-8">
             
             {/* Pill Tag */}
-            <div className="inline-flex items-center gap-2 bg-[#0b1120] border border-blue-500/30 rounded-full px-3.5 py-1.5 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-              <span className="text-xs font-bold uppercase tracking-wider text-blue-300 font-mono">
+            <div className="inline-flex max-w-full items-center gap-2 bg-[#0b1120] border border-blue-500/30 rounded-full px-3 py-1.5 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse shrink-0"></span>
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-blue-300 font-mono truncate">
                 {t.hero.tag}
               </span>
             </div>
 
             {/* Headline */}
             <div className="space-y-2">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight font-heading leading-[1.08] text-white">
+              <h1 className="text-[28px] xs:text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight font-heading leading-[1.15] sm:leading-[1.08] text-white break-words">
                 {t.hero.headlinePart1}
                 <br />
                 <span className="text-gradient-blue drop-shadow-sm">
                   {t.hero.headlinePart2}
                 </span>
               </h1>
-              <p className="text-sm sm:text-base text-slate-400 max-w-xl pt-2 leading-relaxed font-light">
+              <p className="text-xs sm:text-base text-slate-400 max-w-xl pt-2 leading-relaxed font-light">
                 {t.hero.description}
               </p>
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-3.5 pt-1">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1 w-full sm:w-auto">
               <button
                 onClick={onExplore}
-                className="group flex items-center gap-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-bold rounded-full px-6 py-3.5 shadow-lg shadow-blue-500/25 transition-all cursor-pointer"
+                className="group flex items-center justify-center gap-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-bold rounded-full px-6 py-3.5 shadow-lg shadow-blue-500/25 transition-all cursor-pointer"
               >
                 <span>{t.hero.ctaPrimary}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -57,7 +57,7 @@ export const Hero: React.FC<HeroProps> = ({ onExplore, onHowItWorks, onViewBundl
 
               <button
                 onClick={onHowItWorks}
-                className="flex items-center gap-2 bg-[#0b1120] hover:bg-slate-800 text-slate-200 hover:text-white text-xs sm:text-sm font-semibold rounded-full px-5 py-3.5 border border-slate-700 hover:border-blue-500/40 transition-all cursor-pointer"
+                className="flex items-center justify-center gap-2 bg-[#0b1120] hover:bg-slate-800 text-slate-200 hover:text-white text-xs sm:text-sm font-semibold rounded-full px-5 py-3.5 border border-slate-700 hover:border-blue-500/40 transition-all cursor-pointer"
               >
                 <span>{t.hero.ctaSecondary}</span>
               </button>
@@ -101,7 +101,7 @@ export const Hero: React.FC<HeroProps> = ({ onExplore, onHowItWorks, onViewBundl
           {/* Right Column: Clean Institutional Technical Preview Card */}
           <div className="lg:col-span-5 relative flex flex-col items-center justify-center">
             
-            <div className="relative w-full max-w-[440px] rounded-3xl overflow-hidden border border-slate-800 bg-[#0b1120] p-6 shadow-2xl space-y-5">
+            <div className="relative w-full max-w-[440px] rounded-3xl overflow-hidden border border-slate-800 bg-[#0b1120] p-4 sm:p-6 shadow-2xl space-y-5">
               
               {/* Header Bar */}
               <div className="flex items-center justify-between pb-3 border-b border-slate-800">
@@ -121,7 +121,7 @@ export const Hero: React.FC<HeroProps> = ({ onExplore, onHowItWorks, onViewBundl
               </div>
 
               {/* Code Snippet Box */}
-              <div className="bg-[#070b14] rounded-2xl p-4 border border-slate-800/80 font-mono text-[11px] space-y-1.5 text-slate-300">
+              <div className="bg-[#070b14] rounded-2xl p-3.5 sm:p-4 border border-slate-800/80 font-mono text-[11px] space-y-1.5 text-slate-300 overflow-x-auto no-scrollbar">
                 <div className="text-slate-500">// SECTION 2 DIRECTIVE: CANDLE 1 CLOSED BAR</div>
                 <div><span className="text-blue-400">bar_closed</span> = barstate.isconfirmed</div>
                 <div><span className="text-blue-400">c_high</span> = high[1], <span className="text-blue-400">c_low</span> = low[1]</div>

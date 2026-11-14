@@ -166,7 +166,7 @@ export const Catalog: React.FC<CatalogProps> = ({
           </div>
 
           {/* Category Tabs */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar w-full max-w-full touch-pan-x">
             {categories.map((cat) => (
               <button
                 key={cat.id}
@@ -220,7 +220,7 @@ export const Catalog: React.FC<CatalogProps> = ({
               return (
                 <div
                   key={product.id}
-                  className="group bg-[#0b1120] border border-slate-800 hover:border-blue-500/40 rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:shadow-xl"
+                  className="group bg-[#0b1120] border border-slate-800 hover:border-blue-500/40 rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:shadow-xl max-w-full"
                 >
                   {/* Card Thumbnail */}
                   <div className="relative h-48 w-full overflow-hidden bg-black">
@@ -279,7 +279,7 @@ export const Catalog: React.FC<CatalogProps> = ({
                   </div>
 
                   {/* Card Body */}
-                  <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                  <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
                     <div className="space-y-2">
                       <h3 className="text-lg font-bold font-heading text-white group-hover:text-blue-400 transition-colors line-clamp-1">
                         {title}

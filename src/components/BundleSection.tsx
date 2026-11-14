@@ -1,4 +1,4 @@
-﻿import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Layers, Check, Sparkles, Shield, ArrowRight, Info, AlertCircle } from 'lucide-react';
 import { useTranslation } from '../i18n/LanguageContext';
 import { calculateBundlePrice, BUNDLE_DEFINITIONS, isLaunchPromoActive } from '../config/pricing';
@@ -85,7 +85,7 @@ export const BundleSection: React.FC<BundleSectionProps> = ({ products, onChecko
   };
 
   return (
-    <div id="bundle-builder" className="w-full bg-[#0b1120] border border-blue-500/30 rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl space-y-8 relative overflow-hidden">
+    <div id="bundle-builder" className="w-full max-w-full bg-[#0b1120] border border-blue-500/30 rounded-3xl p-4 sm:p-8 lg:p-10 shadow-2xl space-y-6 sm:space-y-8 relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute -top-32 -right-32 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -179,7 +179,7 @@ export const BundleSection: React.FC<BundleSectionProps> = ({ products, onChecko
                       : 'bg-black/40 border-slate-800/80 text-slate-400 hover:border-slate-700'
                   } ${isDisabled ? 'cursor-default opacity-95' : 'cursor-pointer'}`}
                 >
-                  <div className="flex items-center gap-3 min-w-0">
+                  <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
                     <div
                       className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 transition-colors ${
                         isSelected
@@ -193,10 +193,10 @@ export const BundleSection: React.FC<BundleSectionProps> = ({ products, onChecko
                     <img
                       src={product.thumbnail_url}
                       alt={title}
-                      className="w-10 h-10 rounded-lg object-cover border border-slate-800 shrink-0"
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg object-cover border border-slate-800 shrink-0"
                     />
 
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <span className="text-xs sm:text-sm font-semibold text-white block truncate">
                         {title}
                       </span>

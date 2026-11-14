@@ -28,7 +28,7 @@ export const BentoFeatures: React.FC<BentoFeaturesProps> = ({ onExplore }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
           {/* Card 1: Large Featured Card */}
-          <div className="lg:col-span-7 bg-[#0b1120] border border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between overflow-hidden relative shadow-xl hover:border-blue-500/30 transition-all">
+          <div className="lg:col-span-7 bg-[#0b1120] border border-slate-800 rounded-3xl p-4 sm:p-8 flex flex-col justify-between overflow-hidden relative shadow-xl hover:border-blue-500/30 transition-all">
             <div className="space-y-4 relative z-10">
               <span className="inline-flex items-center gap-2 text-xs font-semibold text-blue-400 font-mono">
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
@@ -52,14 +52,14 @@ export const BentoFeatures: React.FC<BentoFeaturesProps> = ({ onExplore }) => {
             </div>
 
             {/* Code preview block */}
-            <div className="mt-8 rounded-2xl overflow-hidden border border-slate-800 bg-[#070b14] p-4 relative shadow-inner">
+            <div className="mt-8 rounded-2xl overflow-hidden border border-slate-800 bg-[#070b14] p-3.5 sm:p-4 relative shadow-inner max-w-full">
               <div className="flex items-center justify-between pb-3 border-b border-slate-800 text-[11px] font-mono text-slate-400">
                 <span className="text-blue-400 flex items-center gap-1.5">
-                  <Terminal className="w-3.5 h-3.5" /> AEMETH_LIQUIDITY_MATRIX.pine
+                  <Terminal className="w-3.5 h-3.5 shrink-0" /> <span className="truncate">AEMETH_LIQUIDITY_MATRIX.pine</span>
                 </span>
-                <span className="text-slate-400">TradingView v5</span>
+                <span className="text-slate-400 shrink-0">TradingView v5</span>
               </div>
-              <div className="pt-3 font-mono text-[11px] text-slate-300 space-y-1 overflow-x-auto">
+              <div className="pt-3 font-mono text-[11px] text-slate-300 space-y-1 overflow-x-auto no-scrollbar max-w-full">
                 <div className="text-slate-500">// Fixed Closed Bar confirmation (Prevents Candle 0 repaint)</div>
                 <div><span className="text-blue-400">closed_high</span> = high[1]</div>
                 <div><span className="text-blue-400">closed_low</span> = low[1]</div>

@@ -110,7 +110,7 @@ export function App() {
   const bundleProduct = products.find((p) => p.type === 'bundle');
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-zinc-100 flex flex-col antialiased selection:bg-blue-600/30 selection:text-white">
+    <div className="min-h-screen bg-[#070b14] text-zinc-100 flex flex-col antialiased selection:bg-blue-600/30 selection:text-white w-full max-w-full overflow-x-hidden">
       
       {/* Floating Pill Navbar */}
       <Navbar
@@ -126,7 +126,7 @@ export function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 w-full">
+      <main className="flex-1 w-full max-w-full overflow-x-hidden">
         {activeTab === 'home' && (
           <>
             <Hero
