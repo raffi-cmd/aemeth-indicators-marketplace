@@ -154,12 +154,12 @@ export const BUNDLE_DEFINITIONS: Record<'starter' | 'pro' | 'ultimate', BundleDe
   },
   ultimate: {
     type: 'ultimate',
-    requiredCount: 'all',
+    requiredCount: 5,
     discountRate: 0.25, // 25%
     nameId: 'Ultimate Pack',
     nameEn: 'Ultimate Pack',
-    descriptionId: 'Seluruh indikator aktif Aemeth dalam satu paket lengkap dengan diskon maksimal 25%.',
-    descriptionEn: 'All active Aemeth indicators in one comprehensive package with maximum 25% discount.',
+    descriptionId: 'Seluruh 5 indikator utama Aemeth dalam satu paket lengkap dengan diskon maksimal 25%.',
+    descriptionEn: 'All 5 core Aemeth indicators in one comprehensive package with maximum 25% discount.',
   },
 };
 

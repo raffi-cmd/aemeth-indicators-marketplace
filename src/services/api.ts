@@ -575,12 +575,12 @@ const SINGLE_INDICATORS: Product[] = [
     title: 'Aemeth SMC Entry/TP/SL Signal Panel V2',
     title_id: 'Aemeth SMC Entry/TP/SL Signal Panel V2',
     title_en: 'Aemeth SMC Entry/TP/SL Signal Panel V2',
-    short_desc: 'Deteksi struktur pasar BOS/CHoCH, Fair Value Gap, Order Block, sinyal BUY/SELL, serta level Entry, Stop Loss (SL), dan TP1-TP3 dengan panel skor sinyal real-time.',
-    short_desc_id: 'Deteksi struktur pasar BOS/CHoCH, Fair Value Gap, Order Block, sinyal BUY/SELL, serta level Entry, Stop Loss (SL), dan TP1-TP3 dengan panel skor sinyal real-time.',
-    short_desc_en: 'Smart Money Concepts suite with automatic BOS/CHoCH, Fair Value Gaps, Order Blocks, BUY/SELL signals, Entry/SL/TP1-TP3 levels, and live Signal Score panel.',
-    long_desc: 'Aemeth SMC Entry/TP/SL Signal Panel V2 adalah indikator TradingView tingkat lanjut yang dirancang untuk membantu trader menganalisis pergerakan harga berbasis Smart Money Concepts (SMC) dan struktur pasar institusional.\n\nIndikator mendeteksi Break of Structure (BOS), Change of Character (CHoCH), Order Block (OB), dan Fair Value Gap (FVG) secara otomatis. Dilengkapi sinyal BUY dan SELL dengan proyeksi visual level Entry, Stop Loss (SL), dan tiga target Take Profit (TP1, TP2, TP3) berbasis rasio Risk to Reward (RR) yang fleksibel.\n\nDilengkapi filter volatilitas berbasis ATR dan filter cooldown untuk meminimalkan sinyal palsu saat konsolidasi, serta panel skor kekuatan sinyal langsung pada chart untuk membantu pengambilan keputusan yang lebih objektif.',
-    long_desc_id: 'Aemeth SMC Entry/TP/SL Signal Panel V2 adalah indikator TradingView tingkat lanjut yang dirancang untuk membantu trader menganalisis pergerakan harga berbasis Smart Money Concepts (SMC) dan struktur pasar institusional.\n\nIndikator mendeteksi Break of Structure (BOS), Change of Character (CHoCH), Order Block (OB), dan Fair Value Gap (FVG) secara otomatis. Dilengkapi sinyal BUY dan SELL dengan proyeksi visual level Entry, Stop Loss (SL), dan tiga target Take Profit (TP1, TP2, TP3) berbasis rasio Risk to Reward (RR) yang fleksibel.\n\nDilengkapi filter volatilitas berbasis ATR dan filter cooldown untuk meminimalkan sinyal palsu saat konsolidasi, serta panel skor kekuatan sinyal langsung pada chart untuk membantu pengambilan keputusan yang lebih objektif.',
-    long_desc_en: 'Aemeth SMC Entry/TP/SL Signal Panel V2 is an institutional-grade TradingView indicator designed for Smart Money Concepts (SMC) and market structure analysis.\n\nAutomatically identifies Break of Structure (BOS), Change of Character (CHoCH), Order Blocks (OB), and Fair Value Gaps (FVG). Features high-probability BUY/SELL signals with visual Entry, Stop Loss (SL), and TP1, TP2, TP3 projection levels based on customizable Risk-to-Reward (RR) ratios.\n\nIncludes ATR volatility filtering and cooldown timers to suppress market noise during consolidation, plus an on-chart real-time Signal Score panel for disciplined trade execution.',
+    short_desc: 'Indikator TradingView berbasis market structure untuk membantu mengidentifikasi potensi breakout, BUY/SELL, Entry, Stop Loss, dan target TP1–TP3, dilengkapi visualisasi zona serta panel informasi sinyal.',
+    short_desc_id: 'Indikator TradingView berbasis market structure untuk membantu mengidentifikasi potensi breakout, BUY/SELL, Entry, Stop Loss, dan target TP1–TP3, dilengkapi visualisasi zona serta panel informasi sinyal.',
+    short_desc_en: 'Market structure TradingView indicator to identify breakout setups, BUY/SELL signals, Entry, Stop Loss, and TP1–TP3 targets with liquidity zones and live signal panel.',
+    long_desc: 'Aemeth SMC Entry/TP/SL Signal Panel V2 adalah indikator TradingView yang dirancang untuk membantu trader mengamati breakout struktur pasar (market structure) dan potensi setup trading melalui sinyal BUY/SELL, level Entry, Stop Loss (SL), target Take Profit (TP1, TP2, TP3), serta zona analisis pasar seperti Fair Value Gap dan Order Block.\n\nDilengkapi filter volatilitas berbasis ATR dan pengaturan cooldown sinyal untuk meminimalkan noise pasar, serta panel informasi sinyal langsung pada chart untuk kemudahan pemantauan secara objektif.\n\nCatatan Penting:\nIndikator ini merupakan alat bantu analisis, bukan jaminan hasil trading. Keputusan trading dan pengelolaan risiko tetap menjadi tanggung jawab pengguna.',
+    long_desc_id: 'Aemeth SMC Entry/TP/SL Signal Panel V2 adalah indikator TradingView yang dirancang untuk membantu trader mengamati breakout struktur pasar (market structure) dan potensi setup trading melalui sinyal BUY/SELL, level Entry, Stop Loss (SL), target Take Profit (TP1, TP2, TP3), serta zona analisis pasar seperti Fair Value Gap dan Order Block.\n\nDilengkapi filter volatilitas berbasis ATR dan pengaturan cooldown sinyal untuk meminimalkan noise pasar, serta panel informasi sinyal langsung pada chart untuk kemudahan pemantauan secara objektif.\n\nCatatan Penting:\nIndikator ini merupakan alat bantu analisis, bukan jaminan hasil trading. Keputusan trading dan pengelolaan risiko tetap menjadi tanggung jawab pengguna.',
+    long_desc_en: 'Aemeth SMC Entry/TP/SL Signal Panel V2 is an indicator designed to help users observe market structure breakouts and potential trading setups through BUY/SELL signals, entry levels, stop loss, take profit targets, and market-analysis zones.\n\nEquipped with ATR volatility filtering, signal cooldown settings, and a live signal information panel directly on the chart.\n\nDisclaimer:\nThis indicator is an analytical tool and does not guarantee trading results. Trading decisions and risk management remain the sole responsibility of the user.',
     type: 'open_source',
     category: 'trend',
     version: '2.1.0',
@@ -588,76 +588,76 @@ const SINGLE_INDICATORS: Product[] = [
     release_date: '2026-03-25',
     changelog: [
       'v2.1.0: Real-time Signal Score panel & multi-timeframe ATR cooldown filtering',
-      'v2.0.0: Smart Money Concepts core engine rewrite with automated BOS/CHoCH & Order Blocks'
+      'v2.0.0: Smart Money Concepts core engine with automated BOS/CHoCH, FVG, & Order Blocks'
     ],
     changelog_id: [
       'v2.1.0: Panel Signal Score real-time & filter cooldown volatilitas ATR',
-      'v2.0.0: Arsitektur Smart Money Concepts baru dengan deteksi otomatis BOS/CHoCH dan Order Block'
+      'v2.0.0: Arsitektur Smart Money Concepts baru dengan deteksi otomatis BOS/CHoCH, FVG, dan Order Block'
     ],
     changelog_en: [
       'v2.1.0: Real-time Signal Score panel & multi-timeframe ATR cooldown filtering',
-      'v2.0.0: Smart Money Concepts core engine rewrite with automated BOS/CHoCH & Order Blocks'
+      'v2.0.0: Smart Money Concepts core engine with automated BOS/CHoCH, FVG, & Order Blocks'
     ],
     compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
     compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
     compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
     features: [
-      'Market Structure: Deteksi otomatis Break of Structure (BOS) dan Change of Character (CHoCH).',
-      'Sinyal BUY & SELL: Penanda sinyal terkonfirmasi dilengkapi level Entry, SL, dan TP1/TP2/TP3 visual.',
-      'Risk to Reward (RR): Pengaturan rasio risk/reward yang dapat disesuaikan dengan manajemen risiko.',
-      'Visualisasi FVG & Order Block: Kotak zona likuiditas Fair Value Gap dan Order Block terplot rapi di chart.',
-      'Filter Volatilitas ATR & Cooldown: Mengurangi false breakout dan mencegah sinyal beruntun palsu.',
-      'Panel Signal Score: Dashboard ringkas penilai kekuatan sinyal real-time langsung di layar chart.',
-      'TradingView Alerts: Notifikasi app TradingView & webhook siap pakai untuk trigger sinyal dan BOS.',
-      'Pengaturan Parameter Fleksibel: Gaya visual, warna level, dan sensitivitas dapat diatur penuh.'
+      'Market Structure & Break of Structure.',
+      'BUY/SELL signals.',
+      'Entry, Stop Loss, TP1–TP3.',
+      'Fair Value Gap & Order Block.',
+      'ATR filter & cooldown.',
+      'Signal Score panel.',
+      'Customizable settings.',
+      'TradingView alerts.'
     ],
     features_id: [
-      'Market Structure: Deteksi otomatis Break of Structure (BOS) dan Change of Character (CHoCH).',
-      'Sinyal BUY & SELL: Penanda sinyal terkonfirmasi dilengkapi level Entry, SL, dan TP1/TP2/TP3 visual.',
-      'Risk to Reward (RR): Pengaturan rasio risk/reward yang dapat disesuaikan dengan manajemen risiko.',
-      'Visualisasi FVG & Order Block: Kotak zona likuiditas Fair Value Gap dan Order Block terplot rapi di chart.',
-      'Filter Volatilitas ATR & Cooldown: Mengurangi false breakout dan mencegah sinyal beruntun palsu.',
-      'Panel Signal Score: Dashboard ringkas penilai kekuatan sinyal real-time langsung di layar chart.',
-      'TradingView Alerts: Notifikasi app TradingView & webhook siap pakai untuk trigger sinyal dan BOS.',
-      'Pengaturan Parameter Fleksibel: Gaya visual, warna level, dan sensitivitas dapat diatur penuh.'
+      'Market Structure & Break of Structure.',
+      'BUY/SELL signals.',
+      'Entry, Stop Loss, TP1–TP3.',
+      'Fair Value Gap & Order Block.',
+      'ATR filter & cooldown.',
+      'Signal Score panel.',
+      'Customizable settings.',
+      'TradingView alerts.'
     ],
     features_en: [
-      'Market Structure: Automatic Break of Structure (BOS) and Change of Character (CHoCH) mapping.',
-      'BUY & SELL Signals: Confirmed signal triggers with visual Entry, Stop Loss (SL), and TP1-TP3 targets.',
-      'Risk to Reward (RR): Fully configurable risk/reward calculation tailored to your trading plan.',
-      'FVG & Order Block Visuals: Highlights institutional liquidity zones and unmitigated order blocks.',
-      'ATR & Cooldown Filters: Suppresses false breakouts and rapid whipsaws during ranging markets.',
-      'Signal Score Panel: Real-time strength meter displayed directly on chart for quick confluence reading.',
-      'TradingView Alerts: Instant app notifications and webhook integration ready for execution automation.',
-      'Flexible Parameters: Full customization over colors, lookback lengths, and trigger thresholds.'
+      'Market Structure & Break of Structure.',
+      'BUY/SELL signals.',
+      'Entry, Stop Loss, TP1–TP3.',
+      'Fair Value Gap & Order Block.',
+      'ATR filter & cooldown.',
+      'Signal Score panel.',
+      'Customizable settings.',
+      'TradingView alerts.'
     ],
     technical_specs_id: [
       { label: 'Platform', value: 'TradingView' },
       { label: 'Bahasa', value: 'Pine Script v5' },
-      { label: 'Tipe', value: 'Overlay Indicator' },
-      { label: 'Sistem Analisis', value: 'Smart Money Concepts (SMC) & Struktur Pasar' },
+      { label: 'Tipe', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Sistem Analisis', value: 'Market Structure & Smart Money Concepts (SMC)' },
       { label: 'Sinyal', value: 'BUY / SELL dengan Entry, SL, TP1, TP2, TP3' },
-      { label: 'Fitur Tambahan', value: 'BOS/CHoCH, FVG, Order Block, Cooldown Filter & Signal Score Panel' },
-      { label: 'Alerts', value: 'Tersedia untuk Sinyal BUY/SELL, BOS, dan FVG Sweep' }
+      { label: 'Fitur Tambahan', value: 'Fair Value Gap, Order Block, Cooldown Filter & Signal Score Panel' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions (Webhooks & Notifications)' }
     ],
     technical_specs_en: [
       { label: 'Platform', value: 'TradingView' },
       { label: 'Language', value: 'Pine Script v5' },
-      { label: 'Type', value: 'Overlay Indicator' },
-      { label: 'Analysis System', value: 'Smart Money Concepts (SMC) & Market Structure' },
+      { label: 'Type', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Analysis System', value: 'Market Structure & Smart Money Concepts (SMC)' },
       { label: 'Signals', value: 'BUY / SELL with Entry, SL, TP1, TP2, TP3' },
-      { label: 'Additional Features', value: 'BOS/CHoCH, FVG, Order Blocks, Cooldown Filter & Signal Score Panel' },
-      { label: 'Alerts', value: 'Available for BUY/SELL, BOS, and FVG Sweep triggers' }
+      { label: 'Additional Features', value: 'Fair Value Gap, Order Block, Cooldown Filter & Signal Score Panel' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions (Webhooks & Notifications)' }
     ],
     package_includes_id: [
-      'Source code indikator Pine Script (.pine & .txt).',
-      'Panduan pemasangan step-by-step di Pine Editor TradingView.',
-      'Bantuan instalasi dari tim Aemeth jika diperlukan.'
+      'Pine Script source code.',
+      'Installation guide.',
+      'Installation assistance if needed.'
     ],
     package_includes_en: [
-      'Pine Script indicator source code (.pine & .txt).',
-      'Step-by-step TradingView Pine Editor installation guide.',
-      'Direct installation assistance from Aemeth support team if needed.'
+      'Pine Script source code.',
+      'Installation guide.',
+      'Installation assistance if needed.'
     ],
     tradingview_script_id: 'aemeth_smc_signal_panel_v2',
     is_published: true,
@@ -773,12 +773,12 @@ const BUNDLE_PRODUCTS: Product[] = [
   ),
   createBundleProduct(
     'ultimate',
-    ['parabolic-sar', 'mfi-reversal', 'ichimoku-cloud', 'ai-signal-v1', 'trendline-sr-utbot', 'smc-signal-panel-v2'],
+    ['parabolic-sar', 'mfi-reversal', 'ichimoku-cloud', 'ai-signal-v1', 'trendline-sr-utbot'],
     'ultimate-pack',
-    'Aemeth Ultimate Pack (Semua 6 Indikator)',
-    'Aemeth Ultimate Pack (All 6 Indicators)',
-    'Seluruh 6 indikator unggulan Aemeth sekaligus dalam satu lisensi lengkap dengan diskon maksimal 25%.',
-    'All 6 flagship Aemeth trading indicators in one comprehensive suite with maximum 25% discount.'
+    'Aemeth Ultimate Pack (Semua 5 Indikator)',
+    'Aemeth Ultimate Pack (All 5 Indicators)',
+    'Seluruh 5 indikator unggulan Aemeth sekaligus dalam satu lisensi lengkap dengan diskon maksimal 25%.',
+    'All 5 flagship Aemeth trading indicators in one comprehensive suite with maximum 25% discount.'
   ),
 ];
 
