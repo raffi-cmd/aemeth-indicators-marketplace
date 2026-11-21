@@ -62,10 +62,14 @@ async function runTests() {
   const trendSr = getProductPrice('trendline-sr-utbot');
   assert(trendSr !== null && trendSr.normalPriceIdr === 299000 && trendSr.promoPriceIdr === 249000, 'Trendline Breakout + S/R + UT Bot: Normal Rp 299.000, Promo Rp 249.000');
 
+  const smc = getProductPrice('smc-signal-panel-v2');
+  assert(smc !== null && smc.normalPriceIdr === 299000 && smc.promoPriceIdr === 249000, 'SMC Entry/TP/SL Signal Panel V2: Normal Rp 299.000, Promo Rp 249.000');
+
   // Legacy ID aliases resolution test
   assert(resolveProductId('prd_psar_004') === 'parabolic-sar', 'Legacy ID prd_psar_004 resolved to parabolic-sar');
   assert(resolveProductId('prd_ichimoku_001') === 'ichimoku-cloud', 'Legacy ID prd_ichimoku_001 resolved to ichimoku-cloud');
   assert(resolveProductId('prd_aisignal_002') === 'ai-signal-v1', 'Legacy ID prd_aisignal_002 resolved to ai-signal-v1');
+  assert(resolveProductId('smc-signal-panel') === 'smc-signal-panel-v2', 'Legacy ID smc-signal-panel resolved to smc-signal-panel-v2');
 
   // 4. Launch Promo Window Validation
   console.log('\n--- 4. Launch Promo Schedule & Time Window Tests ---');
@@ -111,14 +115,14 @@ async function runTests() {
   assert(proCheapest.subtotalEffectiveIdr === 377000, 'Pro subtotal is Rp 377.000');
   assert(proCheapest.finalPriceIdr === 302000, 'Pro cheapest trio rounds exactly to Rp 302.000');
 
-  // 7. Ultimate Pack Bundling Tests (All 5 active indicators, 25% discount)
-  console.log('\n--- 7. Ultimate Pack (All 5 Indicators, 25% Off) ---');
-  // All 5 promo: 79k + 149k + 149k + 149k + 249k = 775.000 -> 775.000 * 0.75 = 581.250 -> rounded to 581.000
-  const allFive = ['parabolic-sar', 'mfi-reversal', 'ichimoku-cloud', 'ai-signal-v1', 'trendline-sr-utbot'];
-  const ultimatePack = calculateBundlePrice('ultimate', allFive);
-  assert(ultimatePack.isValid === true, 'Ultimate pack valid with all 5 products');
-  assert(ultimatePack.subtotalEffectiveIdr === 775000, 'Ultimate subtotal is Rp 775.000');
-  assert(ultimatePack.finalPriceIdr === 581000, 'Ultimate pack rounds exactly to Rp 581.000');
+  // 7. Ultimate Pack Bundling Tests (All 6 active indicators, 25% discount)
+  console.log('\n--- 7. Ultimate Pack (All 6 Indicators, 25% Off) ---');
+  // All 6 promo: 79k + 149k + 149k + 149k + 249k + 249k = 1.024.000 -> 1.024.000 * 0.75 = 768.000
+  const allSix = ['parabolic-sar', 'mfi-reversal', 'ichimoku-cloud', 'ai-signal-v1', 'trendline-sr-utbot', 'smc-signal-panel-v2'];
+  const ultimatePack = calculateBundlePrice('ultimate', allSix);
+  assert(ultimatePack.isValid === true, 'Ultimate pack valid with all 6 products');
+  assert(ultimatePack.subtotalEffectiveIdr === 1024000, 'Ultimate subtotal is Rp 1.024.000');
+  assert(ultimatePack.finalPriceIdr === 768000, 'Ultimate pack rounds exactly to Rp 768.000');
 
   // 8. Bundle Price <= Individual Price Guarantee
   console.log('\n--- 8. Bundle Price <= Individual Sum Guarantee ---');

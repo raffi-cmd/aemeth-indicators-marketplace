@@ -181,11 +181,22 @@ export function initDatabase() {
     `);
   } catch {}
 
+  // Purge any legacy duplicate products from database tables
+  try {
+    db.exec(`
+      DELETE FROM bundle_items WHERE bundle_id LIKE 'prd_%' OR product_id LIKE 'prd_%';
+      DELETE FROM product_versions WHERE product_id LIKE 'prd_%';
+      DELETE FROM deliveries WHERE product_id LIKE 'prd_%';
+      DELETE FROM order_items WHERE product_id LIKE 'prd_%';
+      DELETE FROM products WHERE id LIKE 'prd_%';
+    `);
+  } catch {}
+
   seedInitialData();
-  seedFiveIndicators();
+  seedCanonicalIndicators();
 }
 
-function seedFiveIndicators() {
+function seedCanonicalIndicators() {
   const insertOrReplaceProduct = db.prepare(`
     INSERT OR REPLACE INTO products (
       id, slug, title, short_desc, long_desc, type, category, price_cents, discount_cents,
@@ -275,7 +286,28 @@ function seedFiveIndicators() {
       normal_idr: 299000,
       promo_idr: 249000,
     },
+    {
+      id: 'smc-signal-panel-v2',
+      slug: 'aemeth-smc-signal-panel-v2',
+      title: 'Aemeth SMC Entry/TP/SL Signal Panel V2',
+      short_desc: 'Deteksi struktur pasar BOS/CHoCH, Fair Value Gap, Order Block, sinyal BUY/SELL, serta level Entry, Stop Loss (SL), dan TP1-TP3 dengan panel skor sinyal real-time.',
+      long_desc: 'Indikator Smart Money Concepts (SMC) tingkat lanjut dengan deteksi otomatis BOS/CHoCH, Order Block, FVG, dan penanda sinyal BUY/SELL dilengkapi level SL dan TP1-TP3.',
+      type: 'open_source',
+      category: 'trend',
+      price_cents: 2490,
+      discount_cents: 510,
+      version: '2.1.0',
+      features: ['Automated BOS & CHoCH Market Structure Mapping', 'Visual Entry, SL, and TP1-TP3 Targets', 'FVG & Institutional Order Block Projections', 'Real-time On-Chart Signal Score Panel'],
+      thumb: 'https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80',
+      normal_idr: 299000,
+      promo_idr: 249000,
+    },
   ];
+
+  // Purge any legacy duplicate products from database
+  try {
+    db.exec(`DELETE FROM products WHERE id LIKE 'prd_%';`);
+  } catch {}
 
   for (const p of prods) {
     insertOrReplaceProduct.run(
@@ -407,151 +439,8 @@ plotshape(aligned_bear and not aligned_bear[1], title="Bear Cascade", style=shap
   fs.writeFileSync(p1File, samplePineScriptLiquidity);
   fs.writeFileSync(p3File, samplePineScriptTrend);
 
-  // 3. Seed Products
-  const insertProduct = db.prepare(`
-    INSERT INTO products (
-      id, slug, title, short_desc, long_desc, type, category, price_cents, discount_cents,
-      version, features_json, tradingview_script_id, is_published, thumbnail_url, preview_images_json
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `);
-
-  // Product 1: Open-source Pine Script
-  insertProduct.run(
-    'prd_liq_001',
-    'aemeth-liquidity-matrix',
-    'Aemeth Liquidity Matrix v5.2',
-    'Institutional Fair Value Gaps, Liquidity Sweeps, and Order Block visualizer with Candle 1 Anti-Repaint guarantee.',
-    'Engineered for institutional order flow traders on TradingView. The Aemeth Liquidity Matrix automatically projects dynamic Buy-Side and Sell-Side Liquidity pools, calculates premium/discount institutional mitigation zones, and alerts on precise liquidity sweeps. Includes full uncompiled Pine Script v5 source code and lifetime updates.',
-    'open_source',
-    'liquidity',
-    7900, // $79.00
-    0,
-    '5.2.0',
-    JSON.stringify([
-      'Full Uncompiled Pine Script v5 Source Code (.pine & .txt)',
-      'Candle 1 Anti-Repaint Strict Execution',
-      'Dynamic Institutional Order Block & FVG Projections',
-      'TradingView Webhook & Mobile Alert Ready',
-      'Tested across Forex (XAUUSD, EURUSD), Crypto (BTC/USDT), & Indices (NQ/ES)'
-    ]),
-    'aemeth_liquidity_v5_pub',
-    1,
-    'https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80',
-    JSON.stringify(['https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=1200&q=80'])
-  );
-
-  // Product 2: Private / Protected TradingView Indicator
-  insertProduct.run(
-    'prd_delta_002',
-    'aemeth-delta-volume-absorption',
-    'Aemeth Delta Flow & Volume Absorption Pro',
-    'Proprietary footprint proxy and volume absorption engine. Direct TradingView access granted to customer username.',
-    'A proprietary institutional volume analysis engine that tracks hidden institutional accumulation and distribution without requiring costly Level 2 subscriptions. Delivered directly to your TradingView account via authorized invite-only script access. No source code leakage, fully protected institutional algorithm.',
-    'private_protected',
-    'volume',
-    12900, // $129.00
-    0,
-    '3.4.1',
-    JSON.stringify([
-      'Direct TradingView Invite-Only Access via Username',
-      'Volume Delta Divergence & Absorption Clusters',
-      'Exhaustion vs Continuation Institutional Print Filter',
-      'Automatic Multi-Timeframe Volume Profiling',
-      'Official Invite Updates Pushed Automatically to TradingView'
-    ]),
-    'aemeth_delta_pro_invite_only',
-    1,
-    'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80',
-    JSON.stringify(['https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80'])
-  );
-
-  // Product 3: Open-source Multi-Timeframe Trend
-  insertProduct.run(
-    'prd_trend_003',
-    'aemeth-multitimeframe-trend-cascade',
-    'Aemeth Multi-Timeframe Trend Cascade v2.1',
-    'Algorithmic multi-timeframe trend filter ensuring trades align with higher-timeframe order flow.',
-    'Never fight higher-timeframe order flow again. This algorithm cross-synthesizes momentum and volatility across 4 synchronized timeframes into a clean visual dashboard and actionable execution alerts. Full Pine Script v5 source code included.',
-    'open_source',
-    'trend',
-    6900, // $69.00
-    0,
-    '2.1.0',
-    JSON.stringify([
-      'Full Editable Pine Script v5 Codebase',
-      'Syncs 1m/5m/15m/1h or 1h/4h/D1 structures smoothly',
-      'Low CPU footprint optimized for TradingView free & pro accounts',
-      'Built-in Risk-to-Reward stop projection'
-    ]),
-    'aemeth_trend_cascade_pub',
-    1,
-    'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80',
-    JSON.stringify(['https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1200&q=80'])
-  );
-
-  // Product 4: Private Reversal Sniper
-  insertProduct.run(
-    'prd_rev_004',
-    'aemeth-reversal-sniper-pro',
-    'Aemeth Reversal Sniper Pro v4.0',
-    'High-probability turning point identification based on liquidity exhaustions and RSI micro-divergences.',
-    'Identifies high-conviction market turning points at key psychological session boundaries. Grants proprietary invite-only TradingView access directly to verified accounts.',
-    'private_protected',
-    'reversal',
-    9900, // $99.00
-    0,
-    '4.0.0',
-    JSON.stringify([
-      'Direct TradingView Invite-Only Script Authorization',
-      'Micro-Divergence Algorithmic Scanner',
-      'Exhaustion Peak & Valley Detection',
-      'Discord / Telegram Webhook Signal Compatible'
-    ]),
-    'aemeth_reversal_sniper_invite',
-    1,
-    'https://images.unsplash.com/photo-1535320903710-d993d3d77d29?auto=format&fit=crop&w=800&q=80',
-    JSON.stringify(['https://images.unsplash.com/photo-1535320903710-d993d3d77d29?auto=format&fit=crop&w=1200&q=80'])
-  );
-
-  // Product 5: Full Institutional Bundle
-  insertProduct.run(
-    'prd_bundle_005',
-    'aemeth-complete-institutional-suite',
-    'Aemeth Complete Institutional Suite (All 4 Indicators)',
-    'The complete institutional analytical arsenal: Liquidity Matrix, Delta Flow, Trend Cascade, and Reversal Sniper at 35% discount.',
-    'Get total market clarity. Combines all four flagship Aemeth indicators into one discounted package. Includes both instant open-source Pine Script downloads for Liquidity Matrix & Trend Cascade, PLUS authorized TradingView private invite access for Delta Flow & Reversal Sniper Pro.',
-    'bundle',
-    'bundle',
-    24900, // $249.00 (Separately $376 -> Save $127!)
-    12700,
-    '2026.1',
-    JSON.stringify([
-      'Includes All 4 Flagship Indicators',
-      'Both Open-Source Pine Scripts (.pine + .txt) & Invite-Only Access Included',
-      'Massive 35% Bundle Savings ($127 off)',
-      'VIP Dedicated Fast-Track TradingView Access Verification',
-      'Exclusive Aemeth Proprietary Trading Strategy Guide (PDF/Markdown)'
-    ]),
-    'aemeth_complete_suite',
-    1,
-    'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80',
-    JSON.stringify(['https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80'])
-  );
-
-  // 4. Link bundle items
-  const insertBundleItem = db.prepare('INSERT INTO bundle_items (id, bundle_id, product_id) VALUES (?, ?, ?)');
-  insertBundleItem.run('bi_1', 'prd_bundle_005', 'prd_liq_001');
-  insertBundleItem.run('bi_2', 'prd_bundle_005', 'prd_delta_002');
-  insertBundleItem.run('bi_3', 'prd_bundle_005', 'prd_trend_003');
-  insertBundleItem.run('bi_4', 'prd_bundle_005', 'prd_rev_004');
-
-  // 5. Product Versions
-  const insertVersion = db.prepare(`
-    INSERT INTO product_versions (id, product_id, version_number, changelog, source_file_path, pine_script_content)
-    VALUES (?, ?, ?, ?, ?, ?)
-  `);
-  insertVersion.run('ver_1', 'prd_liq_001', '5.2.0', 'Added Candle 1 zero-repaint lock and customizable session boxes.', 'server/storage/protected_scripts/aemeth_liquidity_matrix_v5_2.pine', samplePineScriptLiquidity);
-  insertVersion.run('ver_2', 'prd_trend_003', '2.1.0', 'Optimized multi-timeframe request.security performance.', 'server/storage/protected_scripts/aemeth_trend_cascade_v2_1.pine', samplePineScriptTrend);
+  // Sample order setup
+  const sampleOrderProdId = 'parabolic-sar';
 
   // 6. Site Settings
   const insertSetting = db.prepare('INSERT OR REPLACE INTO site_settings (key, value) VALUES (?, ?)');
@@ -577,17 +466,17 @@ plotshape(aligned_bear and not aligned_bear[1], title="Bear Cascade", style=shap
   db.prepare(`
     INSERT INTO order_items (id, order_id, product_id, product_title, product_type, unit_price_cents)
     VALUES (?, ?, ?, ?, ?, ?)
-  `).run('oi_sample_001', orderId, 'prd_liq_001', 'Aemeth Liquidity Matrix v5.2', 'open_source', 7900);
+  `).run('oi_sample_001', orderId, sampleOrderProdId, 'Aemeth Parabolic SAR', 'open_source', 790);
 
   db.prepare(`
     INSERT INTO payments (id, order_id, method, amount_cents, currency, status, provider_ref, proof_data, reviewed_by, reviewed_at)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
-  `).run('pay_sample_001', orderId, 'bank_transfer', 7900, 'USD', 'completed', 'BCA-TX-998124', 'Verified via Bank Central Asia settlement', adminId);
+  `).run('pay_sample_001', orderId, 'bank_transfer', 790, 'USD', 'completed', 'BCA-TX-998124', 'Verified via Bank Central Asia settlement', adminId);
 
   db.prepare(`
     INSERT INTO deliveries (id, order_id, product_id, user_id, delivery_type, status, tv_username)
     VALUES (?, ?, ?, ?, ?, ?, ?)
-  `).run('del_sample_001', orderId, 'prd_liq_001', traderId, 'source_download', 'ready', 'vance_fx');
+  `).run('del_sample_001', orderId, sampleOrderProdId, traderId, 'source_download', 'ready', 'vance_fx');
 
   console.log('[DB] Database successfully initialized and seeded!');
 }

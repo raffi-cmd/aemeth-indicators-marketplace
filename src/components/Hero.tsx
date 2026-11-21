@@ -13,9 +13,11 @@ export const Hero: React.FC<HeroProps> = ({ onExplore, onHowItWorks, onViewBundl
 
   return (
     <section className="relative w-full pt-8 pb-16 overflow-hidden">
-      {/* Subtle restrained ambient lighting */}
-      <div className="absolute top-10 right-1/4 w-[450px] h-[450px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
-      <div className="absolute bottom-10 left-10 w-[350px] h-[350px] bg-indigo-600/8 rounded-full blur-[150px] pointer-events-none -z-10"></div>
+      {/* Subtle restrained ambient lighting contained securely */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="hidden sm:block absolute top-10 right-1/4 w-[450px] h-[450px] bg-blue-600/10 rounded-full blur-[140px]"></div>
+        <div className="absolute bottom-10 left-10 w-64 sm:w-[350px] h-64 sm:h-[350px] bg-indigo-600/8 rounded-full blur-[100px]"></div>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">

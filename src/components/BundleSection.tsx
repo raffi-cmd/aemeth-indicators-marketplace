@@ -32,6 +32,16 @@ export const BundleSection: React.FC<BundleSectionProps> = ({ products, onChecko
     return allProductIds.slice(0, 3);
   });
 
+  // Re-sync selections once asynchronous product catalog loads
+  React.useEffect(() => {
+    if (starterSelection.length === 0 && allProductIds.length >= 2) {
+      setStarterSelection(allProductIds.slice(0, 2));
+    }
+    if (proSelection.length === 0 && allProductIds.length >= 3) {
+      setProSelection(allProductIds.slice(0, 3));
+    }
+  }, [allProductIds]);
+
   const currentSelection = useMemo(() => {
     if (activeBundle === 'starter') return starterSelection;
     if (activeBundle === 'pro') return proSelection;
@@ -86,9 +96,11 @@ export const BundleSection: React.FC<BundleSectionProps> = ({ products, onChecko
 
   return (
     <div id="bundle-builder" className="w-full max-w-full bg-[#0b1120] border border-blue-500/30 rounded-3xl p-4 sm:p-8 lg:p-10 shadow-2xl space-y-6 sm:space-y-8 relative overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute -top-32 -right-32 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+      {/* Background glow safely contained */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-32 -right-32 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl"></div>
+      </div>
 
       {/* Header */}
       <div className="space-y-3 relative z-10 text-center max-w-2xl mx-auto">

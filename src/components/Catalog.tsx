@@ -27,8 +27,24 @@ export const Catalog: React.FC<CatalogProps> = ({
   const [selectedType, setSelectedType] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'newest' | 'price_asc' | 'price_desc'>('newest');
 
-  // Filter products
-  const filtered = products.filter((p) => {
+  // Deduplicate products by canonical ID to prevent any duplicate cards
+  const uniqueProducts = React.useMemo(() => {
+    const map = new Map<string, Product>();
+    for (const p of products) {
+      if (!map.has(p.id)) {
+        map.set(p.id, p);
+      }
+    }
+    return Array.from(map.values());
+  }, [products]);
+
+  // Separate individual single indicators strictly from bundle packages
+  const singleIndicators = React.useMemo(() => {
+    return uniqueProducts.filter((p) => p.type !== 'bundle');
+  }, [uniqueProducts]);
+
+  // Filter single indicators
+  const filtered = singleIndicators.filter((p) => {
     const title = (lang === 'id' ? p.title_id || p.title : p.title_en || p.title).toLowerCase();
     const desc = (lang === 'id' ? p.short_desc_id || p.short_desc : p.short_desc_en || p.short_desc).toLowerCase();
     const query = search.toLowerCase();
@@ -40,7 +56,7 @@ export const Catalog: React.FC<CatalogProps> = ({
     return matchesSearch && matchesCategory && matchesType;
   });
 
-  // Sort products
+  // Sort single indicators
   const sorted = [...filtered].sort((a, b) => {
     if (sortBy === 'price_asc') return a.price_cents - b.price_cents;
     if (sortBy === 'price_desc') return b.price_cents - a.price_cents;
@@ -49,12 +65,20 @@ export const Catalog: React.FC<CatalogProps> = ({
 
   const categories = [
     { id: 'all', label: t.catalog.allCategories },
-    { id: 'liquidity', label: t.catalog.catLiquidity },
-    { id: 'volume', label: t.catalog.catVolume },
     { id: 'trend', label: t.catalog.catTrend },
     { id: 'reversal', label: t.catalog.catReversal },
+    { id: 'liquidity', label: t.catalog.catLiquidity },
+    { id: 'volume', label: t.catalog.catVolume },
     { id: 'bundle', label: t.catalog.catBundle },
   ];
+
+  const handleCategorySelect = (catId: string) => {
+    setSelectedCategory(catId);
+    if (catId === 'bundle') {
+      const el = document.getElementById('bundle-builder');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const handleBundleCheckout = (bundleType: 'starter' | 'pro' | 'ultimate', selectedProductIds: string[]) => {
     if (onCheckoutBundle) {
@@ -116,7 +140,7 @@ export const Catalog: React.FC<CatalogProps> = ({
 
           <div className="flex items-center gap-2 bg-[#0b1120] border border-slate-800 rounded-full px-4 py-2 text-xs font-mono text-slate-300">
             <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span>{products.length} {t.catalog.activeScriptsCount}</span>
+            <span>{singleIndicators.length} {t.catalog.activeScriptsCount}</span>
           </div>
         </div>
 
@@ -170,7 +194,7 @@ export const Catalog: React.FC<CatalogProps> = ({
             {categories.map((cat) => (
               <button
                 key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
+                onClick={() => handleCategorySelect(cat.id)}
                 className={`px-3.5 py-1.5 text-xs font-semibold rounded-full whitespace-nowrap transition-all cursor-pointer ${
                   selectedCategory === cat.id
                     ? 'bg-blue-600 text-white shadow-md shadow-blue-500/30'
@@ -358,7 +382,7 @@ export const Catalog: React.FC<CatalogProps> = ({
 
       {/* Special Bundle Packages Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <BundleSection products={products} onCheckoutBundle={handleBundleCheckout} />
+        <BundleSection products={uniqueProducts} onCheckoutBundle={handleBundleCheckout} />
       </div>
 
     </section>

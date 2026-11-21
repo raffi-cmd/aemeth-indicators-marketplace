@@ -569,6 +569,102 @@ const SINGLE_INDICATORS: Product[] = [
     preview_images: ['./products/trendline-sr-utbot.jpg'],
     created_at: new Date('2026-03-25').toISOString(),
   }),
+  injectPricing({
+    id: 'smc-signal-panel-v2',
+    slug: 'aemeth-smc-signal-panel-v2',
+    title: 'Aemeth SMC Entry/TP/SL Signal Panel V2',
+    title_id: 'Aemeth SMC Entry/TP/SL Signal Panel V2',
+    title_en: 'Aemeth SMC Entry/TP/SL Signal Panel V2',
+    short_desc: 'Deteksi struktur pasar BOS/CHoCH, Fair Value Gap, Order Block, sinyal BUY/SELL, serta level Entry, Stop Loss (SL), dan TP1-TP3 dengan panel skor sinyal real-time.',
+    short_desc_id: 'Deteksi struktur pasar BOS/CHoCH, Fair Value Gap, Order Block, sinyal BUY/SELL, serta level Entry, Stop Loss (SL), dan TP1-TP3 dengan panel skor sinyal real-time.',
+    short_desc_en: 'Smart Money Concepts suite with automatic BOS/CHoCH, Fair Value Gaps, Order Blocks, BUY/SELL signals, Entry/SL/TP1-TP3 levels, and live Signal Score panel.',
+    long_desc: 'Aemeth SMC Entry/TP/SL Signal Panel V2 adalah indikator TradingView tingkat lanjut yang dirancang untuk membantu trader menganalisis pergerakan harga berbasis Smart Money Concepts (SMC) dan struktur pasar institusional.\n\nIndikator mendeteksi Break of Structure (BOS), Change of Character (CHoCH), Order Block (OB), dan Fair Value Gap (FVG) secara otomatis. Dilengkapi sinyal BUY dan SELL dengan proyeksi visual level Entry, Stop Loss (SL), dan tiga target Take Profit (TP1, TP2, TP3) berbasis rasio Risk to Reward (RR) yang fleksibel.\n\nDilengkapi filter volatilitas berbasis ATR dan filter cooldown untuk meminimalkan sinyal palsu saat konsolidasi, serta panel skor kekuatan sinyal langsung pada chart untuk membantu pengambilan keputusan yang lebih objektif.',
+    long_desc_id: 'Aemeth SMC Entry/TP/SL Signal Panel V2 adalah indikator TradingView tingkat lanjut yang dirancang untuk membantu trader menganalisis pergerakan harga berbasis Smart Money Concepts (SMC) dan struktur pasar institusional.\n\nIndikator mendeteksi Break of Structure (BOS), Change of Character (CHoCH), Order Block (OB), dan Fair Value Gap (FVG) secara otomatis. Dilengkapi sinyal BUY dan SELL dengan proyeksi visual level Entry, Stop Loss (SL), dan tiga target Take Profit (TP1, TP2, TP3) berbasis rasio Risk to Reward (RR) yang fleksibel.\n\nDilengkapi filter volatilitas berbasis ATR dan filter cooldown untuk meminimalkan sinyal palsu saat konsolidasi, serta panel skor kekuatan sinyal langsung pada chart untuk membantu pengambilan keputusan yang lebih objektif.',
+    long_desc_en: 'Aemeth SMC Entry/TP/SL Signal Panel V2 is an institutional-grade TradingView indicator designed for Smart Money Concepts (SMC) and market structure analysis.\n\nAutomatically identifies Break of Structure (BOS), Change of Character (CHoCH), Order Blocks (OB), and Fair Value Gaps (FVG). Features high-probability BUY/SELL signals with visual Entry, Stop Loss (SL), and TP1, TP2, TP3 projection levels based on customizable Risk-to-Reward (RR) ratios.\n\nIncludes ATR volatility filtering and cooldown timers to suppress market noise during consolidation, plus an on-chart real-time Signal Score panel for disciplined trade execution.',
+    type: 'open_source',
+    category: 'trend',
+    version: '2.1.0',
+    pine_version: 'v5',
+    release_date: '2026-03-25',
+    changelog: [
+      'v2.1.0: Real-time Signal Score panel & multi-timeframe ATR cooldown filtering',
+      'v2.0.0: Smart Money Concepts core engine rewrite with automated BOS/CHoCH & Order Blocks'
+    ],
+    changelog_id: [
+      'v2.1.0: Panel Signal Score real-time & filter cooldown volatilitas ATR',
+      'v2.0.0: Arsitektur Smart Money Concepts baru dengan deteksi otomatis BOS/CHoCH dan Order Block'
+    ],
+    changelog_en: [
+      'v2.1.0: Real-time Signal Score panel & multi-timeframe ATR cooldown filtering',
+      'v2.0.0: Smart Money Concepts core engine rewrite with automated BOS/CHoCH & Order Blocks'
+    ],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'Market Structure: Deteksi otomatis Break of Structure (BOS) dan Change of Character (CHoCH).',
+      'Sinyal BUY & SELL: Penanda sinyal terkonfirmasi dilengkapi level Entry, SL, dan TP1/TP2/TP3 visual.',
+      'Risk to Reward (RR): Pengaturan rasio risk/reward yang dapat disesuaikan dengan manajemen risiko.',
+      'Visualisasi FVG & Order Block: Kotak zona likuiditas Fair Value Gap dan Order Block terplot rapi di chart.',
+      'Filter Volatilitas ATR & Cooldown: Mengurangi false breakout dan mencegah sinyal beruntun palsu.',
+      'Panel Signal Score: Dashboard ringkas penilai kekuatan sinyal real-time langsung di layar chart.',
+      'TradingView Alerts: Notifikasi app TradingView & webhook siap pakai untuk trigger sinyal dan BOS.',
+      'Pengaturan Parameter Fleksibel: Gaya visual, warna level, dan sensitivitas dapat diatur penuh.'
+    ],
+    features_id: [
+      'Market Structure: Deteksi otomatis Break of Structure (BOS) dan Change of Character (CHoCH).',
+      'Sinyal BUY & SELL: Penanda sinyal terkonfirmasi dilengkapi level Entry, SL, dan TP1/TP2/TP3 visual.',
+      'Risk to Reward (RR): Pengaturan rasio risk/reward yang dapat disesuaikan dengan manajemen risiko.',
+      'Visualisasi FVG & Order Block: Kotak zona likuiditas Fair Value Gap dan Order Block terplot rapi di chart.',
+      'Filter Volatilitas ATR & Cooldown: Mengurangi false breakout dan mencegah sinyal beruntun palsu.',
+      'Panel Signal Score: Dashboard ringkas penilai kekuatan sinyal real-time langsung di layar chart.',
+      'TradingView Alerts: Notifikasi app TradingView & webhook siap pakai untuk trigger sinyal dan BOS.',
+      'Pengaturan Parameter Fleksibel: Gaya visual, warna level, dan sensitivitas dapat diatur penuh.'
+    ],
+    features_en: [
+      'Market Structure: Automatic Break of Structure (BOS) and Change of Character (CHoCH) mapping.',
+      'BUY & SELL Signals: Confirmed signal triggers with visual Entry, Stop Loss (SL), and TP1-TP3 targets.',
+      'Risk to Reward (RR): Fully configurable risk/reward calculation tailored to your trading plan.',
+      'FVG & Order Block Visuals: Highlights institutional liquidity zones and unmitigated order blocks.',
+      'ATR & Cooldown Filters: Suppresses false breakouts and rapid whipsaws during ranging markets.',
+      'Signal Score Panel: Real-time strength meter displayed directly on chart for quick confluence reading.',
+      'TradingView Alerts: Instant app notifications and webhook integration ready for execution automation.',
+      'Flexible Parameters: Full customization over colors, lookback lengths, and trigger thresholds.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Overlay Indicator' },
+      { label: 'Sistem Analisis', value: 'Smart Money Concepts (SMC) & Struktur Pasar' },
+      { label: 'Sinyal', value: 'BUY / SELL dengan Entry, SL, TP1, TP2, TP3' },
+      { label: 'Fitur Tambahan', value: 'BOS/CHoCH, FVG, Order Block, Cooldown Filter & Signal Score Panel' },
+      { label: 'Alerts', value: 'Tersedia untuk Sinyal BUY/SELL, BOS, dan FVG Sweep' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Overlay Indicator' },
+      { label: 'Analysis System', value: 'Smart Money Concepts (SMC) & Market Structure' },
+      { label: 'Signals', value: 'BUY / SELL with Entry, SL, TP1, TP2, TP3' },
+      { label: 'Additional Features', value: 'BOS/CHoCH, FVG, Order Blocks, Cooldown Filter & Signal Score Panel' },
+      { label: 'Alerts', value: 'Available for BUY/SELL, BOS, and FVG Sweep triggers' }
+    ],
+    package_includes_id: [
+      'Source code indikator Pine Script (.pine & .txt).',
+      'Panduan pemasangan step-by-step di Pine Editor TradingView.',
+      'Bantuan instalasi dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script indicator source code (.pine & .txt).',
+      'Step-by-step TradingView Pine Editor installation guide.',
+      'Direct installation assistance from Aemeth support team if needed.'
+    ],
+    tradingview_script_id: 'aemeth_smc_signal_panel_v2',
+    is_published: true,
+    thumbnail_url: './products/smc-signal-panel.jpg',
+    preview_images: ['./products/smc-signal-panel.jpg'],
+    created_at: new Date('2026-03-25').toISOString(),
+  }),
 ];
 
 // Helper to construct dynamic bundles using the central bundle calculation
@@ -677,12 +773,12 @@ const BUNDLE_PRODUCTS: Product[] = [
   ),
   createBundleProduct(
     'ultimate',
-    ['parabolic-sar', 'mfi-reversal', 'ichimoku-cloud', 'ai-signal-v1', 'trendline-sr-utbot'],
+    ['parabolic-sar', 'mfi-reversal', 'ichimoku-cloud', 'ai-signal-v1', 'trendline-sr-utbot', 'smc-signal-panel-v2'],
     'ultimate-pack',
-    'Aemeth Ultimate Pack (Semua 5 Indikator)',
-    'Aemeth Ultimate Pack (All 5 Indicators)',
-    'Seluruh 5 indikator unggulan Aemeth sekaligus dalam satu lisensi lengkap dengan diskon maksimal 25%.',
-    'All 5 flagship Aemeth trading indicators in one comprehensive suite with maximum 25% discount.'
+    'Aemeth Ultimate Pack (Semua 6 Indikator)',
+    'Aemeth Ultimate Pack (All 6 Indicators)',
+    'Seluruh 6 indikator unggulan Aemeth sekaligus dalam satu lisensi lengkap dengan diskon maksimal 25%.',
+    'All 6 flagship Aemeth trading indicators in one comprehensive suite with maximum 25% discount.'
   ),
 ];
 
@@ -708,7 +804,7 @@ function setLocalStore(key: string, val: any) {
 }
 
 export const api = {
-  // Products
+  // Products with strict canonical ID deduplication
   async getProducts(params?: { category?: string; type?: string; search?: string }) {
     try {
       const query = new URLSearchParams();
@@ -717,11 +813,35 @@ export const api = {
       if (params?.search) query.append('search', params.search);
 
       const res = await fetch(`${API_BASE}/products?${query.toString()}`);
-      if (res.ok) return await res.json();
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && Array.isArray(data.products)) {
+          // Canonical deduplication on backend-returned products
+          const seen = new Set<string>();
+          const deduped: Product[] = [];
+          for (const p of data.products) {
+            if (!seen.has(p.id)) {
+              seen.add(p.id);
+              deduped.push(p);
+            }
+          }
+          return { success: true, products: deduped };
+        }
+        return data;
+      }
     } catch {}
 
     const customProds = getLocalStore<Product[]>('aemeth_custom_products', []);
-    const all = [...BILINGUAL_PRODUCTS, ...customProds];
+    const productMap = new Map<string, Product>();
+    for (const p of BILINGUAL_PRODUCTS) {
+      productMap.set(p.id, p);
+    }
+    for (const p of customProds) {
+      if (!productMap.has(p.id)) {
+        productMap.set(p.id, p);
+      }
+    }
+    const all = Array.from(productMap.values());
     return { success: true, products: all };
   },
 
@@ -1020,12 +1140,94 @@ export const api = {
     const isMfi = resolved.includes('mfi');
     const isPsar = resolved.includes('parabolic-sar') || resolved.includes('psar');
     const isTrendSr = resolved.includes('trendline') || resolved.includes('trendsr');
+    const isSmc = resolved.includes('smc');
 
     let content = PINE_SCRIPT_LIQUIDITY;
-    let filename = 'aemeth_ichimoku_cloud_v5.pine';
-    let title = 'Aemeth Ichimoku Cloud Indicator';
+    let filename = 'aemeth_smc_signal_panel_v2.pine';
+    let title = 'Aemeth SMC Entry/TP/SL Signal Panel V2';
 
-    if (isIchimoku) {
+    if (isSmc) {
+      content = `//@version=5
+indicator("Aemeth SMC Entry/TP/SL Signal Panel V2", overlay=true, max_boxes_count=150, max_lines_count=150)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - SMART MONEY CONCEPTS (SMC) ENGINE V2
+// DIRECTIVE: CANDLE 1 CLOSED BAR ANTI-REPAINT VERIFICATION
+// =====================================================================
+
+// --- User Inputs ---
+grp_smc = "Market Structure (BOS / CHoCH)"
+swing_len = input.int(5, "Swing Detection Length", minval=2, group=grp_smc)
+show_bos = input.bool(true, "Display Break of Structure (BOS)", group=grp_smc)
+show_choch = input.bool(true, "Display Change of Character (CHoCH)", group=grp_smc)
+
+grp_signals = "Signals & Risk/Reward Targets"
+rr_ratio = input.float(2.0, "Risk to Reward Ratio (RR)", minval=1.0, maxval=10.0, step=0.5, group=grp_signals)
+atr_period = input.int(14, "ATR Filter Period", minval=1, group=grp_signals)
+atr_sl_mult = input.float(1.5, "Stop Loss ATR Multiplier", minval=0.5, step=0.1, group=grp_signals)
+cooldown_bars = input.int(5, "Signal Cooldown (Bars)", minval=1, group=grp_signals)
+
+grp_zones = "Liquidity Zones (FVG & Order Block)"
+show_fvg = input.bool(true, "Highlight Fair Value Gaps (FVG)", group=grp_zones)
+show_ob = input.bool(true, "Highlight Institutional Order Blocks (OB)", group=grp_zones)
+
+// --- Anti-Repaint Closed Bar References ---
+c_high = high[1]
+c_low = low[1]
+c_close = close[1]
+c_open = open[1]
+
+// --- Swing High & Low Detection ---
+ph = ta.pivothigh(high, swing_len, swing_len)
+pl = ta.pivotlow(low, swing_len, swing_len)
+
+var float last_ph = na
+var float last_pl = na
+if not na(ph)
+    last_ph := high[swing_len]
+if not na(pl)
+    last_pl := low[swing_len]
+
+// --- Structure Breakouts (BOS & CHoCH) ---
+bos_bull = ta.crossover(c_close, last_ph)
+bos_bear = ta.crossunder(c_close, last_pl)
+
+// --- Fair Value Gaps (FVG) ---
+bull_fvg = c_low > high[3]
+bear_fvg = c_high < low[3]
+
+if show_fvg and bull_fvg
+    box.new(left=bar_index[2], top=c_low, right=bar_index, bottom=high[3],
+            border_color=color.new(#10b981, 60), bgcolor=color.new(#10b981, 85))
+
+if show_fvg and bear_fvg
+    box.new(left=bar_index[2], top=low[3], right=bar_index, bottom=c_high,
+            border_color=color.new(#ef4444, 60), bgcolor=color.new(#ef4444, 85))
+
+// --- Volatility & Cooldown ---
+atr_val = ta.atr(atr_period)
+var int last_buy_bar = -999
+var int last_sell_bar = -999
+
+buy_condition = bos_bull and (bar_index - last_buy_bar > cooldown_bars)
+sell_condition = bos_bear and (bar_index - last_sell_bar > cooldown_bars)
+
+if buy_condition
+    last_buy_bar := bar_index
+if sell_condition
+    last_sell_bar := bar_index
+
+// Plot BUY & SELL Signals
+plotshape(buy_condition, "SMC BUY", shape.labelup, location.belowbar, color=#10b981, text="SMC BUY\\nENTRY", textcolor=color.white, size=size.small)
+plotshape(sell_condition, "SMC SELL", shape.labeldown, location.abovebar, color=#ef4444, text="SMC SELL\\nENTRY", textcolor=color.white, size=size.small)
+
+// --- Alerts ---
+alertcondition(buy_condition, title="Aemeth SMC BUY", message="Aemeth SMC: Bullish Entry confirmed on {{ticker}}.")
+alertcondition(sell_condition, title="Aemeth SMC SELL", message="Aemeth SMC: Bearish Entry confirmed on {{ticker}}.")
+alertcondition(bos_bull or bos_bear, title="Aemeth Structure Break", message="Aemeth SMC: Market Structure BOS/CHoCH triggered on {{ticker}}.")
+`;
+      filename = 'aemeth_smc_signal_panel_v2.pine';
+      title = 'Aemeth SMC Entry/TP/SL Signal Panel V2';
+    } else if (isIchimoku) {
       content = `//@version=5\nindicator("Aemeth Ichimoku Cloud [Signals & SL/TP]", overlay=true)\n// ==========================================\n// Aemeth Ichimoku Cloud Indicator - Pine Script v5\n// ==========================================\nconversionPeriods = input.int(9, minval=1, title="Conversion Line Length")\nbasePeriods = input.int(26, minval=1, title="Base Line Length")\nlaggingSpan2Periods = input.int(52, minval=1, title="Leading Span B Length")\ndisplacement = input.int(26, minval=1, title="Displacement")\n\ndonchian(len) => math.avg(ta.lowest(len), ta.highest(len))\nconversionLine = donchian(conversionPeriods)\nbaseLine = donchian(basePeriods)\nleadLine1 = math.avg(conversionLine, baseLine)\nleadLine2 = donchian(laggingSpan2Periods)\n\nplot(conversionLine, color=color.blue, title="Conversion Line")\nplot(baseLine, color=color.red, title="Base Line")\np1 = plot(leadLine1, offset = displacement - 1, color=color.green, title="Lead 1")\np2 = plot(leadLine2, offset = displacement - 1, color=color.maroon, title="Lead 2")\nfill(p1, p2, color = leadLine1 > leadLine2 ? color.new(color.green, 90) : color.new(color.red, 90))\n\nbuy_signal = ta.crossover(conversionLine, baseLine) and close > leadLine1[displacement - 1]\nsell_signal = ta.crossunder(conversionLine, baseLine) and close < leadLine1[displacement - 1]\nplotshape(buy_signal, "BUY Signal", shape.labelup, location.belowbar, color.green, text="BUY", textcolor=color.white)\nplotshape(sell_signal, "SELL Signal", shape.labeldown, location.abovebar, color.red, text="SELL", textcolor=color.white)\n`;
       filename = 'aemeth_ichimoku_cloud_v5.pine';
       title = 'Aemeth Ichimoku Cloud Indicator';

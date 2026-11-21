@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AEMETH TRADER ANALYSIS - CENTRALIZED PRICING ENGINE
  * 
  * Single source of truth for:
@@ -103,6 +103,16 @@ export const PRODUCT_PRICING: Record<string, ProductPricingDefinition> = {
     isPublished: true,
     version: '4.2.0',
   },
+  'smc-signal-panel-v2': {
+    id: 'smc-signal-panel-v2',
+    name: 'Aemeth SMC Entry/TP/SL Signal Panel V2',
+    normalPriceIdr: 299000,
+    promoPriceIdr: 249000,
+    normalPriceCents: 3000,
+    promoPriceCents: 2490,
+    isPublished: true,
+    version: '2.1.0',
+  },
 };
 
 // Aliases for legacy compatibility
@@ -112,6 +122,8 @@ export const LEGACY_PRODUCT_ID_MAP: Record<string, string> = {
   'prd_ichimoku_001': 'ichimoku-cloud',
   'prd_aisignal_002': 'ai-signal-v1',
   'prd_trendsr_005': 'trendline-sr-utbot',
+  'smc-signal-panel': 'smc-signal-panel-v2',
+  'prd_smc_006': 'smc-signal-panel-v2',
 };
 
 export function resolveProductId(id: string): string {
@@ -146,8 +158,8 @@ export const BUNDLE_DEFINITIONS: Record<'starter' | 'pro' | 'ultimate', BundleDe
     discountRate: 0.25, // 25%
     nameId: 'Ultimate Pack',
     nameEn: 'Ultimate Pack',
-    descriptionId: 'Seluruh 5 indikator aktif Aemeth dalam satu paket lengkap dengan diskon maksimal 25%.',
-    descriptionEn: 'All 5 active Aemeth indicators in one comprehensive package with maximum 25% discount.',
+    descriptionId: 'Seluruh indikator aktif Aemeth dalam satu paket lengkap dengan diskon maksimal 25%.',
+    descriptionEn: 'All active Aemeth indicators in one comprehensive package with maximum 25% discount.',
   },
 };
 

@@ -111,8 +111,8 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* Mobile Navigation Scrollbar */}
-      <div className="w-full max-w-full overflow-hidden mt-2 pt-1 lg:hidden">
-        <div className="flex overflow-x-auto py-1 gap-1.5 justify-start no-scrollbar touch-pan-x -mx-3 px-3">
+      <div className="w-full max-w-full overflow-x-auto no-scrollbar touch-pan-x mt-2 pt-1 lg:hidden">
+        <div className="flex py-1 gap-1.5 justify-start w-max min-w-full px-0.5">
           {[
             { id: 'home', label: t.nav.home },
             { id: 'catalog', label: t.nav.indicators },

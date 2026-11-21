@@ -3,6 +3,8 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { BentoFeatures } from './components/BentoFeatures';
 import { Catalog } from './components/Catalog';
+import { BundleSection } from './components/BundleSection';
+import { calculateBundlePrice } from './config/pricing';
 import { ProductDetailModal } from './components/ProductDetailModal';
 import { CheckoutModal } from './components/CheckoutModal';
 import { GuestOrderStatus } from './components/GuestOrderStatus';
@@ -76,6 +78,41 @@ export function App() {
   const handleQuickBuy = (product: Product) => {
     setCartItems([product]);
     setIsCheckoutOpen(true);
+  };
+
+  const handleBundleCheckout = (bundleType: 'starter' | 'pro' | 'ultimate', selectedProductIds: string[]) => {
+    const calc = calculateBundlePrice(bundleType, selectedProductIds);
+    const bundleProduct: Product = {
+      id: `bundle-${bundleType}`,
+      slug: `${bundleType}-pack`,
+      title: calc.bundleName,
+      title_id: calc.bundleName,
+      title_en: calc.bundleName,
+      short_desc: `Paket bundling ${calc.productCount} indikator pilihan`,
+      short_desc_id: `Paket bundling ${calc.productCount} indikator pilihan`,
+      short_desc_en: `Bundle package of ${calc.productCount} selected indicators`,
+      long_desc: `Paket bundling ${calc.productCount} indikator pilihan dengan diskon bundling ${Math.round(calc.bundleDiscountRate * 100)}%`,
+      type: 'bundle',
+      category: 'bundle',
+      bundle_type: bundleType,
+      price_idr: calc.finalPriceIdr,
+      normal_price_idr: calc.totalNormalPriceIdr,
+      discount_idr: calc.totalSavingsIdr,
+      discount_percent: calc.totalSavingsPercent,
+      price_cents: Math.round(calc.finalPriceIdr / 160),
+      discount_cents: Math.round(calc.totalSavingsIdr / 160),
+      version: '2026.2',
+      is_published: true,
+      thumbnail_url: './products/trendline-sr-utbot.jpg',
+      included_product_ids: selectedProductIds,
+      created_at: new Date().toISOString(),
+      features: [
+        `${calc.productCount} File Kode Sumber Pine Script (.pine & .txt)`,
+        `Diskon Bundling ${Math.round(calc.bundleDiscountRate * 100)}%`,
+        'Lisensi Permanen untuk Versi yang Dibeli',
+      ],
+    };
+    handleQuickBuy(bundleProduct);
   };
 
   const handleCheckoutSuccess = (orderNumber: string, accessToken: string) => {
@@ -180,12 +217,10 @@ export function App() {
         )}
 
         {activeTab === 'bundles' && (
-          <div className="pt-6">
-            <Catalog
-              products={products.filter((p) => p.type === 'bundle')}
-              isLoading={isLoadingProducts}
-              onSelectProduct={(p) => setSelectedProduct(p)}
-              onQuickBuy={handleQuickBuy}
+          <div className="pt-6 pb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <BundleSection
+              products={products}
+              onCheckoutBundle={handleBundleCheckout}
             />
           </div>
         )}
