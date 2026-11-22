@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
-  Search, ShieldCheck, Clock, CheckCircle2, AlertCircle, Copy, Check, Download, 
-  Terminal, Lock, Code, ExternalLink, HelpCircle, ArrowRight, BookOpen, MessageCircle, Send, FileText
+  Search, Clock, CheckCircle2, AlertCircle, Copy, Check, Download, 
+  Terminal, Code, ExternalLink, HelpCircle, ArrowRight, BookOpen, MessageCircle, Send, FileText,
+  Mail, Key, Layers, MousePointer
 } from 'lucide-react';
 import { useTranslation } from '../i18n/LanguageContext';
 import { api } from '../services/api';
@@ -20,16 +21,32 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
   onNavigateToGuide,
 }) => {
   const { t, lang } = useTranslation();
+  const [activeTab, setActiveTab] = useState<'order' | 'email'>('order');
   const [orderNumber, setOrderNumber] = useState(initialOrderNumber);
   const [accessToken, setAccessToken] = useState(initialToken);
   const [isSearching, setIsSearching] = useState(false);
   const [order, setOrder] = useState<Order | null>(null);
   const [notFound, setNotFound] = useState(false);
 
-  // Source code state
+  // Email magic retrieval state
+  const [retrievalEmail, setRetrievalEmail] = useState('');
+  const [retrievalToken, setRetrievalToken] = useState('');
+  const [retrievalSent, setRetrievalSent] = useState(false);
+  const [retrievedOrders, setRetrievedOrders] = useState<Order[]>([]);
+  const [isRetrieving, setIsRetrieving] = useState(false);
+
+  // Source code viewer state
   const [activePineScript, setActivePineScript] = useState<{ title: string; code: string; filename: string } | null>(null);
   const [copiedCode, setCopiedCode] = useState(false);
   const [copiedOrderRef, setCopiedOrderRef] = useState(false);
+  const [copiedToken, setCopiedToken] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const codePreRef = useRef<HTMLPreElement>(null);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
 
   useEffect(() => {
     // If order number provided in props or session, auto-fetch
@@ -61,6 +78,10 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
       const res = await api.getGuestOrder(lookupNum.trim(), lookupToken.trim());
       if (res.success && res.order) {
         setOrder(res.order);
+        // Persist token in local state if returned from order
+        if (res.order.access_token && !accessToken) {
+          setAccessToken(res.order.access_token);
+        }
       } else {
         setNotFound(true);
       }
@@ -73,16 +94,37 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
 
   const handleViewPineSource = async (productId: string) => {
     try {
-      const res = await api.getDeliverySourceCode(productId);
+      const res = await api.getDeliverySourceCode(productId, order?.order_number, accessToken || order?.access_token);
       if (res.success) {
         setActivePineScript({
           title: res.product_title,
           filename: res.filename,
           code: res.pine_script_content,
         });
+      } else {
+        showToast(res.error || 'Gagal mengambil source code');
       }
     } catch (err: any) {
-      alert('Error: ' + err.message);
+      showToast(err.message || 'Akses ditolak: Pembayaran belum diverifikasi');
+    }
+  };
+
+  const handleViewBundleAllSources = async () => {
+    if (!order) return;
+    try {
+      const res = await api.getBundleSourceCodes(order.order_number, accessToken || order.access_token);
+      if (res.success) {
+        setActivePineScript({
+          title: `All Indicators (${order.bundle_type?.toUpperCase() || 'BUNDLE'} PACKAGE)`,
+          filename: `aemeth_${order.bundle_type || 'bundle'}_all_sources.pine`,
+          code: res.combined_source,
+        });
+        showToast(lang === 'id' ? 'Seluruh source code bundle berhasil dimuat.' : 'All bundle sources loaded.');
+      } else {
+        showToast(res.error || 'Gagal memuat source code bundle');
+      }
+    } catch (err: any) {
+      showToast(err.message || 'Gagal memuat source bundle');
     }
   };
 
@@ -96,25 +138,78 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+    showToast(`${lang === 'id' ? 'Mengunduh file' : 'Downloading'} ${filename}`);
   };
 
   const copyCode = () => {
     if (!activePineScript) return;
     navigator.clipboard.writeText(activePineScript.code);
     setCopiedCode(true);
+    showToast(lang === 'id' ? 'Source code berhasil disalin.' : 'Source code copied to clipboard.');
     setTimeout(() => setCopiedCode(false), 2000);
+  };
+
+  const handleSelectAllCode = () => {
+    if (codePreRef.current) {
+      const range = document.createRange();
+      range.selectNodeContents(codePreRef.current);
+      const sel = window.getSelection();
+      sel?.removeAllRanges();
+      sel?.addRange(range);
+      showToast(lang === 'id' ? 'Seluruh kode berhasil dipilih.' : 'All code selected.');
+    }
   };
 
   const copyOrderRef = () => {
     if (!order) return;
     navigator.clipboard.writeText(order.order_number);
     setCopiedOrderRef(true);
+    showToast(lang === 'id' ? 'Nomor pesanan disalin.' : 'Order reference copied.');
     setTimeout(() => setCopiedOrderRef(false), 2000);
   };
 
+  const copyAccessToken = () => {
+    const tokenToCopy = order?.access_token || accessToken;
+    if (!tokenToCopy) return;
+    navigator.clipboard.writeText(tokenToCopy);
+    setCopiedToken(true);
+    showToast(lang === 'id' ? 'Access token disalin.' : 'Access token copied.');
+    setTimeout(() => setCopiedToken(false), 2000);
+  };
+
+  const handleRequestMagicLink = async () => {
+    if (!retrievalEmail.trim()) return;
+    setIsRetrieving(true);
+    try {
+      const res = await api.requestOrderRetrieval(retrievalEmail.trim());
+      setRetrievalSent(true);
+      if (res.token) {
+        setRetrievalToken(res.token);
+        // Automatically fetch orders if token is returned
+        const listRes = await api.getOrdersByRetrievalToken(res.token);
+        if (listRes.success && listRes.orders) {
+          setRetrievedOrders(listRes.orders);
+        }
+      }
+      showToast(lang === 'id' ? 'Tautan akses riwayat pesanan diproses.' : 'Order retrieval link generated.');
+    } catch {
+      showToast(lang === 'id' ? 'Gagal memproses permintaan.' : 'Failed to request retrieval.');
+    } finally {
+      setIsRetrieving(false);
+    }
+  };
+
   return (
-    <div className="w-full py-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div className="w-full py-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 relative">
       
+      {/* Toast Notification Notification */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 bg-blue-600 border border-blue-400 text-white px-5 py-3 rounded-2xl shadow-2xl text-xs sm:text-sm font-semibold flex items-center gap-2.5 animate-bounce">
+          <Check className="w-4 h-4 text-emerald-300" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
+
       {/* Header */}
       <div className="text-center space-y-2">
         <span className="text-xs font-bold text-blue-400 uppercase tracking-wider font-mono">
@@ -128,66 +223,175 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
         </p>
       </div>
 
-      {/* Lookup Card */}
-      <div className="bg-[#0b1120] border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
-        <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
-          <div className="sm:col-span-6">
-            <label className="text-[11px] font-mono text-slate-400 block mb-1">
-              {t.checkout.orderReference} *
-            </label>
-            <input
-              type="text"
-              value={orderNumber}
-              onChange={(e) => setOrderNumber(e.target.value)}
-              placeholder="e.g. AEM-8931204"
-              className="w-full bg-[#070b14] border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white font-mono focus:border-blue-500 focus:outline-none"
-            />
-          </div>
-
-          <div className="sm:col-span-6">
-            <label className="text-[11px] font-mono text-slate-400 block mb-1">
-              Guest Access Token (Optional)
-            </label>
-            <input
-              type="text"
-              value={accessToken}
-              onChange={(e) => setAccessToken(e.target.value)}
-              placeholder="tok_guest_..."
-              className="w-full bg-[#070b14] border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white font-mono focus:border-blue-500 focus:outline-none"
-            />
-          </div>
-        </div>
-
+      {/* Tab Switcher: Direct Lookup vs Email History Retrieval */}
+      <div className="flex items-center justify-center gap-2 max-w-md mx-auto">
         <button
-          onClick={() => handleLookup()}
-          disabled={isSearching || !orderNumber.trim()}
-          className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+          onClick={() => setActiveTab('order')}
+          className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            activeTab === 'order'
+              ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+              : 'bg-[#0b1120] text-slate-400 hover:text-white border border-slate-800'
+          }`}
         >
-          {isSearching ? (
-            <span>{t.orderStatus.searching}</span>
-          ) : (
-            <>
-              <Search className="w-4 h-4" />
-              <span>{t.orderStatus.lookupButton}</span>
-            </>
-          )}
+          <Key className="w-3.5 h-3.5" />
+          <span>{lang === 'id' ? 'Lacak Pesanan & Token' : 'Order ID & Access Token'}</span>
         </button>
 
-        {/* Demo order quick hint */}
-        <div className="pt-2 flex items-center justify-between text-[11px] text-slate-400 font-mono border-t border-slate-800/60">
-          <span>{lang === 'id' ? 'Contoh order terverifikasi:' : 'Sample verified order:'}</span>
-          <button
-            onClick={() => {
-              setOrderNumber('AEM-8931204');
-              setAccessToken('tok_sample_verified_2026');
-              handleLookup('AEM-8931204', 'tok_sample_verified_2026');
-            }}
-            className="text-blue-400 hover:text-blue-300 underline cursor-pointer"
-          >
-            AEM-8931204
-          </button>
-        </div>
+        <button
+          onClick={() => setActiveTab('email')}
+          className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            activeTab === 'email'
+              ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+              : 'bg-[#0b1120] text-slate-400 hover:text-white border border-slate-800'
+          }`}
+        >
+          <Mail className="w-3.5 h-3.5" />
+          <span>{lang === 'id' ? 'Ambil Riwayat via Email' : 'Email Order History'}</span>
+        </button>
       </div>
+
+      {/* Mode A: Lookup by Order Number & Token */}
+      {activeTab === 'order' && (
+        <div className="bg-[#0b1120] border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+            <div className="sm:col-span-6">
+              <label className="text-[11px] font-mono text-slate-400 block mb-1">
+                {t.checkout.orderReference} *
+              </label>
+              <input
+                type="text"
+                value={orderNumber}
+                onChange={(e) => setOrderNumber(e.target.value)}
+                placeholder="e.g. AEM-8931204"
+                className="w-full bg-[#070b14] border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white font-mono focus:border-blue-500 focus:outline-none"
+              />
+            </div>
+
+            <div className="sm:col-span-6">
+              <label className="text-[11px] font-mono text-slate-400 block mb-1">
+                Guest Access Token *
+              </label>
+              <input
+                type="text"
+                value={accessToken}
+                onChange={(e) => setAccessToken(e.target.value)}
+                placeholder="tok_..."
+                className="w-full bg-[#070b14] border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white font-mono focus:border-blue-500 focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <button
+            onClick={() => handleLookup()}
+            disabled={isSearching || !orderNumber.trim()}
+            className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+          >
+            {isSearching ? (
+              <span>{t.orderStatus.searching}</span>
+            ) : (
+              <>
+                <Search className="w-4 h-4" />
+                <span>{t.orderStatus.lookupButton}</span>
+              </>
+            )}
+          </button>
+
+          {/* Demo order quick hint */}
+          <div className="pt-2 flex items-center justify-between text-[11px] text-slate-400 font-mono border-t border-slate-800/60">
+            <span>{lang === 'id' ? 'Contoh order terverifikasi:' : 'Sample verified order:'}</span>
+            <button
+              onClick={() => {
+                setOrderNumber('AEM-8931204');
+                setAccessToken('tok_sample_verified_2026');
+                handleLookup('AEM-8931204', 'tok_sample_verified_2026');
+              }}
+              className="text-blue-400 hover:text-blue-300 underline cursor-pointer"
+            >
+              AEM-8931204
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Mode B: Email History Magic Link */}
+      {activeTab === 'email' && (
+        <div className="bg-[#0b1120] border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
+          <div className="space-y-1">
+            <h3 className="text-base font-bold text-white font-heading">
+              {lang === 'id' ? 'Ambil Semua Pesanan Tanpa Wajib Login' : 'Retrieve Orders Without Forced Accounts'}
+            </h3>
+            <p className="text-xs text-slate-400">
+              {lang === 'id' 
+                ? 'Masukkan alamat email yang Anda gunakan saat checkout untuk menerima tautan akses seluruh source code indikator Anda.' 
+                : 'Enter the email address used during purchase to retrieve all your indicators and access tokens.'}
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3">
+            <input
+              type="email"
+              value={retrievalEmail}
+              onChange={(e) => setRetrievalEmail(e.target.value)}
+              placeholder="trader@aemethtrader.com"
+              className="flex-1 bg-[#070b14] border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:border-blue-500 focus:outline-none"
+            />
+            <button
+              onClick={handleRequestMagicLink}
+              disabled={isRetrieving || !retrievalEmail.trim()}
+              className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-bold rounded-xl transition-all shadow-md shrink-0 cursor-pointer disabled:opacity-50"
+            >
+              {isRetrieving ? (lang === 'id' ? 'Memproses...' : 'Processing...') : (lang === 'id' ? 'Kirim Tautan Akses' : 'Send Access Link')}
+            </button>
+          </div>
+
+          {retrievalSent && (
+            <div className="p-4 rounded-xl bg-blue-950/40 border border-blue-500/30 text-xs text-blue-300 space-y-1">
+              <span className="font-bold block">
+                {lang === 'id' ? 'Permintaan Berhasil Dikirim' : 'Retrieval Request Processed'}
+              </span>
+              <p className="text-slate-300 text-[11px]">
+                {lang === 'id'
+                  ? 'Jika email terdaftar, sistem akan memverifikasi pesanan Anda. Untuk demonstrasi instan, daftar pesanan Anda langsung ditampilkan di bawah:'
+                  : 'If the email matches existing records, your orders are listed below:'}
+              </p>
+            </div>
+          )}
+
+          {retrievedOrders.length > 0 && (
+            <div className="space-y-3 pt-3">
+              <span className="text-xs font-bold font-mono text-slate-300 uppercase tracking-wider block">
+                {lang === 'id' ? `Ditemukan ${retrievedOrders.length} Pesanan:` : `Found ${retrievedOrders.length} Orders:`}
+              </span>
+              <div className="space-y-2">
+                {retrievedOrders.map((ro) => (
+                  <div
+                    key={ro.id}
+                    className="p-4 bg-[#070b14] border border-slate-800 rounded-2xl flex items-center justify-between"
+                  >
+                    <div>
+                      <div className="font-mono text-white text-xs font-bold">{ro.order_number}</div>
+                      <div className="text-[11px] text-slate-400">
+                        {new Date(ro.created_at).toLocaleDateString()} • Status: <span className="text-emerald-400 font-bold">{ro.status.toUpperCase()}</span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setActiveTab('order');
+                        setOrderNumber(ro.order_number);
+                        setAccessToken(ro.access_token || '');
+                        handleLookup(ro.order_number, ro.access_token);
+                      }}
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl cursor-pointer"
+                    >
+                      {lang === 'id' ? 'Buka Source Code' : 'Open Source Code'}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {notFound && (
         <div className="p-4 rounded-2xl bg-red-950/40 border border-red-500/30 text-red-300 text-xs text-center flex items-center justify-center gap-2">
@@ -212,7 +416,7 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
                 </h3>
                 <button
                   onClick={copyOrderRef}
-                  className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                  className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
                   title="Copy Reference"
                 >
                   {copiedOrderRef ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
@@ -221,6 +425,15 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
               <p className="text-xs text-slate-400 font-mono">
                 {new Date(order.created_at).toLocaleDateString()} • {order.customer_email}
               </p>
+              {order.access_token && (
+                <div className="flex items-center gap-1.5 pt-1 text-[11px] font-mono text-slate-400">
+                  <span>Token:</span>
+                  <span className="text-blue-400 truncate max-w-[200px]">{order.access_token}</span>
+                  <button onClick={copyAccessToken} className="text-slate-400 hover:text-white cursor-pointer">
+                    {copiedToken ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Status Badge */}
@@ -249,18 +462,49 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
                   <span>{t.orderStatus.statusCancelled}</span>
                 </span>
               )}
+              {order.status === 'refunded' && (
+                <span className="px-4 py-2 rounded-full bg-red-950/80 border border-red-500/40 text-red-300 text-xs font-bold font-mono flex items-center gap-1.5">
+                  <AlertCircle className="w-4 h-4 text-red-400" />
+                  <span>{lang === 'id' ? 'Dibatalkan / Direfund' : 'Refunded'}</span>
+                </span>
+              )}
             </div>
           </div>
+
+          {/* Bundle Bulk Actions (If order is bundle or contains multiple indicators) */}
+          {order.status === 'paid' && (order.bundle_type || (order.items && order.items.length > 1)) && (
+            <div className="p-4 bg-blue-950/30 border border-blue-500/30 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <Layers className="w-5 h-5 text-blue-400 shrink-0" />
+                <div>
+                  <span className="text-xs font-bold text-white block">
+                    {lang === 'id' ? 'Paket Bundle Terverifikasi' : 'Verified Indicator Bundle'}
+                  </span>
+                  <span className="text-[11px] text-slate-400">
+                    {lang === 'id' 
+                      ? 'Dapatkan seluruh source code indikator dalam satu tampilan terpisah.' 
+                      : 'Access all bundled indicators in one organized delivery.'}
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={handleViewBundleAllSources}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-md shrink-0"
+              >
+                <Terminal className="w-3.5 h-3.5" />
+                <span>{lang === 'id' ? 'Salin Semua Source Code Bundle' : 'Copy All Bundle Sources'}</span>
+              </button>
+            </div>
+          )}
 
           {/* Purchased Items List */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider font-mono">
-              {t.orderStatus.purchasedItems}
+              {t.orderStatus.purchasedItems} ({order.items?.length || 0})
             </h4>
 
             <div className="space-y-3">
               {order.items?.map((item) => {
-                const isOpenSource = item.product_type === 'open_source';
                 const isPaid = order.status === 'paid';
 
                 return (
@@ -270,27 +514,21 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        {isOpenSource ? (
-                          <span className="px-2.5 py-0.5 rounded-full bg-emerald-950/70 border border-emerald-500/30 text-[10px] font-bold text-emerald-300 flex items-center gap-1 font-mono">
-                            <Code className="w-3 h-3" /> Open-Source .pine
-                          </span>
-                        ) : (
-                          <span className="px-2.5 py-0.5 rounded-full bg-blue-950/70 border border-blue-500/30 text-[10px] font-bold text-blue-300 flex items-center gap-1 font-mono">
-                            <Lock className="w-3 h-3" /> TradingView Invite-Only
-                          </span>
-                        )}
+                        <span className="px-2.5 py-0.5 rounded-full bg-emerald-950/70 border border-emerald-500/30 text-[10px] font-bold text-emerald-300 flex items-center gap-1 font-mono">
+                          <Code className="w-3 h-3" /> Uncompiled Source Code (.pine / .txt)
+                        </span>
                       </div>
                       <h5 className="text-base font-bold text-white font-heading">
                         {item.product_title}
                       </h5>
                       <span className="text-xs font-mono text-slate-400">
-                        {formatPriceExact(item.unit_price_cents, lang)}
+                        {formatPriceExact(item.unit_price_cents, lang, item.effective_price_idr)}
                       </span>
                     </div>
 
                     {/* Delivery Actions */}
                     <div>
-                      {isPaid && isOpenSource && (
+                      {isPaid && (
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => handleViewPineSource(item.product_id)}
@@ -299,15 +537,6 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
                             <Terminal className="w-3.5 h-3.5" />
                             <span>{t.orderStatus.viewSourceCode}</span>
                           </button>
-                        </div>
-                      )}
-
-                      {isPaid && !isOpenSource && (
-                        <div className="bg-blue-950/60 border border-blue-500/30 rounded-xl px-3.5 py-2 text-xs font-mono text-blue-300">
-                          <span className="font-bold">{t.orderStatus.inviteStatusGranted}</span>
-                          <span className="block text-[10px] text-slate-300 mt-0.5">
-                            Username: {order.customer_tv_username || 'Submitted'}
-                          </span>
                         </div>
                       )}
 
@@ -326,18 +555,26 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
           {/* Interactive Source Code Viewer */}
           {activePineScript && (
             <div className="rounded-2xl border border-blue-500/40 bg-[#05080f] overflow-hidden shadow-2xl space-y-0">
-              <div className="px-5 py-3.5 bg-[#0f172a] border-b border-slate-800 flex items-center justify-between">
+              <div className="px-4 sm:px-5 py-3.5 bg-[#0f172a] border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2 text-xs font-mono font-bold text-white">
-                  <Terminal className="w-4 h-4 text-blue-400" />
-                  <span>{activePineScript.filename}</span>
+                  <Terminal className="w-4 h-4 text-blue-400 shrink-0" />
+                  <span className="truncate max-w-[200px] sm:max-w-[320px]">{activePineScript.filename}</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <button
+                    onClick={handleSelectAllCode}
+                    className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg flex items-center gap-1 cursor-pointer transition-colors"
+                    title="Select All Code"
+                  >
+                    <MousePointer className="w-3.5 h-3.5" />
+                    <span>{lang === 'id' ? 'Pilih Semua' : 'Select All'}</span>
+                  </button>
                   <button
                     onClick={copyCode}
-                    className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg flex items-center gap-1 cursor-pointer transition-colors"
+                    className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg flex items-center gap-1 cursor-pointer transition-colors shadow-sm"
                   >
                     {copiedCode ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                    <span>{copiedCode ? t.checkout.copied : t.checkout.copy}</span>
+                    <span>{copiedCode ? (lang === 'id' ? 'Tersalin' : 'Copied') : (lang === 'id' ? 'Salin Seluruh Kode' : 'Copy Entire Code')}</span>
                   </button>
                   <button
                     onClick={() => handleDownloadPineBlob(activePineScript.filename, activePineScript.code)}
@@ -360,8 +597,8 @@ export const GuestOrderStatus: React.FC<GuestOrderStatusProps> = ({
                   </button>
                 </div>
               </div>
-              <div className="p-5 font-mono text-xs text-slate-200 bg-[#03060c] max-h-80 overflow-y-auto leading-relaxed">
-                <pre className="whitespace-pre-wrap">{activePineScript.code}</pre>
+              <div className="p-4 sm:p-5 font-mono text-xs text-slate-200 bg-[#03060c] max-h-96 overflow-y-auto leading-relaxed select-text">
+                <pre ref={codePreRef} className="whitespace-pre font-mono tab-size-4">{activePineScript.code}</pre>
               </div>
             </div>
           )}

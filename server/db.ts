@@ -150,7 +150,30 @@ export function initDatabase() {
       key TEXT PRIMARY KEY,
       value TEXT NOT NULL
     );
+
+    CREATE TABLE IF NOT EXISTS order_retrieval_tokens (
+      id TEXT PRIMARY KEY,
+      email TEXT NOT NULL,
+      token_hash TEXT NOT NULL,
+      expires_at TEXT NOT NULL,
+      used INTEGER NOT NULL DEFAULT 0,
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
   `);
+
+  // Migrate: add access_token and is_revoked columns to orders (guest delivery security)
+  try {
+    db.exec(`ALTER TABLE orders ADD COLUMN access_token TEXT;`);
+  } catch {}
+  try {
+    db.exec(`ALTER TABLE orders ADD COLUMN access_token_hash TEXT;`);
+  } catch {}
+  try {
+    db.exec(`ALTER TABLE orders ADD COLUMN is_revoked INTEGER NOT NULL DEFAULT 0;`);
+  } catch {}
+  try {
+    db.exec(`ALTER TABLE orders ADD COLUMN customer_name TEXT;`);
+  } catch {}
 
   // Migrate schema for IDR pricing, bundle types, and license terms
   try {
@@ -194,6 +217,7 @@ export function initDatabase() {
 
   seedInitialData();
   seedCanonicalIndicators();
+  seedProductVersions();
 }
 
 function seedCanonicalIndicators() {
@@ -465,12 +489,16 @@ plotshape(aligned_bear and not aligned_bear[1], title="Bear Cascade", style=shap
   insertSetting.run('paypal_sandbox_mode', 'true');
   insertSetting.run('tradingview_publisher_username', 'AemethTraderAnalysis');
 
-  // 7. Seed an initial sample order for the test customer so they have instant data
+  // 7. Seed sample order with deterministic access_token for demo
+  const sampleAccessToken = 'tok_sample_verified_2026';
+  const sampleTokenHash = crypto.createHash('sha256').update(sampleAccessToken).digest('hex');
   const orderId = 'ord_sample_paid_001';
   db.prepare(`
-    INSERT INTO orders (id, order_number, user_id, total_cents, currency, status, payment_method, customer_email, customer_tv_username)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `).run(orderId, 'AEM-8931204', traderId, 7900, 'USD', 'paid', 'bank_transfer', 'trader@aemethtrader.com', 'vance_fx');
+    INSERT INTO orders (id, order_number, user_id, total_cents, currency, status, payment_method, customer_email,
+      access_token, access_token_hash, is_revoked)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
+  `).run(orderId, 'AEM-8931204', traderId, 7900, 'USD', 'paid', 'bank_transfer', 'trader@aemethtrader.com',
+    sampleAccessToken, sampleTokenHash);
 
   db.prepare(`
     INSERT INTO order_items (id, order_id, product_id, product_title, product_type, unit_price_cents)
@@ -483,9 +511,481 @@ plotshape(aligned_bear and not aligned_bear[1], title="Bear Cascade", style=shap
   `).run('pay_sample_001', orderId, 'bank_transfer', 790, 'USD', 'completed', 'BCA-TX-998124', 'Verified via Bank Central Asia settlement', adminId);
 
   db.prepare(`
-    INSERT INTO deliveries (id, order_id, product_id, user_id, delivery_type, status, tv_username)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-  `).run('del_sample_001', orderId, sampleOrderProdId, traderId, 'source_download', 'ready', 'vance_fx');
+    INSERT INTO deliveries (id, order_id, product_id, user_id, delivery_type, status)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `).run('del_sample_001', orderId, sampleOrderProdId, traderId, 'source_download', 'ready');
+
+  // 8. Seed Pine Script source code for all 6 canonical products
+  seedProductVersions();
 
   console.log('[DB] Database successfully initialized and seeded!');
+}
+
+function seedProductVersions() {
+  const insertVersion = db.prepare(`
+    INSERT OR IGNORE INTO product_versions (id, product_id, version_number, changelog, pine_script_content)
+    VALUES (?, ?, ?, ?, ?)
+  `);
+
+  const PINE_SCRIPTS: Record<string, { version: string; changelog: string; content: string }> = {
+    'parabolic-sar': {
+      version: '3.1.0',
+      changelog: 'v3.1.0: Added multi-stage acceleration parameter tuning & dynamic status dashboard',
+      content: `//@version=5
+indicator("Aemeth Parabolic SAR", overlay=true)
+
+// ==========================================================================
+// AEMETH TRADER ANALYSIS — PARABOLIC SAR INDICATOR v3.1.0
+// Pine Script v5 | Anti-Repaint: Locked to Closed Bar (bar_index[1])
+// License: Personal Use — Do Not Redistribute
+// ==========================================================================
+
+// ————— Inputs
+start       = input.float(0.02, "AF Start",     minval=0.001, maxval=0.1,  step=0.001)
+increment   = input.float(0.02, "AF Increment", minval=0.001, maxval=0.1,  step=0.001)
+max_af      = input.float(0.2,  "AF Maximum",   minval=0.05,  maxval=1.0,  step=0.01)
+atr_len     = input.int(14,     "ATR Length",   minval=1)
+tp_mult1    = input.float(1.0,  "TP1 Multiplier", minval=0.1)
+tp_mult2    = input.float(2.0,  "TP2 Multiplier", minval=0.1)
+tp_mult3    = input.float(3.0,  "TP3 Multiplier", minval=0.1)
+show_dash   = input.bool(true,  "Show Dashboard")
+
+// ————— Parabolic SAR (closed bar anti-repaint)
+psar        = ta.sar(start, increment, max_af)
+psar_prev   = psar[1]
+close_prev  = close[1]
+
+bull_signal = close_prev > psar_prev and close[2] <= psar[2]
+bear_signal = close_prev < psar_prev and close[2] >= psar[2]
+
+// ————— ATR for level spacing
+atr         = ta.atr(atr_len)[1]
+
+// ————— Entry, SL, TP levels (computed on closed bar)
+entry_bull  = close_prev
+sl_bull     = psar_prev
+tp1_bull    = entry_bull + atr * tp_mult1
+tp2_bull    = entry_bull + atr * tp_mult2
+tp3_bull    = entry_bull + atr * tp_mult3
+
+entry_bear  = close_prev
+sl_bear     = psar_prev
+tp1_bear    = entry_bear - atr * tp_mult1
+tp2_bear    = entry_bear - atr * tp_mult2
+tp3_bear    = entry_bear - atr * tp_mult3
+
+// ————— Plotting
+plot(psar, "SAR", color=close[1] > psar[1] ? color.new(#10b981,0) : color.new(#ff2a3b,0), style=plot.style_circles, linewidth=2)
+
+plotshape(bull_signal, "BUY",  shape.labelup,   location.belowbar, color.new(#10b981,0), text="BUY",  textcolor=color.white, size=size.small)
+plotshape(bear_signal, "SELL", shape.labeldown, location.abovebar, color.new(#ff2a3b,0), text="SELL", textcolor=color.white, size=size.small)
+
+// ————— Dashboard
+if show_dash
+    signal_txt = bull_signal ? "BUY 🟢" : bear_signal ? "SELL 🔴" : "—"
+    var table dash = table.new(position.top_right, 2, 5, border_width=1, border_color=color.new(color.gray,70))
+    table.cell(dash, 0, 0, "AEMETH PSAR", text_color=color.new(#2563eb,0), text_size=size.small, bgcolor=color.new(#070b14,10))
+    table.cell(dash, 1, 0, "v3.1.0",      text_color=color.silver,         text_size=size.small, bgcolor=color.new(#070b14,10))
+    table.cell(dash, 0, 1, "Signal",       text_color=color.silver,         text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(dash, 1, 1, signal_txt,     text_color=color.white,          text_size=size.small, bgcolor=color.new(#0b1120,10))
+
+// ————— Alerts
+alertcondition(bull_signal, "Aemeth PSAR — BUY",  "Aemeth Parabolic SAR: BUY signal triggered.")
+alertcondition(bear_signal, "Aemeth PSAR — SELL", "Aemeth Parabolic SAR: SELL signal triggered.")
+`,
+    },
+    'mfi-reversal': {
+      version: '2.4.0',
+      changelog: 'v2.4.0: Dynamic MFI exhaustion threshold tuning and ATR distance logic',
+      content: `//@version=5
+indicator("Aemeth MFI Reversal", overlay=true)
+
+// ==========================================================================
+// AEMETH TRADER ANALYSIS — MFI REVERSAL INDICATOR v2.4.0
+// Pine Script v5 | Anti-Repaint: Closed Bar Architecture
+// License: Personal Use — Do Not Redistribute
+// ==========================================================================
+
+// ————— Inputs
+mfi_len     = input.int(14,  "MFI Length",         minval=2)
+ob_level    = input.int(80,  "Overbought Level",    minval=51, maxval=99)
+os_level    = input.int(20,  "Oversold Level",      minval=1,  maxval=49)
+atr_len     = input.int(14,  "ATR Length",          minval=1)
+tp_mult1    = input.float(1.0, "TP1 ATR Multiplier")
+tp_mult2    = input.float(2.0, "TP2 ATR Multiplier")
+tp_mult3    = input.float(3.0, "TP3 ATR Multiplier")
+show_dash   = input.bool(true, "Show Dashboard")
+
+// ————— MFI Computation (closed bar)
+mfi         = ta.mfi(hlc3, mfi_len)[1]
+mfi_prev    = ta.mfi(hlc3, mfi_len)[2]
+
+buy_signal  = mfi_prev <= os_level and mfi > os_level
+sell_signal = mfi_prev >= ob_level and mfi < ob_level
+
+// ————— ATR (closed bar)
+atr         = ta.atr(atr_len)[1]
+entry_c     = close[1]
+
+// ————— BUY levels
+tp1_buy     = entry_c + atr * tp_mult1
+tp2_buy     = entry_c + atr * tp_mult2
+tp3_buy     = entry_c + atr * tp_mult3
+sl_buy      = entry_c - atr
+
+// ————— SELL levels
+tp1_sell    = entry_c - atr * tp_mult1
+tp2_sell    = entry_c - atr * tp_mult2
+tp3_sell    = entry_c - atr * tp_mult3
+sl_sell     = entry_c + atr
+
+// ————— Plots
+plotshape(buy_signal,  "BUY",  shape.labelup,   location.belowbar, color.new(#10b981,0), text="BUY",  textcolor=color.white, size=size.small)
+plotshape(sell_signal, "SELL", shape.labeldown, location.abovebar, color.new(#ff2a3b,0), text="SELL", textcolor=color.white, size=size.small)
+
+// ————— Dashboard
+if show_dash
+    sig_txt = buy_signal ? "BUY 🟢" : sell_signal ? "SELL 🔴" : "—"
+    var table dash = table.new(position.top_right, 2, 4, border_width=1, border_color=color.new(color.gray,70))
+    table.cell(dash, 0, 0, "AEMETH MFI",  text_color=color.new(#2563eb,0), text_size=size.small, bgcolor=color.new(#070b14,10))
+    table.cell(dash, 1, 0, "v2.4.0",      text_color=color.silver,         text_size=size.small, bgcolor=color.new(#070b14,10))
+    table.cell(dash, 0, 1, "MFI",         text_color=color.silver,         text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(dash, 1, 1, str.tostring(math.round(mfi, 2)), text_color=color.white, text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(dash, 0, 2, "Signal",      text_color=color.silver,         text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(dash, 1, 2, sig_txt,       text_color=color.white,          text_size=size.small, bgcolor=color.new(#0b1120,10))
+
+alertcondition(buy_signal,  "Aemeth MFI — BUY",  "Aemeth MFI Reversal: BUY reversal detected.")
+alertcondition(sell_signal, "Aemeth MFI — SELL", "Aemeth MFI Reversal: SELL reversal detected.")
+`,
+    },
+    'ichimoku-cloud': {
+      version: '5.2.0',
+      changelog: 'v5.2.0: Pine Script v5 upgrade with dynamic cloud projections & TP1-TP3 targets',
+      content: `//@version=5
+indicator("Aemeth Ichimoku Cloud", overlay=true)
+
+// ==========================================================================
+// AEMETH TRADER ANALYSIS — ICHIMOKU CLOUD INDICATOR v5.2.0
+// Pine Script v5 | Closed-Bar Anti-Repaint Architecture
+// License: Personal Use — Do Not Redistribute
+// ==========================================================================
+
+// ————— Inputs
+tenkan_len  = input.int(9,  "Tenkan-sen Length",  minval=1)
+kijun_len   = input.int(26, "Kijun-sen Length",   minval=1)
+senkou_len  = input.int(52, "Senkou Span B Len",  minval=1)
+disp        = input.int(26, "Displacement",       minval=1)
+atr_len     = input.int(14, "ATR Length",         minval=1)
+tp_mult1    = input.float(1.0, "TP1 Multiplier")
+tp_mult2    = input.float(2.0, "TP2 Multiplier")
+tp_mult3    = input.float(3.0, "TP3 Multiplier")
+show_dash   = input.bool(true, "Show Dashboard")
+
+// ————— Ichimoku Components (closed bar: index [1])
+tenkan      = (ta.highest(high, tenkan_len)[1] + ta.lowest(low, tenkan_len)[1]) / 2
+kijun       = (ta.highest(high, kijun_len)[1]  + ta.lowest(low, kijun_len)[1])  / 2
+senkou_a    = (tenkan + kijun) / 2
+senkou_b    = (ta.highest(high, senkou_len)[1]  + ta.lowest(low, senkou_len)[1]) / 2
+chikou      = close[disp + 1]
+
+// ————— Signal logic (fully closed bar)
+price_above_cloud = close[1] > math.max(senkou_a[disp], senkou_b[disp])
+price_below_cloud = close[1] < math.min(senkou_a[disp], senkou_b[disp])
+tk_cross_bull     = ta.crossover(tenkan, kijun)
+tk_cross_bear     = ta.crossunder(tenkan, kijun)
+
+buy_signal  = tk_cross_bull and price_above_cloud
+sell_signal = tk_cross_bear and price_below_cloud
+
+// ————— ATR levels
+atr         = ta.atr(atr_len)[1]
+entry_c     = close[1]
+tp1_buy     = entry_c + atr * tp_mult1
+tp2_buy     = entry_c + atr * tp_mult2
+tp3_buy     = entry_c + atr * tp_mult3
+sl_buy      = kijun
+tp1_sell    = entry_c - atr * tp_mult1
+tp2_sell    = entry_c - atr * tp_mult2
+tp3_sell    = entry_c - atr * tp_mult3
+sl_sell     = kijun
+
+// ————— Cloud Plots
+spa_line    = plot(senkou_a, "Senkou Span A", color=color.new(#10b981, 60), offset=disp)
+spb_line    = plot(senkou_b, "Senkou Span B", color=color.new(#ff2a3b, 60), offset=disp)
+fill(spa_line, spb_line, color=senkou_a >= senkou_b ? color.new(#10b981, 85) : color.new(#ff2a3b, 85))
+plot(tenkan, "Tenkan-sen",  color=color.new(#3b82f6, 0),  linewidth=1)
+plot(kijun,  "Kijun-sen",   color=color.new(#f59e0b, 0),  linewidth=1)
+plot(chikou, "Chikou Span", color=color.new(#8b5cf6, 50), offset=-disp)
+
+plotshape(buy_signal,  "BUY",  shape.labelup,   location.belowbar, color.new(#10b981,0), text="BUY",  textcolor=color.white, size=size.small)
+plotshape(sell_signal, "SELL", shape.labeldown, location.abovebar, color.new(#ff2a3b,0), text="SELL", textcolor=color.white, size=size.small)
+
+// ————— Dashboard
+if show_dash
+    sig_txt = buy_signal ? "BUY 🟢" : sell_signal ? "SELL 🔴" : "—"
+    cloud_txt = price_above_cloud ? "Above Cloud" : price_below_cloud ? "Below Cloud" : "In Cloud"
+    var table dash = table.new(position.top_right, 2, 5, border_width=1, border_color=color.new(color.gray,70))
+    table.cell(dash, 0, 0, "AEMETH ICHIMOKU", text_color=color.new(#2563eb,0), text_size=size.small, bgcolor=color.new(#070b14,10))
+    table.cell(dash, 1, 0, "v5.2.0",          text_color=color.silver,         text_size=size.small, bgcolor=color.new(#070b14,10))
+    table.cell(dash, 0, 1, "Signal",           text_color=color.silver,         text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(dash, 1, 1, sig_txt,            text_color=color.white,          text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(dash, 0, 2, "Price vs Cloud",   text_color=color.silver,         text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(dash, 1, 2, cloud_txt,          text_color=color.white,          text_size=size.small, bgcolor=color.new(#0b1120,10))
+
+alertcondition(buy_signal,  "Aemeth Ichimoku — BUY",  "Aemeth Ichimoku Cloud: BUY signal fired.")
+alertcondition(sell_signal, "Aemeth Ichimoku — SELL", "Aemeth Ichimoku Cloud: SELL signal fired.")
+`,
+    },
+    'ai-signal-v1': {
+      version: '1.2.0',
+      changelog: 'v1.2.0: Added Grade evaluation & AI Confidence telemetry badges',
+      content: `//@version=5
+indicator("Aemeth AI Signal V1", overlay=true)
+
+// ==========================================================================
+// AEMETH TRADER ANALYSIS — AI SIGNAL V1 v1.2.0
+// Pine Script v5 | Lorentzian-Inspired Classification Proxy
+// Anti-Repaint: Fully Closed Bar | License: Personal Use
+// ==========================================================================
+
+// ————— Inputs
+rsi_len     = input.int(14,   "RSI Length",           minval=2)
+ema_fast    = input.int(21,   "EMA Fast",             minval=1)
+ema_slow    = input.int(50,   "EMA Slow",             minval=1)
+atr_len     = input.int(14,   "ATR Length",           minval=1)
+tp_mult1    = input.float(1.0, "TP1 ATR Multiplier")
+tp_mult2    = input.float(2.0, "TP2 ATR Multiplier")
+tp_mult3    = input.float(3.0, "TP3 ATR Multiplier")
+show_dash   = input.bool(true, "Show Dashboard")
+
+// ————— Feature Vectors (closed bar)
+rsi         = ta.rsi(close[1], rsi_len)
+ema_f       = ta.ema(close[1], ema_fast)
+ema_s       = ta.ema(close[1], ema_slow)
+atr         = ta.atr(atr_len)[1]
+
+// ————— Classification proxy: multi-feature confluence
+bull_cond   = rsi > 50 and ema_f > ema_s and close[1] > ema_f
+bear_cond   = rsi < 50 and ema_f < ema_s and close[1] < ema_f
+
+// ————— Avoid repainting: use bar_index comparison
+buy_signal  = bull_cond and not bull_cond[1]
+sell_signal = bear_cond and not bear_cond[1]
+
+// ————— Grade & Confidence (illustrative scoring)
+rsi_score   = bull_cond ? (rsi - 50) / 50 : bear_cond ? (50 - rsi) / 50 : 0.0
+ema_gap     = math.abs(ema_f - ema_s) / atr
+confidence  = math.min(math.round((rsi_score * 50 + ema_gap * 50)), 100)
+grade       = confidence >= 80 ? "A" : confidence >= 60 ? "B" : "C"
+
+// ————— Entry/SL/TP levels
+entry_c     = close[1]
+sl_buy      = entry_c - atr
+tp1_buy     = entry_c + atr * tp_mult1
+tp2_buy     = entry_c + atr * tp_mult2
+tp3_buy     = entry_c + atr * tp_mult3
+sl_sell     = entry_c + atr
+tp1_sell    = entry_c - atr * tp_mult1
+tp2_sell    = entry_c - atr * tp_mult2
+tp3_sell    = entry_c - atr * tp_mult3
+
+// ————— Plots
+plotshape(buy_signal,  "LONG",  shape.labelup,   location.belowbar, color.new(#10b981,0), text="LONG",  textcolor=color.white, size=size.small)
+plotshape(sell_signal, "SHORT", shape.labeldown, location.abovebar, color.new(#ff2a3b,0), text="SHORT", textcolor=color.white, size=size.small)
+
+// ————— Dashboard
+if show_dash
+    sig_txt  = buy_signal ? "LONG 🟢" : sell_signal ? "SHORT 🔴" : "—"
+    conf_txt = str.tostring(confidence) + "% (" + grade + ")"
+    var table dash = table.new(position.top_right, 2, 5, border_width=1, border_color=color.new(color.gray,70))
+    table.cell(dash, 0, 0, "AEMETH AI SIG",  text_color=color.new(#2563eb,0), text_size=size.small, bgcolor=color.new(#070b14,10))
+    table.cell(dash, 1, 0, "v1.2.0",         text_color=color.silver,         text_size=size.small, bgcolor=color.new(#070b14,10))
+    table.cell(dash, 0, 1, "Signal",          text_color=color.silver,         text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(dash, 1, 1, sig_txt,           text_color=color.white,          text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(dash, 0, 2, "AI Confidence",   text_color=color.silver,         text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(dash, 1, 2, conf_txt,          text_color=color.white,          text_size=size.small, bgcolor=color.new(#0b1120,10))
+
+alertcondition(buy_signal,  "Aemeth AI — LONG",  "Aemeth AI Signal: LONG setup detected.")
+alertcondition(sell_signal, "Aemeth AI — SHORT", "Aemeth AI Signal: SHORT setup detected.")
+`,
+    },
+    'trendline-sr-utbot': {
+      version: '4.2.0',
+      changelog: 'v4.2.0: Integrated UT Bot trailing ATR stop with multi-swing trendline logic',
+      content: `//@version=5
+indicator("Aemeth Trendline Breakout + S/R + UT Bot", overlay=true, max_lines_count=100)
+
+// ==========================================================================
+// AEMETH TRADER ANALYSIS — TRENDLINE BREAKOUT + S/R + UT BOT v4.2.0
+// Pine Script v5 | Closed-Bar Anti-Repaint | License: Personal Use
+// ==========================================================================
+
+// ————— Inputs
+swing_len   = input.int(10,   "Swing Length",          minval=3)
+atr_len     = input.int(14,   "ATR Length",            minval=1)
+ut_sens     = input.float(1.0,"UT Bot ATR Sensitivity",minval=0.1)
+show_sr     = input.bool(true, "Show S/R Levels")
+show_tl     = input.bool(true, "Show Trendlines")
+show_dash   = input.bool(true, "Show Dashboard")
+
+// ————— ATR (closed bar)
+atr         = ta.atr(atr_len)[1]
+close_c     = close[1]
+
+// ————— UT Bot Core (closed bar trailing stop)
+trail_stop  = 0.0
+ut_up       = close_c - ut_sens * atr
+ut_dn       = close_c + ut_sens * atr
+trail_stop  := close_c > nz(trail_stop[1]) ? math.max(nz(trail_stop[1]), ut_up) : math.min(nz(trail_stop[1]), ut_dn)
+
+ut_buy      = close_c > trail_stop and close[2] <= trail_stop[1]
+ut_sell     = close_c < trail_stop and close[2] >= trail_stop[1]
+
+// ————— Swing High / Low for S/R
+sw_high     = ta.pivothigh(high, swing_len, swing_len)
+sw_low      = ta.pivotlow(low,   swing_len, swing_len)
+
+// ————— Trendline Breakout (diagonal)
+tl_break_up  = sw_low  and close[1] > sw_low
+tl_break_dn  = sw_high and close[1] < sw_high
+
+// ————— Plots
+plot(trail_stop, "UT Trail", color=close[1] >= trail_stop ? color.new(#10b981,20) : color.new(#ff2a3b,20), style=plot.style_linebr, linewidth=2)
+
+plotshape(ut_buy,  "BUY",  shape.labelup,   location.belowbar, color.new(#10b981,0), text="BUY",  textcolor=color.white, size=size.small)
+plotshape(ut_sell, "SELL", shape.labeldown, location.abovebar, color.new(#ff2a3b,0), text="SELL", textcolor=color.white, size=size.small)
+
+// ————— S/R Horizontal Levels
+plot(show_sr ? sw_high : na, "Resistance", color=color.new(#ff2a3b,40), style=plot.style_circles, linewidth=2, offset=-swing_len)
+plot(show_sr ? sw_low  : na, "Support",    color=color.new(#10b981,40), style=plot.style_circles, linewidth=2, offset=-swing_len)
+
+// ————— Dashboard
+if show_dash
+    sig_txt = ut_buy ? "BUY 🟢" : ut_sell ? "SELL 🔴" : "—"
+    var table dash = table.new(position.top_right, 2, 4, border_width=1, border_color=color.new(color.gray,70))
+    table.cell(dash, 0, 0, "AEMETH TL+SR+UTB", text_color=color.new(#2563eb,0), text_size=size.small, bgcolor=color.new(#070b14,10))
+    table.cell(dash, 1, 0, "v4.2.0",            text_color=color.silver,         text_size=size.small, bgcolor=color.new(#070b14,10))
+    table.cell(dash, 0, 1, "Signal",             text_color=color.silver,         text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(dash, 1, 1, sig_txt,              text_color=color.white,          text_size=size.small, bgcolor=color.new(#0b1120,10))
+
+alertcondition(ut_buy,  "Aemeth TL+SR+UTB — BUY",  "Aemeth UT Bot: BUY signal triggered.")
+alertcondition(ut_sell, "Aemeth TL+SR+UTB — SELL", "Aemeth UT Bot: SELL signal triggered.")
+`,
+    },
+    'smc-signal-panel-v2': {
+      version: '2.1.0',
+      changelog: 'v2.1.0: Real-time Signal Score panel & multi-timeframe ATR cooldown filtering',
+      content: `//@version=5
+indicator("Aemeth SMC Entry/TP/SL Signal Panel V2", overlay=true, max_boxes_count=50, max_lines_count=100)
+
+// ==========================================================================
+// AEMETH TRADER ANALYSIS — SMC SIGNAL PANEL V2 v2.1.0
+// Pine Script v5 | Smart Money Concepts | Closed-Bar Anti-Repaint
+// DISCLAIMER: Analytical tool. No guaranteed results. Trade at your own risk.
+// License: Personal Use — Do Not Redistribute
+// ==========================================================================
+
+// ————— Inputs
+swing_len   = input.int(10,    "Swing Lookback",           minval=3)
+atr_len     = input.int(14,    "ATR Length",               minval=1)
+atr_filter  = input.float(0.5, "ATR Filter Threshold",     minval=0.1)
+cooldown    = input.int(5,     "Signal Cooldown (bars)",   minval=1)
+rr_ratio    = input.float(2.0, "Risk:Reward Ratio",        minval=0.5)
+show_fvg    = input.bool(true,  "Show Fair Value Gaps")
+show_ob     = input.bool(true,  "Show Order Blocks")
+show_dash   = input.bool(true,  "Show Signal Panel")
+tp1_mult    = input.float(1.0,  "TP1 RR Multiplier")
+tp2_mult    = input.float(1.5,  "TP2 RR Multiplier")
+tp3_mult    = input.float(2.0,  "TP3 RR Multiplier")
+
+// ————— Market Structure (closed bar)
+atr         = ta.atr(atr_len)[1]
+sw_high     = ta.pivothigh(high, swing_len, swing_len)
+sw_low      = ta.pivotlow(low,   swing_len, swing_len)
+
+bos_bull    = not na(sw_low)  and close[1] > sw_low  and high[1] > ta.highest(high, swing_len)[2]
+bos_bear    = not na(sw_high) and close[1] < sw_high and low[1]  < ta.lowest(low,  swing_len)[2]
+
+// ————— ATR Volatility Filter
+vol_pass    = atr >= atr_filter * ta.atr(atr_len * 3)[1]
+
+// ————— Cooldown counter (prevent signal clusters)
+var int bars_since = 0
+bars_since := bars_since + 1
+buy_raw     = bos_bull and vol_pass and bars_since >= cooldown
+sell_raw    = bos_bear and vol_pass and bars_since >= cooldown
+
+buy_signal  = buy_raw
+sell_signal = sell_raw
+
+if buy_signal or sell_signal
+    bars_since := 0
+
+// ————— Entry / SL / TP levels
+sl_dist     = atr
+entry_c     = close[1]
+sl_buy      = entry_c - sl_dist
+sl_sell     = entry_c + sl_dist
+
+tp1_buy     = entry_c + sl_dist * tp1_mult * rr_ratio
+tp2_buy     = entry_c + sl_dist * tp2_mult * rr_ratio
+tp3_buy     = entry_c + sl_dist * tp3_mult * rr_ratio
+tp1_sell    = entry_c - sl_dist * tp1_mult * rr_ratio
+tp2_sell    = entry_c - sl_dist * tp2_mult * rr_ratio
+tp3_sell    = entry_c - sl_dist * tp3_mult * rr_ratio
+
+// ————— Fair Value Gap (closed bar)
+bull_fvg    = low[1] > high[3]
+bear_fvg    = high[1] < low[3]
+
+if show_fvg and bull_fvg
+    box.new(bar_index[2], low[1], bar_index, high[3], border_color=color.new(#10b981,50), bgcolor=color.new(#10b981,80))
+if show_fvg and bear_fvg
+    box.new(bar_index[2], high[1], bar_index, low[3], border_color=color.new(#ff2a3b,50), bgcolor=color.new(#ff2a3b,80))
+
+// ————— Order Block (last swing before BOS)
+if show_ob and bos_bull and not na(sw_low)
+    box.new(bar_index[swing_len], low[swing_len], bar_index, high[swing_len], border_color=color.new(#3b82f6,40), bgcolor=color.new(#3b82f6,85), border_style=line.style_dashed)
+if show_ob and bos_bear and not na(sw_high)
+    box.new(bar_index[swing_len], low[swing_len], bar_index, high[swing_len], border_color=color.new(#f59e0b,40), bgcolor=color.new(#f59e0b,85), border_style=line.style_dashed)
+
+// ————— Signal Shapes
+plotshape(buy_signal,  "BUY",  shape.labelup,   location.belowbar, color.new(#10b981,0), text="BUY",  textcolor=color.white, size=size.normal)
+plotshape(sell_signal, "SELL", shape.labeldown, location.abovebar, color.new(#ff2a3b,0), text="SELL", textcolor=color.white, size=size.normal)
+
+// ————— Signal Score (composite)
+rsi_score   = buy_signal ? ta.rsi(close[1], 14) / 100 : sell_signal ? (100 - ta.rsi(close[1], 14)) / 100 : 0.0
+atr_score   = vol_pass ? 1.0 : 0.5
+sig_score   = math.round((rsi_score * 50 + atr_score * 50))
+
+// ————— Live Signal Panel
+if show_dash
+    sig_txt   = buy_signal ? "BUY 🟢" : sell_signal ? "SELL 🔴" : "—"
+    score_txt = str.tostring(sig_score) + " / 100"
+    var table panel = table.new(position.top_right, 2, 7, border_width=1, border_color=color.new(color.gray,70))
+    table.cell(panel, 0, 0, "AEMETH SMC V2",   text_color=color.new(#2563eb,0), text_size=size.small, bgcolor=color.new(#070b14,10))
+    table.cell(panel, 1, 0, "v2.1.0",           text_color=color.silver,         text_size=size.small, bgcolor=color.new(#070b14,10))
+    table.cell(panel, 0, 1, "Signal",            text_color=color.silver,         text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(panel, 1, 1, sig_txt,             text_color=color.white,          text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(panel, 0, 2, "Signal Score",      text_color=color.silver,         text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(panel, 1, 2, score_txt,           text_color=color.white,          text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(panel, 0, 3, "ATR Filter",        text_color=color.silver,         text_size=size.small, bgcolor=color.new(#0b1120,10))
+    table.cell(panel, 1, 3, vol_pass ? "Pass ✓" : "Weak", text_color=vol_pass ? color.new(#10b981,0) : color.silver, text_size=size.small, bgcolor=color.new(#0b1120,10))
+
+alertcondition(buy_signal,  "Aemeth SMC V2 — BUY",  "Aemeth SMC V2: BUY structure breakout signal.")
+alertcondition(sell_signal, "Aemeth SMC V2 — SELL", "Aemeth SMC V2: SELL structure breakout signal.")
+`,
+    },
+  };
+
+  for (const [productId, info] of Object.entries(PINE_SCRIPTS)) {
+    insertVersion.run(
+      `pv_${productId.replace(/-/g, '_')}_${info.version.replace(/\./g, '_')}`,
+      productId,
+      info.version,
+      info.changelog,
+      info.content
+    );
+  }
+  console.log('[DB] Seeded Pine Script v5 source code for all 6 products.');
 }

@@ -190,6 +190,50 @@ adminRoutes.post('/orders/:id/reject', (req: AuthRequest, res) => {
   }
 });
 
+// Refund order & revoke digital delivery access
+adminRoutes.post('/orders/:id/refund', (req: AuthRequest, res) => {
+  try {
+    const { id } = req.params;
+    const { reason } = req.body;
+
+    const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(id) as any;
+    if (!order) {
+      return res.status(404).json({ success: false, error: 'Order not found' });
+    }
+
+    db.prepare(`
+      UPDATE orders 
+      SET status = 'refunded', is_revoked = 1, updated_at = datetime('now')
+      WHERE id = ?
+    `).run(id);
+
+    db.prepare(`
+      UPDATE payments 
+      SET status = 'refunded', reviewed_by = ?, reviewed_at = datetime('now'),
+          proof_data = COALESCE(proof_data, '') || ' | Refunded: ' || COALESCE(?, 'Customer refund processed')
+      WHERE order_id = ?
+    `).run(req.user!.id, reason || 'Refund processed', id);
+
+    // Record audit log
+    db.prepare(`
+      INSERT INTO audit_logs (id, admin_user_id, action, target_entity, target_id, details_json)
+      VALUES (?, ?, 'REFUND_ORDER', 'orders', ?, ?)
+    `).run(
+      'aud_' + crypto.randomUUID().slice(0, 12),
+      req.user!.id,
+      id,
+      JSON.stringify({ order_number: order.order_number, reason })
+    );
+
+    res.json({
+      success: true,
+      message: `Order ${order.order_number} has been marked as refunded and digital source code access revoked.`,
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // GET TradingView access requests
 adminRoutes.get('/tv-access-requests', (_req, res) => {
   try {

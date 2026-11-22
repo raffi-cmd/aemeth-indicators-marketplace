@@ -862,6 +862,7 @@ export const api = {
     product_ids: string[];
     payment_method: string;
     customer_email: string;
+    customer_name?: string;
     customer_tv_username?: string;
     bundle_type?: 'starter' | 'pro' | 'ultimate';
     license_accepted?: boolean;
@@ -1115,23 +1116,34 @@ export const api = {
 
   // Deliveries for Guest Order (Enforces Token Verification)
   async getDeliverySourceCode(productId: string, orderNumber?: string, accessToken?: string) {
-    // If orderNumber & token provided, check validity
-    if (orderNumber && accessToken) {
-      const orders = getLocalStore<Order[]>('aemeth_local_orders', []);
-      const match = orders.find(
-        (o) => o.order_number.toUpperCase() === orderNumber.toUpperCase() && o.access_token === accessToken
-      );
-      if (match && match.status !== 'paid') {
-        throw new Error('Order payment is still under review or unpaid. Source code is released strictly after payment confirmation.');
+    if (orderNumber) {
+      try {
+        const query = new URLSearchParams();
+        if (accessToken) query.append('token', accessToken);
+        const res = await fetch(`${API_BASE}/deliveries/order/${orderNumber}/source/${productId}?${query.toString()}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success) return data;
+        } else {
+          const errData = await res.json().catch(() => ({}));
+          if (errData.error) throw new Error(errData.error);
+        }
+      } catch (err: any) {
+        if (err.message && err.message.includes('not verified paid')) {
+          throw err;
+        }
       }
     }
 
+    // Try delivery ID endpoint
     try {
       const query = new URLSearchParams();
-      if (orderNumber) query.append('order_number', orderNumber);
-      if (accessToken) query.append('access_token', accessToken);
-      const res = await fetch(`${API_BASE}/deliveries/source/${productId}?${query.toString()}`);
-      if (res.ok) return await res.json();
+      if (accessToken) query.append('token', accessToken);
+      const res = await fetch(`${API_BASE}/deliveries/${productId}/source?${query.toString()}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) return data;
+      }
     } catch {}
 
     const resolved = resolveProductId(productId).toLowerCase();
@@ -1347,6 +1359,69 @@ alertcondition(bos_bull or bos_bear, title="Aemeth Structure Break", message="Ae
     setLocalStore('aemeth_local_orders', orders);
 
     return { success: true, message: 'Order marked as cancelled.' };
+  },
+
+  async refundOrder(orderId: string, reason?: string) {
+    try {
+      const res = await fetch(`${API_BASE}/admin/orders/${orderId}/refund`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...getAdminAuthHeader() },
+        body: JSON.stringify({ reason }),
+      });
+      if (res.ok) return await res.json();
+    } catch {}
+
+    const orders = getLocalStore<Order[]>('aemeth_local_orders', []);
+    const ord = orders.find((o) => o.id === orderId);
+    if (ord) {
+      ord.status = 'cancelled';
+      (ord as any).is_revoked = 1;
+    }
+    setLocalStore('aemeth_local_orders', orders);
+
+    return { success: true, message: 'Order refunded and access revoked.' };
+  },
+
+  async getBundleSourceCodes(orderNumber: string, accessToken?: string) {
+    try {
+      const query = new URLSearchParams();
+      if (accessToken) query.append('token', accessToken);
+      const res = await fetch(`${API_BASE}/deliveries/order/${orderNumber}/bundle-source?${query.toString()}`);
+      if (res.ok) return await res.json();
+      const err = await res.json().catch(() => ({}));
+      if (err.error) throw new Error(err.error);
+    } catch (err: any) {
+      throw err;
+    }
+    return { success: false, error: 'Failed to fetch bundle sources' };
+  },
+
+  async requestOrderRetrieval(email: string) {
+    try {
+      const res = await fetch(`${API_BASE}/orders/retrieve`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      if (res.ok) return await res.json();
+    } catch {}
+
+    return {
+      success: true,
+      message: 'Jika email terdaftar, tautan pemulihan pesanan telah dikirim.',
+    };
+  },
+
+  async getOrdersByRetrievalToken(token: string) {
+    try {
+      const res = await fetch(`${API_BASE}/orders/retrieve/${token}`);
+      if (res.ok) return await res.json();
+      const err = await res.json().catch(() => ({}));
+      if (err.error) throw new Error(err.error);
+    } catch (err: any) {
+      throw err;
+    }
+    return { success: false, error: 'Failed to retrieve orders by token' };
   },
 
   async getTvAccessRequests() {

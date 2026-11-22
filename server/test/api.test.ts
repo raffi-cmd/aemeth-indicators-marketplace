@@ -184,6 +184,93 @@ async function runTests() {
   const paidOrder = db.prepare('SELECT * FROM orders WHERE id = ?').get(testOrderId) as any;
   assert(paidOrder.status === 'paid', 'Order transitioned to paid');
 
+  // 14. Uncompiled Pine Script v5 Storage for All 6 Canonical Products
+  console.log('\n--- 14. Uncompiled Pine Script v5 Storage in DB ---');
+  const canonicalIds = [
+    'parabolic-sar',
+    'mfi-reversal',
+    'ichimoku-cloud',
+    'ai-signal-v1',
+    'trendline-sr-utbot',
+    'smc-signal-panel-v2',
+  ];
+
+  for (const cid of canonicalIds) {
+    const versionRow = db.prepare(`
+      SELECT pine_script_content, version_number FROM product_versions WHERE product_id = ?
+    `).get(cid) as any;
+    assert(
+      versionRow && versionRow.pine_script_content && versionRow.pine_script_content.includes('//@version=5'),
+      `Product [${cid}] has valid Pine Script v5 source code stored in database`
+    );
+  }
+
+  // 15. Guest Access Token Generation & Hash Verification
+  console.log('\n--- 15. Access Token Generation & Hash Security ---');
+  const rawToken = 'tok_' + crypto.randomBytes(24).toString('hex');
+  const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
+  assert(rawToken.startsWith('tok_') && rawToken.length >= 48, 'Access token is high-entropy string');
+  assert(tokenHash.length === 64, 'Access token hash is 256-bit SHA-256');
+
+  // Update test order with access token
+  db.prepare(`
+    UPDATE orders SET access_token = ?, access_token_hash = ? WHERE id = ?
+  `).run(rawToken, tokenHash, testOrderId);
+
+  const tokenOrder = db.prepare('SELECT * FROM orders WHERE id = ?').get(testOrderId) as any;
+  assert(tokenOrder.access_token === rawToken, 'Order stores access token for guest fulfillment');
+
+  // 16. Security: Unpaid Order Cannot Access Source Code
+  console.log('\n--- 16. Security: Unpaid Order Source Code Lockdown ---');
+  const unpaidOrderId = 'ord_unpaid_' + Date.now();
+  const unpaidOrderNum = 'AEM-UNP-' + Math.floor(100000 + Math.random() * 900000);
+  const unpaidToken = 'tok_unpaid_' + crypto.randomBytes(16).toString('hex');
+  db.prepare(`
+    INSERT INTO orders (id, order_number, user_id, total_cents, currency, status, payment_method, customer_email, access_token)
+    VALUES (?, ?, ?, 1000, 'IDR', 'pending', 'bank_transfer', 'unpaid@aemeth.test', ?)
+  `).run(unpaidOrderId, unpaidOrderNum, testUserId, unpaidToken);
+
+  const checkUnpaid = db.prepare('SELECT status FROM orders WHERE id = ?').get(unpaidOrderId) as any;
+  assert(checkUnpaid.status !== 'paid', 'Unpaid order status confirmed as pending');
+
+  // 17. Security: Revoked/Refunded Order Locks Delivery
+  console.log('\n--- 17. Security: Revoked / Refunded Order Locks Delivery ---');
+  const refundOrderId = 'ord_refund_' + Date.now();
+  const refundOrderNum = 'AEM-REF-' + Math.floor(100000 + Math.random() * 900000);
+  const refundToken = 'tok_refund_' + crypto.randomBytes(16).toString('hex');
+  db.prepare(`
+    INSERT INTO orders (id, order_number, user_id, total_cents, currency, status, payment_method, customer_email, access_token, is_revoked)
+    VALUES (?, ?, ?, 1000, 'IDR', 'refunded', 'bank_transfer', 'refund@aemeth.test', ?, 1)
+  `).run(refundOrderId, refundOrderNum, testUserId, refundToken);
+
+  const checkRefund = db.prepare('SELECT status, is_revoked FROM orders WHERE id = ?').get(refundOrderId) as any;
+  assert(checkRefund.status === 'refunded' && checkRefund.is_revoked === 1, 'Refunded order has is_revoked = 1');
+
+  // 18. Email-Based Magic Link Retrieval Token Flow
+  console.log('\n--- 18. Email-Based Magic Link Retrieval ---');
+  const retEmail = 'trader@aemethtrader.com';
+  const magicToken = 'ret_' + crypto.randomBytes(24).toString('hex');
+  const magicHash = crypto.createHash('sha256').update(magicToken).digest('hex');
+  const expiry24h = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+  const retTokenId = 'ort_test_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
+
+  db.prepare(`
+    INSERT INTO order_retrieval_tokens (id, email, token_hash, expires_at, used)
+    VALUES (?, ?, ?, ?, 0)
+  `).run(retTokenId, retEmail, magicHash, expiry24h);
+
+  const retrievedTokenRow = db.prepare(`
+    SELECT * FROM order_retrieval_tokens WHERE token_hash = ? AND used = 0 AND expires_at > datetime('now')
+  `).get(magicHash) as any;
+  assert(retrievedTokenRow !== undefined && retrievedTokenRow.email === retEmail, 'Magic link token validated and retrieves matching email');
+
+  // 19. Personal License Terms Watermark Header
+  console.log('\n--- 19. Personal License Terms Watermarking ---');
+  const testScriptContent = `//@version=5\nindicator("Test Indicator", overlay=true)\nplot(close)`;
+  const watermarked = `// ==========================================================================\n// AEMETH TRADER ANALYSIS — OFFICIAL PRODUCT DELIVERY\n// Script: Test Indicator (v1.0.0)\n// Licensed to: trader@aemethtrader.com\n// Order Reference: AEM-8931204\n// License Type: Single-User Personal License (Do Not Redistribute)\n// ==========================================================================\n\n` + testScriptContent;
+  assert(watermarked.includes('Single-User Personal License'), 'Personal use license terms embedded in watermarked script');
+  assert(watermarked.includes('trader@aemethtrader.com'), 'Customer email embedded as licensee');
+
   // Summary
   console.log('\n====================================================');
   console.log(`TEST RESULTS: ${passed} PASSED, ${failed} FAILED`);

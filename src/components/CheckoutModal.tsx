@@ -20,7 +20,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const { t, lang } = useTranslation();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('bank_transfer');
   const [customerEmail, setCustomerEmail] = useState('');
-  const [tradingviewUsername, setTradingviewUsername] = useState('');
+  const [customerName, setCustomerName] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(true);
   const [licenseAccepted, setLicenseAccepted] = useState(true);
   const [config, setConfig] = useState<SiteSettings | null>(null);
@@ -41,11 +41,6 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const bundleProduct = products.find((p) => p.type === 'bundle' || p.bundle_type);
   const isBundle = !!bundleProduct;
 
-  // Check if any selected product requires TradingView username
-  const requiresTvUsername = products.some(
-    (p) => p.type === 'private_protected' || p.type === 'bundle'
-  );
-
   useEffect(() => {
     api.getPaymentConfig().then((res) => {
       if (res.success) setConfig(res.config);
@@ -63,19 +58,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     setTimeout(() => setIsCopied(null), 2000);
   };
 
-  // Step 1: Create Guest Order
+  // Step 1: Create Guest Order (No TradingView account required — Instant Digital Source Delivery)
   const handleCreateGuestOrder = async () => {
     if (!customerEmail.trim()) {
       setError(lang === 'id' ? 'Silakan masukkan alamat email yang valid.' : 'Please enter a valid email address.');
-      return;
-    }
-
-    if (requiresTvUsername && !tradingviewUsername.trim()) {
-      setError(
-        lang === 'id'
-          ? 'Username TradingView diperlukan untuk indikator Invite-Only / Bundle.'
-          : 'TradingView username is required for Invite-Only / Bundle scripts.'
-      );
       return;
     }
 
@@ -105,7 +91,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         product_ids: products.map((p) => p.id),
         payment_method: paymentMethod,
         customer_email: customerEmail.trim(),
-        customer_tv_username: tradingviewUsername.trim() || undefined,
+        customer_name: customerName.trim() || undefined,
         bundle_type: bundleProduct?.bundle_type,
         license_accepted: true,
       });
@@ -324,14 +310,14 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
                 <div>
                   <label className="text-[11px] text-slate-400 block mb-1">
-                    {t.checkout.tvUsernameLabel} <span className="text-blue-400">{t.checkout.tvUsernameNote}</span>
+                    {lang === 'id' ? 'Nama Lengkap / Panggilan (Opsional)' : 'Full Name / Nickname (Optional)'}
                   </label>
                   <input
                     type="text"
-                    value={tradingviewUsername}
-                    onChange={(e) => setTradingviewUsername(e.target.value)}
-                    placeholder={t.checkout.tvUsernamePlaceholder}
-                    className="w-full bg-[#070b14] border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500 font-mono"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                    placeholder={lang === 'id' ? 'e.g. Vance Trader' : 'e.g. Vance Trader'}
+                    className="w-full bg-[#070b14] border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500 font-sans"
                   />
                 </div>
               </div>
