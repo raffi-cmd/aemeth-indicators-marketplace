@@ -463,6 +463,101 @@ function seedCanonicalIndicators() {
       normal_idr: 199000,
       promo_idr: 149000,
     },
+    {
+      id: 'macd-crossover-v1',
+      slug: 'aemeth-macd-crossover-v1',
+      title: 'Aemeth MACD Crossover V1 by RIDHO',
+      short_desc: 'Deteksi momentum persilangan garis MACD dengan evaluasi Grade, AI Confidence level, zona Stop Loss, dan tiga target Take Profit.',
+      long_desc: 'Aemeth MACD Crossover V1 by RIDHO adalah indikator analisis teknikal momentum modern untuk TradingView. Indikator ini mendeteksi perubahan momentum pasar melalui perhitungan garis MACD Fast, Slow, dan Signal yang dapat dikonfigurasi, disertai opsi konfirmasi saat candle close untuk memfilter sinyal dini.\n\nDilengkapi batas Stop Loss (SL) berbasis ATR dan tiga target Take Profit berurutan (TP1, TP2, TP3) berbasis Risk/Reward, serta badge penilaian Grade (A, B, C, D) dan level AI Confidence yang mengevaluasi kondisi volume serta momentum pasar secara terstruktur.\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis teknikal objektif, bukan jaminan keuntungan finansial. Keputusan transaksi dan pengendalian risiko sepenuhnya merupakan tanggung jawab pengguna.',
+      type: 'open_source',
+      category: 'momentum',
+      price_cents: 1490,
+      discount_cents: 510,
+      version: '1.0.0',
+      features: [
+        'MACD Fast, Slow, and Signal Configurable',
+        'Bullish & Bearish Crossover Signals',
+        'Candle Close Signal Confirmation (Optional)',
+        'ATR-Based Dynamic Stop Loss',
+        'TP1, TP2, TP3 Risk/Reward Sequential Targets',
+        'Visual Stop Loss & Take Profit Shaded Zones',
+        'Signal Quality Grade Evaluation (A, B, C, D)',
+        'AI Confidence Telemetry (LOW, MEDIUM, HIGH)',
+        'Volume & Momentum Confluence Matrix',
+        'Directional Mode Settings (LONG & SHORT)',
+        'Integrated TradingView Alert Conditions'
+      ],
+      thumb: './products/macd-crossover.jpg',
+      normal_idr: 199000,
+      promo_idr: 149000,
+    },
+    {
+      id: 'hull-suite-v1',
+      slug: 'aemeth-hull-suite-v1',
+      title: 'Aemeth Hull Suite V1',
+      short_desc: 'Visualisasi tren dinamis berbasis Hull Moving Average (Hull Suite) dengan pita kurva warna, level Entry, Stop Loss, dan 3 target Take Profit.',
+      long_desc: 'Aemeth Hull Suite V1 adalah indikator trend-following yang memanfaatkan kehalusan dan kecepatan respon Hull Moving Average (HMA) untuk mendeteksi arah tren pasar secara real-time.\n\nMenampilkan pita kurva Hull MA yang dinamis (hijau saat bullish, merah saat bearish), penanda sinyal BUY terkonfirmasi pada pergantian tren, kalkulasi otomatis Entry dan Stop Loss (SL), serta proyeksi 3 target Take Profit (TP1, TP2, TP3) bertingkat.\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis teknikal visual, bukan jaminan keuntungan transaksi.',
+      type: 'open_source',
+      category: 'trend',
+      price_cents: 1990,
+      discount_cents: 500,
+      version: '1.0.0',
+      features: [
+        'Hull MA Trend with Band: Pita tren dinamis hijau/merah.',
+        'Entry & SL Auto Calculation: Kalkulasi otomatis level entry dan stop loss.',
+        '3 Take Profit: TP1 (1:1.5), TP2 (1:2), TP3 (1:2.5).',
+        'Smart Visual Trading Tools: Tampilan visual chart modern & bersih.',
+        'Pine Script: Source code siap digunakan.'
+      ],
+      thumb: './products/hull-suite.jpg',
+      normal_idr: 249000,
+      promo_idr: 199000,
+    },
+    {
+      id: 'ema-ribbon-flow',
+      slug: 'aemeth-ema-ribbon-flow',
+      title: 'Aemeth EMA Ribbon Flow',
+      short_desc: 'Visualisasi pita tren multi-EMA yang halus dan responsif dengan penanda sinyal BUY/SELL pada titik transisi tren.',
+      long_desc: 'Aemeth EMA Ribbon Flow menyusun serangkaian garis Exponential Moving Average (EMA) dengan panjang bertingkat yang membentuk pita dinamis di sekitar pergerakan candlestick.\n\nPita berwarna hijau saat tren menguat (bullish) dan berubah merah saat tren melemah (bearish), memberikan panduan visual langsung terhadap kekuatan tren tanpa indikator tambahan yang membingungkan. Dilengkapi label BUY dan SELL yang muncul pada titik awal pembalikan arah.\n\nCatatan Penting:\nIndikator ini mendeteksi arah aliran tren secara matematis, bukan ramalan masa depan.',
+      type: 'open_source',
+      category: 'trend',
+      price_cents: 1490,
+      discount_cents: 510,
+      version: '1.0.0',
+      features: [
+        'EMA Ribbon Trend Detection: Visual trend clarity across multi-EMA spectrum.',
+        'Smart Signal: BUY / SELL labels at confirmed ribbon shifts.',
+        'Multi-EMA Visualization: Cascading ribbon structure.',
+        'Customizable Settings: Adjustable EMA lengths and smoothing.',
+        'Smooth Performance: Lightweight execution without chart lag.',
+        'Pine Script: Source code siap digunakan.'
+      ],
+      thumb: './products/ema-ribbon-flow.jpg',
+      normal_idr: 199000,
+      promo_idr: 149000,
+    },
+    {
+      id: 'ema-crossover-rsi',
+      slug: 'aemeth-ema-crossover-rsi',
+      title: 'Aemeth EMA Crossover + RSI',
+      short_desc: 'Deteksi tren berbasis persilangan EMA Fast 20 dan EMA Slow 50 dengan filter konfirmasi RSI serta level Entry, Stop Loss, dan target TP1–TP3 bertingkat.',
+      long_desc: 'Aemeth EMA Crossover + RSI menggabungkan kecepatan reaksi EMA Fast 20 (garis kuning) dan stabilitas tren EMA Slow 50 (garis oranye) dengan filter konfirmasi momentum Relative Strength Index (RSI).\n\nSaat persilangan bearish terjadi dengan konfirmasi RSI, indikator memproyeksikan garis putus-putus horizontal yang jelas untuk Stop Loss di atas entry (SL: 3587.561), garis Entry harga (3572.560), serta 3 target Take Profit proporsional (TP1: 3563.559, TP2: 3554.558, TP3: 3545.557) langsung pada chart TradingView.\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis teknikal objektif berbasis moving average dan RSI, bukan jaminan profit transaksi.',
+      type: 'open_source',
+      category: 'momentum',
+      price_cents: 1490,
+      discount_cents: 510,
+      version: '1.0.0',
+      features: [
+        'EMA Crossover Trend Detection: Fast 20 (Yellow) & Slow 50 (Orange) crossover triggers.',
+        'RSI Filter Signal Confirmation: Extreme oscillator momentum filtering.',
+        'Entry / SL / TP1–TP3: Dotted level projections on chart (SL: 3587.561, Entry: 3572.560, TP1–TP3).',
+        'ATR-Based Risk Levels: Proportional risk-reward target spacing without repainting.',
+        'Pine Script: Source code siap digunakan.'
+      ],
+      thumb: './products/ema-crossover-rsi.jpg',
+      normal_idr: 199000,
+      promo_idr: 149000,
+    },
   ];
 
   // Purge any legacy duplicate products from database
@@ -1359,6 +1454,205 @@ plotshape(rsi_bear_reversal, "RSI Bear Reversal", shape.labeldown, location.abov
 
 alertcondition(rsi_bull_reversal, "Aemeth RSI Bullish Reversal", "Aemeth RSI: Oversold exit confirmed with TP/SL targets.")
 alertcondition(rsi_bear_reversal, "Aemeth RSI Bearish Reversal", "Aemeth RSI: Overbought exit confirmed with TP/SL targets.")
+`,
+    },
+    'macd-crossover-v1': {
+      version: '1.0.0',
+      changelog: 'v1.0.0: Initial release of Aemeth MACD Crossover V1 by RIDHO',
+      content: `//@version=5
+indicator("Aemeth MACD Crossover V1 by RIDHO", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - MACD CROSSOVER V1 BY RIDHO
+// DIRECTIVE: CANDLE 1 CLOSED BAR ANTI-REPAINT VERIFICATION
+// =====================================================================
+
+grp_macd = "MACD Settings"
+fast_len = input.int(12, "Fast Length", minval=1, group=grp_macd)
+slow_len = input.int(26, "Slow Length", minval=1, group=grp_macd)
+sig_len  = input.int(9, "Signal Length", minval=1, group=grp_macd)
+conf_close = input.bool(true, "Confirm Signal on Candle Close", group=grp_macd)
+
+grp_targets = "Risk / Reward & Stop Loss"
+atr_len = input.int(14, "ATR Period", minval=1, group=grp_targets)
+atr_mult = input.float(1.5, "ATR Multiplier (SL)", minval=0.5, step=0.1, group=grp_targets)
+rr_ratio = input.float(1.5, "Risk/Reward Ratio", minval=0.5, step=0.1, group=grp_targets)
+
+[macd_line, signal_line, hist] = ta.macd(close, fast_len, slow_len, sig_len)
+
+ref_close = conf_close ? close[1] : close
+ref_macd  = conf_close ? macd_line[1] : macd_line
+ref_sig   = conf_close ? signal_line[1] : signal_line
+
+bull_cross = ta.crossover(ref_macd, ref_sig)
+bear_cross = ta.crossunder(ref_macd, ref_sig)
+
+atr_val = ta.atr(atr_len)
+var float entry_price = na
+var float sl_price = na
+var float tp1_price = na
+var float tp2_price = na
+var float tp3_price = na
+
+if bull_cross
+    entry_price := ref_close
+    sl_price := entry_price - (atr_val * atr_mult)
+    risk = math.abs(entry_price - sl_price)
+    tp1_price := entry_price + (risk * 1.0 * rr_ratio)
+    tp2_price := entry_price + (risk * 2.0 * rr_ratio)
+    tp3_price := entry_price + (risk * 3.0 * rr_ratio)
+
+if bear_cross
+    entry_price := ref_close
+    sl_price := entry_price + (atr_val * atr_mult)
+    risk = math.abs(sl_price - entry_price)
+    tp1_price := entry_price - (risk * 1.0 * rr_ratio)
+    tp2_price := entry_price - (risk * 2.0 * rr_ratio)
+    tp3_price := entry_price - (risk * 3.0 * rr_ratio)
+
+plotshape(bull_cross, "Bullish Crossover", shape.triangleup, location.belowbar, color=#10b981, size=size.small, text="MACD BUY\\nGrade A")
+plotshape(bear_cross, "Bearish Crossover", shape.triangledown, location.abovebar, color=#ef4444, size=size.small, text="MACD SELL\\nGrade A")
+
+alertcondition(bull_cross, "Aemeth MACD Bullish Crossover", "Aemeth MACD: Bullish crossover confirmed.")
+alertcondition(bear_cross, "Aemeth MACD Bearish Crossover", "Aemeth MACD: Bearish crossover confirmed.")
+`,
+    },
+    'hull-suite-v1': {
+      version: '1.0.0',
+      changelog: 'v1.0.0: Initial release of Aemeth Hull Suite V1',
+      content: `//@version=5
+indicator("Aemeth Hull Suite V1", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - HULL SUITE V1
+// DIRECTIVE: HULL MOVING AVERAGE SMOOTHED TREND BAND
+// =====================================================================
+
+hull_len = input.int(55, "Hull MA Length", minval=1)
+hma = ta.wma(2 * ta.wma(close, hull_len / 2) - ta.wma(close, hull_len), math.round(math.sqrt(hull_len)))
+
+is_bull = hma > hma[1]
+hma_color = is_bull ? color.new(#10b981, 0) : color.new(#ef4444, 0)
+
+plot(hma, "Hull Suite MA", color=hma_color, linewidth=3)
+
+hull_buy = is_bull and not is_bull[1]
+hull_sell = not is_bull and is_bull[1]
+
+var float entry_p = na
+var float sl_p = na
+var float tp1_p = na
+var float tp2_p = na
+var float tp3_p = na
+
+if hull_buy
+    entry_p := close[1]
+    sl_p := hma[1]
+    risk = math.abs(entry_p - sl_p)
+    tp1_p := entry_p + risk * 1.5
+    tp2_p := entry_p + risk * 2.0
+    tp3_p := entry_p + risk * 2.5
+
+plotshape(hull_buy, "Hull BUY", shape.labelup, location.belowbar, color=#00e5ff, text="BUY", textcolor=color.black, size=size.small)
+plotshape(hull_sell, "Hull SELL", shape.labeldown, location.abovebar, color=#ef4444, text="SELL", textcolor=color.white, size=size.small)
+
+alertcondition(hull_buy, "Hull Suite BUY Signal", "Aemeth Hull Suite: Bullish trend transition detected.")
+alertcondition(hull_sell, "Hull Suite SELL Signal", "Aemeth Hull Suite: Bearish trend transition detected.")
+`,
+    },
+    'ema-ribbon-flow': {
+      version: '1.0.0',
+      changelog: 'v1.0.0: Initial release of Aemeth EMA Ribbon Flow',
+      content: `//@version=5
+indicator("Aemeth EMA Ribbon Flow", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - EMA RIBBON FLOW ENGINE
+// =====================================================================
+
+ema05 = ta.ema(close, 5)
+ema10 = ta.ema(close, 10)
+ema15 = ta.ema(close, 15)
+ema20 = ta.ema(close, 20)
+ema25 = ta.ema(close, 25)
+ema30 = ta.ema(close, 30)
+ema35 = ta.ema(close, 35)
+ema40 = ta.ema(close, 40)
+ema45 = ta.ema(close, 45)
+ema50 = ta.ema(close, 50)
+
+is_bull = ema05 > ema50
+c_ribbon = is_bull ? color.new(#10b981, 20) : color.new(#ef4444, 20)
+
+plot(ema05, "EMA 05", color=c_ribbon, linewidth=1)
+plot(ema10, "EMA 10", color=c_ribbon, linewidth=1)
+plot(ema15, "EMA 15", color=c_ribbon, linewidth=1)
+plot(ema20, "EMA 20", color=c_ribbon, linewidth=1)
+plot(ema25, "EMA 25", color=c_ribbon, linewidth=1)
+plot(ema30, "EMA 30", color=c_ribbon, linewidth=1)
+plot(ema35, "EMA 35", color=c_ribbon, linewidth=1)
+plot(ema40, "EMA 40", color=c_ribbon, linewidth=1)
+plot(ema45, "EMA 45", color=c_ribbon, linewidth=1)
+plot(ema50, "EMA 50", color=c_ribbon, linewidth=2)
+
+ribbon_buy = ta.crossover(ema05, ema50)
+ribbon_sell = ta.crossunder(ema05, ema50)
+
+plotshape(ribbon_buy, "Ribbon BUY", shape.labelup, location.belowbar, color=#10b981, text="BUY", textcolor=color.white, size=size.small)
+plotshape(ribbon_sell, "Ribbon SELL", shape.labeldown, location.abovebar, color=#ef4444, text="SELL", textcolor=color.white, size=size.small)
+
+alertcondition(ribbon_buy, "EMA Ribbon BUY", "Aemeth EMA Ribbon: Bullish expansion triggered.")
+alertcondition(ribbon_sell, "EMA Ribbon SELL", "Aemeth EMA Ribbon: Bearish expansion triggered.")
+`,
+    },
+    'ema-crossover-rsi': {
+      version: '1.0.0',
+      changelog: 'v1.0.0: Initial release of Aemeth EMA Crossover + RSI',
+      content: `//@version=5
+indicator("Aemeth EMA Crossover + RSI", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - EMA CROSSOVER + RSI ENGINE
+// =====================================================================
+
+len_fast = input.int(20, "EMA Fast Length", minval=1)
+len_slow = input.int(50, "EMA Slow Length", minval=1)
+rsi_period = input.int(14, "RSI Filter Period", minval=1)
+
+ema_fast = ta.ema(close, len_fast)
+ema_slow = ta.ema(close, len_slow)
+rsi_val  = ta.rsi(close, rsi_period)
+
+plot(ema_fast, "EMA Fast 20", color=color.new(#facc15, 0), linewidth=2)
+plot(ema_slow, "EMA Slow 50", color=color.new(#f97316, 0), linewidth=2)
+
+bear_cross = ta.crossunder(ema_fast[1], ema_slow[1]) and rsi_val[1] < 50
+bull_cross = ta.crossover(ema_fast[1], ema_slow[1]) and rsi_val[1] > 50
+
+atr_val = ta.atr(14)
+var float entry_p = na
+var float sl_p = na
+var float tp1_p = na
+var float tp2_p = na
+var float tp3_p = na
+
+if bear_cross
+    entry_p := close[1]
+    sl_p := ema_slow[1] + atr_val * 0.5
+    risk = math.abs(sl_p - entry_p)
+    tp1_p := entry_p - risk * 1.0
+    tp2_p := entry_p - risk * 2.0
+    tp3_p := entry_p - risk * 3.0
+
+if bull_cross
+    entry_p := close[1]
+    sl_p := ema_slow[1] - atr_val * 0.5
+    risk = math.abs(entry_p - sl_p)
+    tp1_p := entry_p + risk * 1.0
+    tp2_p := entry_p + risk * 2.0
+    tp3_p := entry_p + risk * 3.0
+
+plotshape(bear_cross, "EMA Bear Cross", shape.circle, location.abovebar, color=#00e5ff, size=size.tiny)
+plotshape(bull_cross, "EMA Bull Cross", shape.circle, location.belowbar, color=#00e5ff, size=size.tiny)
+
+alertcondition(bear_cross, "EMA Bearish Crossover", "Aemeth EMA: Bearish crossover with RSI filter confirmed.")
+alertcondition(bull_cross, "EMA Bullish Crossover", "Aemeth EMA: Bullish crossover with RSI filter confirmed.")
 `,
     },
   };

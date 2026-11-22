@@ -184,7 +184,7 @@ async function runTests() {
   const paidOrder = db.prepare('SELECT * FROM orders WHERE id = ?').get(testOrderId) as any;
   assert(paidOrder.status === 'paid', 'Order transitioned to paid');
 
-  // 14. Uncompiled Pine Script v5 Storage for All 12 Canonical Products
+  // 14. Uncompiled Pine Script v5 Storage for All 16 Canonical Products
   console.log('\n--- 14. Uncompiled Pine Script v5 Storage in DB ---');
   const canonicalIds = [
     'parabolic-sar',
@@ -199,6 +199,10 @@ async function runTests() {
     'stochastic-cross-tpsl',
     'crt-entry-tpsl',
     'rsi-reversal-tpsl',
+    'macd-crossover-v1',
+    'hull-suite-v1',
+    'ema-ribbon-flow',
+    'ema-crossover-rsi',
   ];
 
   for (const cid of canonicalIds) {

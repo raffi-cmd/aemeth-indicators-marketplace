@@ -173,6 +173,46 @@ export const PRODUCT_PRICING: Record<string, ProductPricingDefinition> = {
     isPublished: true,
     version: '1.0.0',
   },
+  'macd-crossover-v1': {
+    id: 'macd-crossover-v1',
+    name: 'Aemeth MACD Crossover V1 by RIDHO',
+    normalPriceIdr: 199000,
+    promoPriceIdr: 149000,
+    normalPriceCents: 2000,
+    promoPriceCents: 1490,
+    isPublished: true,
+    version: '1.0.0',
+  },
+  'hull-suite-v1': {
+    id: 'hull-suite-v1',
+    name: 'Aemeth Hull Suite V1',
+    normalPriceIdr: 249000,
+    promoPriceIdr: 199000,
+    normalPriceCents: 2500,
+    promoPriceCents: 1990,
+    isPublished: true,
+    version: '1.0.0',
+  },
+  'ema-ribbon-flow': {
+    id: 'ema-ribbon-flow',
+    name: 'Aemeth EMA Ribbon Flow',
+    normalPriceIdr: 199000,
+    promoPriceIdr: 149000,
+    normalPriceCents: 2000,
+    promoPriceCents: 1490,
+    isPublished: true,
+    version: '1.0.0',
+  },
+  'ema-crossover-rsi': {
+    id: 'ema-crossover-rsi',
+    name: 'Aemeth EMA Crossover + RSI',
+    normalPriceIdr: 199000,
+    promoPriceIdr: 149000,
+    normalPriceCents: 2000,
+    promoPriceCents: 1490,
+    isPublished: true,
+    version: '1.0.0',
+  },
 };
 
 // Aliases for legacy compatibility
@@ -196,6 +236,13 @@ export const LEGACY_PRODUCT_ID_MAP: Record<string, string> = {
   'crt-entry': 'crt-entry-tpsl',
   'aemeth-rsi-reversal-tpsl': 'rsi-reversal-tpsl',
   'rsi-reversal': 'rsi-reversal-tpsl',
+  'aemeth-macd-crossover-v1': 'macd-crossover-v1',
+  'macd-crossover': 'macd-crossover-v1',
+  'aemeth-hull-suite-v1': 'hull-suite-v1',
+  'hull-suite': 'hull-suite-v1',
+  'aemeth-ema-ribbon-flow': 'ema-ribbon-flow',
+  'aemeth-ema-crossover-rsi': 'ema-crossover-rsi',
+  'ema-crossover': 'ema-crossover-rsi',
 };
 
 export function resolveProductId(id: string): string {
