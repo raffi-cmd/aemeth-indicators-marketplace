@@ -665,6 +665,486 @@ const SINGLE_INDICATORS: Product[] = [
     preview_images: ['./products/smc-signal-panel.jpg'],
     created_at: new Date('2026-03-25').toISOString(),
   }),
+  injectPricing({
+    id: 'supertrend-tpsl',
+    slug: 'aemeth-supertrend-tpsl',
+    title: 'Aemeth Supertrend TP/SL Indicator',
+    title_id: 'Aemeth Supertrend TP/SL Indicator',
+    title_en: 'Aemeth Supertrend TP/SL Indicator',
+    short_desc: 'Indikator berbasis Supertrend yang memvisualisasikan arah tren serta level Entry, Stop Loss (SL), dan tiga target Take Profit (TP1, TP2, TP3) langsung pada chart.',
+    short_desc_id: 'Indikator berbasis Supertrend yang memvisualisasikan arah tren serta level Entry, Stop Loss (SL), dan tiga target Take Profit (TP1, TP2, TP3) langsung pada chart.',
+    short_desc_en: 'Supertrend-based indicator visualizing trend direction along with direct on-chart Entry, Stop Loss (SL), and three Take Profit targets (TP1, TP2, TP3).',
+    long_desc: 'Aemeth Supertrend TP/SL Indicator merupakan indikator berbasis Supertrend yang membantu trader membaca arah tren serta memvisualisasikan level Entry, Stop Loss (SL), dan tiga target Take Profit (TP1, TP2, TP3) langsung pada chart.\n\nDengan tampilan level yang terstruktur dan visual yang intuitif, trader dapat memantau skenario trading, memahami target harga, dan menyusun perencanaan risiko dengan lebih sistematis.\n\nCatatan Penting:\nIndikator ini merupakan alat bantu analisis teknikal visual, bukan jaminan profit. Disiplin money management dan manajemen risiko tetap berada di tangan masing-masing trader.',
+    long_desc_id: 'Aemeth Supertrend TP/SL Indicator merupakan indikator berbasis Supertrend yang membantu trader membaca arah tren serta memvisualisasikan level Entry, Stop Loss (SL), dan tiga target Take Profit (TP1, TP2, TP3) langsung pada chart.\n\nDengan tampilan level yang terstruktur dan visual yang intuitif, trader dapat memantau skenario trading, memahami target harga, dan menyusun perencanaan risiko dengan lebih sistematis.\n\nCatatan Penting:\nIndikator ini merupakan alat bantu analisis teknikal visual, bukan jaminan profit. Disiplin money management dan manajemen risiko tetap berada di tangan masing-masing trader.',
+    long_desc_en: 'Aemeth Supertrend TP/SL Indicator is a Supertrend-powered technical analysis tool designed to help traders read trend orientation while mapping direct Entry, Stop Loss (SL), and three sequential Take Profit targets (TP1, TP2, TP3) directly on the chart.\n\nFeaturing structured level overlays and clear visual cues, it empowers traders to monitor trade setups and execute risk management systematically.\n\nImportant Notice:\nThis indicator is an objective technical analysis tool, not a guarantee of profit. Risk management remains the sole responsibility of the user.',
+    type: 'open_source',
+    category: 'trend',
+    version: '1.0.0',
+    pine_version: 'v5',
+    release_date: '2026-03-28',
+    changelog: [
+      'v1.0.0: Initial release of Aemeth Supertrend TP/SL Indicator with 3 Take Profit targets'
+    ],
+    changelog_id: [
+      'v1.0.0: Rilis awal Aemeth Supertrend TP/SL Indicator dengan 3 level target Take Profit'
+    ],
+    changelog_en: [
+      'v1.0.0: Initial release of Aemeth Supertrend TP/SL Indicator with 3 Take Profit targets'
+    ],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'Supertrend Trend Visualization: Visualisasi garis tren Supertrend.',
+      'Entry Price Level: Level harga entry yang jelas pada chart.',
+      'Stop Loss (SL): Level stop loss dinamis terukur.',
+      'TP1, TP2, TP3: Tiga level target take profit terstruktur.',
+      'Chart-based Trading Levels: Proyeksi garis horizontal langsung pada chart.',
+      'Pine Script Source Code: Uncompiled source code Pine Script v5.'
+    ],
+    features_id: [
+      'Supertrend Trend Visualization: Visualisasi garis tren Supertrend.',
+      'Entry Price Level: Level harga entry yang jelas pada chart.',
+      'Stop Loss (SL): Level stop loss dinamis terukur.',
+      'TP1, TP2, TP3: Tiga level target take profit terstruktur.',
+      'Chart-based Trading Levels: Proyeksi garis horizontal langsung pada chart.',
+      'Pine Script Source Code: Uncompiled source code Pine Script v5.'
+    ],
+    features_en: [
+      'Supertrend Trend Visualization: Clear Supertrend directional line plot.',
+      'Entry Price Level: Structured on-chart entry execution boundary.',
+      'Stop Loss (SL): Dynamic risk mitigation stop boundary.',
+      'TP1, TP2, TP3: Three staged take profit target levels.',
+      'Chart-based Trading Levels: Visual horizontal price projections.',
+      'Pine Script Source Code: Uncompiled Pine Script v5 source code.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Sistem Analisis', value: 'Supertrend Trend Following & ATR' },
+      { label: 'Sinyal', value: 'Bearish ⇩ / Bullish ⇧ dengan Entry, SL, TP1, TP2, TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Analysis System', value: 'Supertrend Trend Following & ATR' },
+      { label: 'Signals', value: 'Bearish ⇩ / Bullish ⇧ with Entry, SL, TP1, TP2, TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    package_includes_id: [
+      'Pine Script source code (.pine & .txt).',
+      'Panduan instalasi di TradingView.',
+      'Bantuan setup dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and indicator guide.',
+      'Direct setup support from Aemeth team if needed.'
+    ],
+    tradingview_script_id: 'aemeth_supertrend_tpsl_v5',
+    is_published: true,
+    thumbnail_url: './products/supertrend-tpsl.jpg',
+    preview_images: ['./products/supertrend-tpsl.jpg', './products/supertrend-chart.png'],
+    created_at: new Date('2026-03-28').toISOString(),
+  }),
+  injectPricing({
+    id: 'vwap-reversal-tpsl',
+    slug: 'aemeth-vwap-reversal-tpsl',
+    title: 'Aemeth VWAP Reversal TP/SL Indicator',
+    title_id: 'Aemeth VWAP Reversal TP/SL Indicator',
+    title_en: 'Aemeth VWAP Reversal TP/SL Indicator',
+    short_desc: 'Deteksi sinyal pembalikan harga saat menembus VWAP dengan level Entry, Stop Loss terukur, dan 3 target Take Profit (TP1, TP2, TP3).',
+    short_desc_id: 'Deteksi sinyal pembalikan harga saat menembus VWAP dengan level Entry, Stop Loss terukur, dan 3 target Take Profit (TP1, TP2, TP3).',
+    short_desc_en: 'Detects VWAP breakout reversal setups with clear on-chart Entry, Stop Loss, and 3 Take Profit targets (TP1, TP2, TP3).',
+    long_desc: 'Aemeth VWAP Reversal TP/SL Indicator dirancang untuk membantu trader mendeteksi momen pembalikan harga saat harga menembus Volume Weighted Average Price (VWAP).\n\nIndikator ini secara otomatis memplot level Entry saat breakout terjadi, Stop Loss (SL) pada level VWAP/swing, serta 3 target Take Profit (TP1, TP2, TP3) bertingkat pada chart untuk target risiko-imbalan yang optimal.\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis teknikal objektif berbasis volume dan harga, bukan jaminan keuntungan finansial.',
+    long_desc_id: 'Aemeth VWAP Reversal TP/SL Indicator dirancang untuk membantu trader mendeteksi momen pembalikan harga saat harga menembus Volume Weighted Average Price (VWAP).\n\nIndikator ini secara otomatis memplot level Entry saat breakout terjadi, Stop Loss (SL) pada level VWAP/swing, serta 3 target Take Profit (TP1, TP2, TP3) bertingkat pada chart untuk target risiko-imbalan yang optimal.\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis teknikal objektif berbasis volume dan harga, bukan jaminan keuntungan finansial.',
+    long_desc_en: 'Aemeth VWAP Reversal TP/SL Indicator helps traders detect high-probability reversal moments when price pierces through the Volume Weighted Average Price (VWAP).\n\nIt dynamically projects Entry lines, Stop Loss (SL) aligned with VWAP levels, and three sequential Take Profit targets (TP1, TP2, TP3) for optimal risk-to-reward ratio management.\n\nImportant Notice:\nThis indicator is an objective technical analysis tool based on volume and price action, not a profit guarantee.',
+    type: 'open_source',
+    category: 'reversal',
+    version: '1.0.0',
+    pine_version: 'v5',
+    release_date: '2026-03-28',
+    changelog: [
+      'v1.0.0: Initial release of Aemeth VWAP Reversal TP/SL Indicator'
+    ],
+    changelog_id: [
+      'v1.0.0: Rilis awal Aemeth VWAP Reversal TP/SL Indicator'
+    ],
+    changelog_en: [
+      'v1.0.0: Initial release of Aemeth VWAP Reversal TP/SL Indicator'
+    ],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'VWAP Reversal: Deteksi sinyal saat harga menembus VWAP.',
+      'Entry & SL: Level entry dan stop loss yang jelas.',
+      '3 Take Profit: TP1, TP2, TP3 untuk target optimal.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_id: [
+      'VWAP Reversal: Deteksi sinyal saat harga menembus VWAP.',
+      'Entry & SL: Level entry dan stop loss yang jelas.',
+      '3 Take Profit: TP1, TP2, TP3 untuk target optimal.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_en: [
+      'VWAP Reversal: Signal detection when price penetrates VWAP.',
+      'Entry & SL: Clear entry and protective stop loss levels.',
+      '3 Take Profit: TP1, TP2, TP3 for optimal profit targeting.',
+      'Pine Script: Ready-to-use Pine Script v5 source code.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Sistem Analisis', value: 'Volume Weighted Average Price (VWAP) Reversal' },
+      { label: 'Sinyal', value: 'VWAP ⇩ Bearish / VWAP ⇧ Bullish dengan Entry, SL, TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Analysis System', value: 'Volume Weighted Average Price (VWAP) Reversal' },
+      { label: 'Signals', value: 'VWAP ⇩ Bearish / VWAP ⇧ Bullish with Entry, SL, TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    package_includes_id: [
+      'Pine Script source code (.pine & .txt).',
+      'Panduan instalasi di TradingView.',
+      'Bantuan setup dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and indicator guide.',
+      'Direct setup support from Aemeth team if needed.'
+    ],
+    tradingview_script_id: 'aemeth_vwap_reversal_tpsl_v5',
+    is_published: true,
+    thumbnail_url: './products/vwap-reversal.jpg',
+    preview_images: ['./products/vwap-reversal.jpg'],
+    created_at: new Date('2026-03-28').toISOString(),
+  }),
+  injectPricing({
+    id: 'major-swing',
+    slug: 'aemeth-major-swing-indicator',
+    title: 'Aemeth Major Swing Indicator',
+    title_id: 'Aemeth Major Swing Indicator',
+    title_en: 'Aemeth Major Swing Indicator',
+    short_desc: 'Deteksi swing high dan swing low utama pasar dengan label Buy/Sell yang jelas dan parameter swing yang dapat disesuaikan.',
+    short_desc_id: 'Deteksi swing high dan swing low utama pasar dengan label Buy/Sell yang jelas dan parameter swing yang dapat disesuaikan.',
+    short_desc_en: 'Identifies major market swing highs and lows with clear Buy/Sell labels and fully adjustable swing length parameters.',
+    long_desc: 'Aemeth Major Swing Indicator membantu trader mengidentifikasi struktur ayunan harga (swing high & swing low) yang signifikan pada grafik tanpa tertipu noise jangka pendek.\n\nDilengkapi label BUY dan SELL visual yang tegas pada titik balik struktural utama, serta pengaturan fleksibel untuk menyesuaikan panjang swing dan jarak minimum sesuai gaya trading swing maupun intraday.\n\nCatatan Penting:\nIndikator ini mendeteksi titik konfirmasi swing secara objektif, bukan ramalan masa depan.',
+    long_desc_id: 'Aemeth Major Swing Indicator membantu trader mengidentifikasi struktur ayunan harga (swing high & swing low) yang signifikan pada grafik tanpa tertipu noise jangka pendek.\n\nDilengkapi label BUY dan SELL visual yang tegas pada titik balik struktural utama, serta pengaturan fleksibel untuk menyesuaikan panjang swing dan jarak minimum sesuai gaya trading swing maupun intraday.\n\nCatatan Penting:\nIndikator ini mendeteksi titik konfirmasi swing secara objektif, bukan ramalan masa depan.',
+    long_desc_en: 'Aemeth Major Swing Indicator assists traders in identifying significant market swing highs and swing lows without falling prey to short-term noise.\n\nFeatures crisp, distinct BUY and SELL labels at major structural turning points, along with customizable swing length and minimum ATR distance parameters suited for both swing and intraday trading.\n\nImportant Notice:\nThis indicator identifies confirmed swing pivot points objectively, not speculative forecasting.',
+    type: 'open_source',
+    category: 'trend',
+    version: '1.0.0',
+    pine_version: 'v5',
+    release_date: '2026-03-28',
+    changelog: [
+      'v1.0.0: Initial release of Aemeth Major Swing Indicator'
+    ],
+    changelog_id: [
+      'v1.0.0: Rilis awal Aemeth Major Swing Indicator'
+    ],
+    changelog_en: [
+      'v1.0.0: Initial release of Aemeth Major Swing Indicator'
+    ],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'Major Swing Signal: Deteksi swing high dan swing low utama.',
+      'Buy / Sell Label: Label jelas pada swing penting.',
+      'Custom Settings: Atur panjang swing dan jarak minimum.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_id: [
+      'Major Swing Signal: Deteksi swing high dan swing low utama.',
+      'Buy / Sell Label: Label jelas pada swing penting.',
+      'Custom Settings: Atur panjang swing dan jarak minimum.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_en: [
+      'Major Swing Signal: Detection of primary swing high and swing low.',
+      'Buy / Sell Label: Distinct on-chart labels at critical pivots.',
+      'Custom Settings: Adjustable swing lookback and minimum clearance distance.',
+      'Pine Script: Ready-to-use Pine Script v5 source code.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Sistem Analisis', value: 'Pivot Swing High / Low Structural Filtering' },
+      { label: 'Sinyal', value: 'BUY & SELL labels pada swing terkonfirmasi' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Analysis System', value: 'Pivot Swing High / Low Structural Filtering' },
+      { label: 'Signals', value: 'BUY & SELL labels on confirmed swing pivots' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    package_includes_id: [
+      'Pine Script source code (.pine & .txt).',
+      'Panduan instalasi di TradingView.',
+      'Bantuan setup dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and indicator guide.',
+      'Direct setup support from Aemeth team if needed.'
+    ],
+    tradingview_script_id: 'aemeth_major_swing_v5',
+    is_published: true,
+    thumbnail_url: './products/major-swing.jpg',
+    preview_images: ['./products/major-swing.jpg'],
+    created_at: new Date('2026-03-28').toISOString(),
+  }),
+  injectPricing({
+    id: 'stochastic-cross-tpsl',
+    slug: 'aemeth-stochastic-cross-tpsl',
+    title: 'Aemeth Stochastic Cross TP/SL Indicator',
+    title_id: 'Aemeth Stochastic Cross TP/SL Indicator',
+    title_en: 'Aemeth Stochastic Cross TP/SL Indicator',
+    short_desc: 'Deteksi persilangan momentum %K dan %D Stochastic Oscillator dengan level Entry, Stop Loss, dan 3 target Take Profit terstruktur.',
+    short_desc_id: 'Deteksi persilangan momentum %K dan %D Stochastic Oscillator dengan level Entry, Stop Loss, dan 3 target Take Profit terstruktur.',
+    short_desc_en: 'Detects Stochastic %K and %D momentum crossovers with on-chart Entry, Stop Loss, and 3 structured Take Profit targets.',
+    long_desc: 'Aemeth Stochastic Cross TP/SL Indicator membaca persilangan garis %K dan %D dari Stochastic Oscillator pada area overbought atau oversold untuk menangkap momentum awal.\n\nSecara otomatis menampilkan level Entry harga, Stop Loss (SL) terproteksi, serta 3 target Take Profit (TP1, TP2, TP3) yang proporsional sehingga eksekusi trading lebih terencana dan disiplin.\n\nCatatan Penting:\nIndikator ini adalah alat bantu kalkulasi teknikal momentum, bukan kepastian arah harga pasar.',
+    long_desc_id: 'Aemeth Stochastic Cross TP/SL Indicator membaca persilangan garis %K dan %D dari Stochastic Oscillator pada area overbought atau oversold untuk menangkap momentum awal.\n\nSecara otomatis menampilkan level Entry harga, Stop Loss (SL) terproteksi, serta 3 target Take Profit (TP1, TP2, TP3) yang proporsional sehingga eksekusi trading lebih terencana dan disiplin.\n\nCatatan Penting:\nIndikator ini adalah alat bantu kalkulasi teknikal momentum, bukan kepastian arah harga pasar.',
+    long_desc_en: 'Aemeth Stochastic Cross TP/SL Indicator reads %K and %D line crossovers from the Stochastic Oscillator in overbought or oversold territories to capture nascent momentum moves.\n\nIt automatically plots entry levels, guarded Stop Loss lines, and 3 proportional Take Profit targets (TP1, TP2, TP3) for disciplined trade execution.\n\nImportant Notice:\nThis indicator is a momentum calculation aid, not an infallible price predictor.',
+    type: 'open_source',
+    category: 'momentum',
+    version: '1.0.0',
+    pine_version: 'v5',
+    release_date: '2026-03-28',
+    changelog: [
+      'v1.0.0: Initial release of Aemeth Stochastic Cross TP/SL Indicator'
+    ],
+    changelog_id: [
+      'v1.0.0: Rilis awal Aemeth Stochastic Cross TP/SL Indicator'
+    ],
+    changelog_en: [
+      'v1.0.0: Initial release of Aemeth Stochastic Cross TP/SL Indicator'
+    ],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'Stochastic Cross Signal: Deteksi persilangan %K dan %D.',
+      'Entry & SL: Level entry dan stop loss yang jelas.',
+      '3 Take Profit: TP1, TP2, TP3 untuk target optimal.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_id: [
+      'Stochastic Cross Signal: Deteksi persilangan %K dan %D.',
+      'Entry & SL: Level entry dan stop loss yang jelas.',
+      '3 Take Profit: TP1, TP2, TP3 untuk target optimal.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_en: [
+      'Stochastic Cross Signal: Detects %K and %D line crossovers.',
+      'Entry & SL: Crisp entry and protective stop loss levels.',
+      '3 Take Profit: TP1, TP2, TP3 for optimal target fulfillment.',
+      'Pine Script: Ready-to-use Pine Script v5 source code.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Sistem Analisis', value: 'Stochastic Oscillator Momentum Cross' },
+      { label: 'Sinyal', value: 'Stoch Cross ⇩ / Stoch Cross ⇧ dengan Entry, SL, TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Analysis System', value: 'Stochastic Oscillator Momentum Cross' },
+      { label: 'Signals', value: 'Stoch Cross ⇩ / Stoch Cross ⇧ with Entry, SL, TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    package_includes_id: [
+      'Pine Script source code (.pine & .txt).',
+      'Panduan instalasi di TradingView.',
+      'Bantuan setup dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and indicator guide.',
+      'Direct setup support from Aemeth team if needed.'
+    ],
+    tradingview_script_id: 'aemeth_stochastic_cross_tpsl_v5',
+    is_published: true,
+    thumbnail_url: './products/stochastic-cross.jpg',
+    preview_images: ['./products/stochastic-cross.jpg'],
+    created_at: new Date('2026-03-28').toISOString(),
+  }),
+  injectPricing({
+    id: 'crt-entry-tpsl',
+    slug: 'aemeth-crt-entry-tpsl',
+    title: 'Aemeth CRT Entry TP/SL Indicator',
+    title_id: 'Aemeth CRT Entry TP/SL Indicator',
+    title_en: 'Aemeth CRT Entry TP/SL Indicator',
+    short_desc: 'Deteksi sinyal Candle Range Theory (CRT) dengan visualisasi setup range, level Entry, Stop Loss (SL), dan 3 target Take Profit (TP1, TP2, TP3).',
+    short_desc_id: 'Deteksi sinyal Candle Range Theory (CRT) dengan visualisasi setup range, level Entry, Stop Loss (SL), dan 3 target Take Profit (TP1, TP2, TP3).',
+    short_desc_en: 'Detects Candle Range Theory (CRT) setups with range markers, on-chart Entry, Stop Loss (SL), and 3 Take Profit targets (TP1, TP2, TP3).',
+    long_desc: 'Aemeth CRT Entry TP/SL Indicator dirancang berdasarkan metodologi Candle Range Theory (CRT) untuk memetakan range pembentukan harga, manipulasi wick, dan ekspansi arah berikutnya.\n\nDilengkapi penanda sinyal CRT, kotak acuan range, level Entry konfirmasi, batas risiko Stop Loss (SL), dan tiga level Take Profit (TP1, TP2, TP3) bertahap langsung pada chart TradingView.\n\nCatatan Penting:\nIndikator ini adalah alat bantu membaca model Candle Range Theory, bukan jaminan sukses transaksi.',
+    long_desc_id: 'Aemeth CRT Entry TP/SL Indicator dirancang berdasarkan metodologi Candle Range Theory (CRT) untuk memetakan range pembentukan harga, manipulasi wick, dan ekspansi arah berikutnya.\n\nDilengkapi penanda sinyal CRT, kotak acuan range, level Entry konfirmasi, batas risiko Stop Loss (SL), dan tiga level Take Profit (TP1, TP2, TP3) bertahap langsung pada chart TradingView.\n\nCatatan Penting:\nIndikator ini adalah alat bantu membaca model Candle Range Theory, bukan jaminan sukses transaksi.',
+    long_desc_en: 'Aemeth CRT Entry TP/SL Indicator is formulated around Candle Range Theory (CRT) principles to map range formation, wick manipulation, and subsequent true trend expansion.\n\nFeatures distinct CRT setup badges, range reference framing, confirmed Entry lines, protective Stop Loss (SL) boundaries, and three phased Take Profit targets (TP1, TP2, TP3) directly on your TradingView chart.\n\nImportant Notice:\nThis indicator is a CRT model visualizer, not a financial guarantee.',
+    type: 'open_source',
+    category: 'trend',
+    version: '1.0.0',
+    pine_version: 'v5',
+    release_date: '2026-03-28',
+    changelog: [
+      'v1.0.0: Initial release of Aemeth CRT Entry TP/SL Indicator'
+    ],
+    changelog_id: [
+      'v1.0.0: Rilis awal Aemeth CRT Entry TP/SL Indicator'
+    ],
+    changelog_en: [
+      'v1.0.0: Initial release of Aemeth CRT Entry TP/SL Indicator'
+    ],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'CRT Signal: Deteksi sinyal CRT secara akurat.',
+      'Entry & SL: Level entry dan stop loss yang jelas.',
+      '3 Take Profit: TP1, TP2, TP3 untuk target optimal.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_id: [
+      'CRT Signal: Deteksi sinyal CRT secara akurat.',
+      'Entry & SL: Level entry dan stop loss yang jelas.',
+      '3 Take Profit: TP1, TP2, TP3 untuk target optimal.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_en: [
+      'CRT Signal: Accurate detection of Candle Range Theory setups.',
+      'Entry & SL: Clear entry and stop loss demarcation.',
+      '3 Take Profit: TP1, TP2, TP3 for structured target scaling.',
+      'Pine Script: Ready-to-use Pine Script v5 source code.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Sistem Analisis', value: 'Candle Range Theory (CRT)' },
+      { label: 'Sinyal', value: 'CRT Entry, SL, TP1, TP2, TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Analysis System', value: 'Candle Range Theory (CRT)' },
+      { label: 'Signals', value: 'CRT Entry, SL, TP1, TP2, TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    package_includes_id: [
+      'Pine Script source code (.pine & .txt).',
+      'Panduan instalasi di TradingView.',
+      'Bantuan setup dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and indicator guide.',
+      'Direct setup support from Aemeth team if needed.'
+    ],
+    tradingview_script_id: 'aemeth_crt_entry_tpsl_v5',
+    is_published: true,
+    thumbnail_url: './products/crt-entry.jpg',
+    preview_images: ['./products/crt-entry.jpg'],
+    created_at: new Date('2026-03-28').toISOString(),
+  }),
+  injectPricing({
+    id: 'rsi-reversal-tpsl',
+    slug: 'aemeth-rsi-reversal-tpsl',
+    title: 'Aemeth RSI Reversal TP/SL Indicator',
+    title_id: 'Aemeth RSI Reversal TP/SL Indicator',
+    title_en: 'Aemeth RSI Reversal TP/SL Indicator',
+    short_desc: 'Deteksi momentum saat harga keluar dari area ekstrem RSI dengan level Entry, Stop Loss terukur, dan 3 target Take Profit bertingkat.',
+    short_desc_id: 'Deteksi momentum saat harga keluar dari area ekstrem RSI dengan level Entry, Stop Loss terukur, dan 3 target Take Profit bertingkat.',
+    short_desc_en: 'Detects momentum reversals exiting RSI extreme zones with on-chart Entry, Stop Loss, and 3 progressive Take Profit targets.',
+    long_desc: 'Aemeth RSI Reversal TP/SL Indicator mendeteksi momentum pembalikan arah saat Relative Strength Index (RSI) berbalik dan keluar dari zona ekstrem (oversold di bawah 30 atau overbought di atas 70).\n\nSecara otomatis menandai titik Entry terkonfirmasi, menempatkan level Stop Loss (SL) yang proporsional, serta memetakan 3 target Take Profit (TP1, TP2, TP3) untuk membantu eksekusi swing atau scalping dengan rasio risiko-imbalan yang sehat.\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis osilator momentum objektif, bukan jaminan profit trading.',
+    long_desc_id: 'Aemeth RSI Reversal TP/SL Indicator mendeteksi momentum pembalikan arah saat Relative Strength Index (RSI) berbalik dan keluar dari zona ekstrem (oversold di bawah 30 atau overbought di atas 70).\n\nSecara otomatis menandai titik Entry terkonfirmasi, menempatkan level Stop Loss (SL) yang proporsional, serta memetakan 3 target Take Profit (TP1, TP2, TP3) untuk membantu eksekusi swing atau scalping dengan rasio risiko-imbalan yang sehat.\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis osilator momentum objektif, bukan jaminan profit trading.',
+    long_desc_en: 'Aemeth RSI Reversal TP/SL Indicator identifies reversal momentum as the Relative Strength Index (RSI) exits extreme zones (oversold below 30 or overbought above 70).\n\nIt automatically displays confirmed Entry points, establishes proportional Stop Loss (SL) limits, and projects three Take Profit targets (TP1, TP2, TP3) for disciplined swing or scalping execution.\n\nImportant Notice:\nThis indicator is an objective momentum tool, not an absolute guarantee of trading profitability.',
+    type: 'open_source',
+    category: 'reversal',
+    version: '1.0.0',
+    pine_version: 'v5',
+    release_date: '2026-03-28',
+    changelog: [
+      'v1.0.0: Initial release of Aemeth RSI Reversal TP/SL Indicator'
+    ],
+    changelog_id: [
+      'v1.0.0: Rilis awal Aemeth RSI Reversal TP/SL Indicator'
+    ],
+    changelog_en: [
+      'v1.0.0: Initial release of Aemeth RSI Reversal TP/SL Indicator'
+    ],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'RSI Reversal Signal: Deteksi momentum keluar dari area extreme.',
+      'Entry & SL: Level entry dan stop loss yang jelas.',
+      '3 Take Profit: TP1, TP2, TP3 untuk target optimal.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_id: [
+      'RSI Reversal Signal: Deteksi momentum keluar dari area extreme.',
+      'Entry & SL: Level entry dan stop loss yang jelas.',
+      '3 Take Profit: TP1, TP2, TP3 untuk target optimal.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_en: [
+      'RSI Reversal Signal: Momentum turning point exiting extreme zone.',
+      'Entry & SL: Clear entry and protective stop loss demarcation.',
+      '3 Take Profit: TP1, TP2, TP3 for structured target scaling.',
+      'Pine Script: Ready-to-use Pine Script v5 source code.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Sistem Analisis', value: 'Relative Strength Index (RSI) Extreme Reversal' },
+      { label: 'Sinyal', value: 'RSI ⇧ Bullish / RSI ⇩ Bearish dengan Entry, SL, TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Analysis System', value: 'Relative Strength Index (RSI) Extreme Reversal' },
+      { label: 'Signals', value: 'RSI ⇧ Bullish / RSI ⇩ Bearish with Entry, SL, TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    package_includes_id: [
+      'Pine Script source code (.pine & .txt).',
+      'Panduan instalasi di TradingView.',
+      'Bantuan setup dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and indicator guide.',
+      'Direct setup support from Aemeth team if needed.'
+    ],
+    tradingview_script_id: 'aemeth_rsi_reversal_tpsl_v5',
+    is_published: true,
+    thumbnail_url: './products/rsi-reversal.jpg',
+    preview_images: ['./products/rsi-reversal.jpg'],
+    created_at: new Date('2026-03-28').toISOString(),
+  }),
 ];
 
 // Helper to construct dynamic bundles using the central bundle calculation
@@ -1153,12 +1633,281 @@ export const api = {
     const isPsar = resolved.includes('parabolic-sar') || resolved.includes('psar');
     const isTrendSr = resolved.includes('trendline') || resolved.includes('trendsr');
     const isSmc = resolved.includes('smc');
+    const isSupertrend = resolved.includes('supertrend');
+    const isVwap = resolved.includes('vwap');
+    const isMajorSwing = resolved.includes('major-swing') || resolved.includes('majorswing');
+    const isStochCross = resolved.includes('stochastic') || resolved.includes('stoch');
+    const isCrt = resolved.includes('crt');
+    const isRsi = resolved.includes('rsi');
 
     let content = PINE_SCRIPT_LIQUIDITY;
     let filename = 'aemeth_smc_signal_panel_v2.pine';
     let title = 'Aemeth SMC Entry/TP/SL Signal Panel V2';
 
-    if (isSmc) {
+    if (isSupertrend) {
+      content = `//@version=5
+indicator("Aemeth Supertrend TP/SL Indicator", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - SUPERTREND TP/SL ENGINE V1
+// DIRECTIVE: CANDLE 1 CLOSED BAR ANTI-REPAINT VERIFICATION
+// =====================================================================
+
+atr_period = input.int(10, "ATR Period", minval=1)
+factor = input.float(3.0, "Supertrend Factor", minval=0.1, step=0.1)
+rr_ratio = input.float(1.5, "Risk/Reward Ratio Multiplier", minval=0.5, step=0.1)
+
+[supertrend, direction] = ta.supertrend(factor, atr_period)
+body_mid = math.avg(close[1], open[1])
+
+trend_bull = direction < 0
+trend_bear = direction > 0
+
+plot(trend_bull ? supertrend : na, "Supertrend Bullish", color=color.new(#10b981, 0), linewidth=2, style=plot.style_linebr)
+plot(trend_bear ? supertrend : na, "Supertrend Bearish", color=color.new(#ef4444, 0), linewidth=2, style=plot.style_linebr)
+
+// Signal confirmation on closed bar
+bear_entry = ta.crossunder(close[1], supertrend[1]) and trend_bear
+bull_entry = ta.crossover(close[1], supertrend[1]) and trend_bull
+
+var float entry_price = na
+var float sl_level = na
+var float tp1_level = na
+var float tp2_level = na
+var float tp3_level = na
+
+atr_val = ta.atr(atr_period)
+
+if bear_entry
+    entry_price := close[1]
+    sl_level := supertrend[1]
+    risk = math.abs(sl_level - entry_price)
+    tp1_level := entry_price - risk * 1.0
+    tp2_level := entry_price - risk * 2.0
+    tp3_level := entry_price - risk * 3.0
+
+if bull_entry
+    entry_price := close[1]
+    sl_level := supertrend[1]
+    risk = math.abs(entry_price - sl_level)
+    tp1_level := entry_price + risk * 1.0
+    tp2_level := entry_price + risk * 2.0
+    tp3_level := entry_price + risk * 3.0
+
+plotshape(bear_entry, "Bearish Entry", shape.labeldown, location.abovebar, color=#ef4444, text="Supertrend ⇩\\nEntry", textcolor=color.white, size=size.normal)
+plotshape(bull_entry, "Bullish Entry", shape.labelup, location.belowbar, color=#10b981, text="Supertrend ⇧\\nEntry", textcolor=color.white, size=size.normal)
+
+alertcondition(bear_entry, "Aemeth Supertrend Bearish Entry", "Aemeth Supertrend: Bearish breakdown confirmed.")
+alertcondition(bull_entry, "Aemeth Supertrend Bullish Entry", "Aemeth Supertrend: Bullish breakout confirmed.")
+`;
+      filename = 'aemeth_supertrend_tpsl_v5.pine';
+      title = 'Aemeth Supertrend TP/SL Indicator';
+    } else if (isVwap) {
+      content = `//@version=5
+indicator("Aemeth VWAP Reversal TP/SL Indicator", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - VWAP REVERSAL TP/SL ENGINE V1
+// DIRECTIVE: CANDLE 1 CLOSED BAR ANTI-REPAINT VERIFICATION
+// =====================================================================
+
+vwap_val = ta.vwap(hlc3)
+plot(vwap_val, "VWAP", color=color.new(#3b82f6, 0), linewidth=2)
+
+vwap_cross_bear = ta.crossunder(close[1], vwap_val[1])
+vwap_cross_bull = ta.crossover(close[1], vwap_val[1])
+
+atr_val = ta.atr(14)
+var float entry_p = na
+var float sl_p = na
+var float tp1_p = na
+var float tp2_p = na
+var float tp3_p = na
+
+if vwap_cross_bear
+    entry_p := close[1]
+    sl_p := vwap_val[1]
+    risk = math.abs(sl_p - entry_p)
+    tp1_p := entry_p - risk * 1.0
+    tp2_p := entry_p - risk * 2.0
+    tp3_p := entry_p - risk * 3.0
+
+if vwap_cross_bull
+    entry_p := close[1]
+    sl_p := vwap_val[1]
+    risk = math.abs(entry_p - sl_p)
+    tp1_p := entry_p + risk * 1.0
+    tp2_p := entry_p + risk * 2.0
+    tp3_p := entry_p + risk * 3.0
+
+plotshape(vwap_cross_bear, "VWAP Bearish Reversal", shape.labeldown, location.abovebar, color=#ef4444, text="VWAP ⇩\\nEntry", textcolor=color.white, size=size.normal)
+plotshape(vwap_cross_bull, "VWAP Bullish Reversal", shape.labelup, location.belowbar, color=#10b981, text="VWAP ⇧\\nEntry", textcolor=color.white, size=size.normal)
+
+alertcondition(vwap_cross_bear, "Aemeth VWAP Bearish Cross", "Aemeth VWAP: Bearish reversal breakdown detected.")
+alertcondition(vwap_cross_bull, "Aemeth VWAP Bullish Cross", "Aemeth VWAP: Bullish reversal breakout detected.")
+`;
+      filename = 'aemeth_vwap_reversal_tpsl_v5.pine';
+      title = 'Aemeth VWAP Reversal TP/SL Indicator';
+    } else if (isMajorSwing) {
+      content = `//@version=5
+indicator("Aemeth Major Swing Indicator", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - MAJOR SWING STRUCTURAL ENGINE V1
+// DIRECTIVE: CONFIRMED PIVOT HIGH / LOW FILTERING
+// =====================================================================
+
+swing_len = input.int(7, "Swing Lookback Length", minval=2)
+atr_filter = input.bool(true, "Filter Swings by Minimum ATR Distance")
+atr_mult = input.float(1.5, "Minimum ATR Clearance", minval=0.5, step=0.1)
+
+ph = ta.pivothigh(high, swing_len, swing_len)
+pl = ta.pivotlow(low, swing_len, swing_len)
+
+plotshape(not na(ph), "Swing High (Sell)", shape.labeldown, location.abovebar, color=#00e5ff, text="sell", textcolor=color.black, size=size.small, offset=-swing_len)
+plotshape(not na(pl), "Swing Low (Buy)", shape.labelup, location.belowbar, color=#00e5ff, text="buy", textcolor=color.black, size=size.small, offset=-swing_len)
+
+alertcondition(not na(ph), "Major Swing High Detected", "Aemeth Major Swing: Significant swing high confirmed.")
+alertcondition(not na(pl), "Major Swing Low Detected", "Aemeth Major Swing: Significant swing low confirmed.")
+`;
+      filename = 'aemeth_major_swing_v5.pine';
+      title = 'Aemeth Major Swing Indicator';
+    } else if (isStochCross) {
+      content = `//@version=5
+indicator("Aemeth Stochastic Cross TP/SL Indicator", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - STOCHASTIC CROSS TP/SL ENGINE V1
+// =====================================================================
+
+periodK = input.int(14, "%K Length", minval=1)
+smoothK = input.int(3, "%K Smoothing", minval=1)
+periodD = input.int(3, "%D Smoothing", minval=1)
+
+k = ta.sma(ta.stoch(close, high, low, periodK), smoothK)
+d = ta.sma(k, periodD)
+
+stoch_bear_cross = ta.crossunder(k[1], d[1]) and k[1] > 70
+stoch_bull_cross = ta.crossover(k[1], d[1]) and k[1] < 30
+
+atr_val = ta.atr(14)
+var float entry_lvl = na
+var float sl_lvl = na
+var float tp1_lvl = na
+var float tp2_lvl = na
+var float tp3_lvl = na
+
+if stoch_bear_cross
+    entry_lvl := close[1]
+    sl_lvl := high[1] + atr_val * 1.0
+    risk = math.abs(sl_lvl - entry_lvl)
+    tp1_lvl := entry_lvl - risk * 1.0
+    tp2_lvl := entry_lvl - risk * 2.0
+    tp3_lvl := entry_lvl - risk * 3.0
+
+if stoch_bull_cross
+    entry_lvl := close[1]
+    sl_lvl := low[1] - atr_val * 1.0
+    risk = math.abs(entry_lvl - sl_lvl)
+    tp1_lvl := entry_lvl + risk * 1.0
+    tp2_lvl := entry_lvl + risk * 2.0
+    tp3_lvl := entry_lvl + risk * 3.0
+
+plotshape(stoch_bear_cross, "Stoch Bear Cross", shape.labeldown, location.abovebar, color=#ef4444, text="Stoch Cross ⇩\\nEntry", textcolor=color.white, size=size.normal)
+plotshape(stoch_bull_cross, "Stoch Bull Cross", shape.labelup, location.belowbar, color=#10b981, text="Stoch Cross ⇧\\nEntry", textcolor=color.white, size=size.normal)
+
+alertcondition(stoch_bear_cross, "Stochastic Bearish Cross", "Aemeth Stoch: Bearish crossover with entry and TP/SL levels.")
+alertcondition(stoch_bull_cross, "Stochastic Bullish Cross", "Aemeth Stoch: Bullish crossover with entry and TP/SL levels.")
+`;
+      filename = 'aemeth_stochastic_cross_tpsl_v5.pine';
+      title = 'Aemeth Stochastic Cross TP/SL Indicator';
+    } else if (isCrt) {
+      content = `//@version=5
+indicator("Aemeth CRT Entry TP/SL Indicator", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - CANDLE RANGE THEORY (CRT) ENGINE V1
+// =====================================================================
+
+crt_lookback = input.int(5, "CRT Range Lookback Candles", minval=2)
+range_high = ta.highest(high[1], crt_lookback)
+range_low = ta.lowest(low[1], crt_lookback)
+
+// Sweep & Reclaim / Breakdown detection
+crt_bear = close[1] < range_low and high[1] >= range_low
+crt_bull = close[1] > range_high and low[1] <= range_high
+
+var float crt_entry = na
+var float crt_sl = na
+var float crt_tp1 = na
+var float crt_tp2 = na
+var float crt_tp3 = na
+
+atr_val = ta.atr(14)
+if crt_bear
+    crt_entry := close[1]
+    crt_sl := range_high
+    risk = math.abs(crt_sl - crt_entry)
+    crt_tp1 := crt_entry - risk * 1.0
+    crt_tp2 := crt_entry - risk * 2.0
+    crt_tp3 := crt_entry - risk * 3.0
+
+if crt_bull
+    crt_entry := close[1]
+    crt_sl := range_low
+    risk = math.abs(crt_entry - crt_sl)
+    crt_tp1 := crt_entry + risk * 1.0
+    crt_tp2 := crt_entry + risk * 2.0
+    crt_tp3 := crt_entry + risk * 3.0
+
+plotshape(crt_bear, "CRT Bearish Setup", shape.labeldown, location.abovebar, color=#9333ea, text="CRT\\nEntry", textcolor=color.white, size=size.normal)
+plotshape(crt_bull, "CRT Bullish Setup", shape.labelup, location.belowbar, color=#9333ea, text="CRT\\nEntry", textcolor=color.white, size=size.normal)
+
+alertcondition(crt_bear, "CRT Bearish Setup Alert", "Aemeth CRT: Bearish range expansion triggered.")
+alertcondition(crt_bull, "CRT Bullish Setup Alert", "Aemeth CRT: Bullish range expansion triggered.")
+`;
+      filename = 'aemeth_crt_entry_tpsl_v5.pine';
+      title = 'Aemeth CRT Entry TP/SL Indicator';
+    } else if (isRsi) {
+      content = `//@version=5
+indicator("Aemeth RSI Reversal TP/SL Indicator", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - RSI REVERSAL TP/SL ENGINE V1
+// =====================================================================
+
+rsi_period = input.int(14, "RSI Period", minval=1)
+rsi_val = ta.rsi(close[1], rsi_period)
+
+rsi_bull_reversal = ta.crossover(rsi_val, 30)
+rsi_bear_reversal = ta.crossunder(rsi_val, 70)
+
+atr_val = ta.atr(14)
+var float rsi_entry = na
+var float rsi_sl = na
+var float rsi_tp1 = na
+var float rsi_tp2 = na
+var float rsi_tp3 = na
+
+if rsi_bull_reversal
+    rsi_entry := close[1]
+    rsi_sl := low[1] - atr_val * 1.2
+    risk = math.abs(rsi_entry - rsi_sl)
+    rsi_tp1 := rsi_entry + risk * 1.0
+    rsi_tp2 := rsi_entry + risk * 2.0
+    rsi_tp3 := rsi_entry + risk * 3.0
+
+if rsi_bear_reversal
+    rsi_entry := close[1]
+    rsi_sl := high[1] + atr_val * 1.2
+    risk = math.abs(rsi_sl - rsi_entry)
+    rsi_tp1 := rsi_entry - risk * 1.0
+    rsi_tp2 := rsi_entry - risk * 2.0
+    rsi_tp3 := rsi_entry - risk * 3.0
+
+plotshape(rsi_bull_reversal, "RSI Bull Reversal", shape.labelup, location.belowbar, color=#10b981, text="RSI ⇧\\nEntry", textcolor=color.white, size=size.normal)
+plotshape(rsi_bear_reversal, "RSI Bear Reversal", shape.labeldown, location.abovebar, color=#ef4444, text="RSI ⇩\\nEntry", textcolor=color.white, size=size.normal)
+
+alertcondition(rsi_bull_reversal, "Aemeth RSI Bullish Reversal", "Aemeth RSI: Oversold exit confirmed with TP/SL targets.")
+alertcondition(rsi_bear_reversal, "Aemeth RSI Bearish Reversal", "Aemeth RSI: Overbought exit confirmed with TP/SL targets.")
+`;
+      filename = 'aemeth_rsi_reversal_tpsl_v5.pine';
+      title = 'Aemeth RSI Reversal TP/SL Indicator';
+    } else if (isSmc) {
       content = `//@version=5
 indicator("Aemeth SMC Entry/TP/SL Signal Panel V2", overlay=true, max_boxes_count=150, max_lines_count=150)
 // =====================================================================
