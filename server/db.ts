@@ -558,6 +558,182 @@ function seedCanonicalIndicators() {
       normal_idr: 199000,
       promo_idr: 149000,
     },
+    {
+      id: "smc-bos-choch",
+      slug: "aemeth-smc-bos-choch",
+      title: "Aemeth SMC BOS/CHoCH Entry SL TP",
+      short_desc: "Indikator market structure yang memvisualisasikan Break of Structure (BOS), perubahan arah tren (CHoCH), Order Block, serta level Entry, Stop Loss, dan tiga target TP.",
+      long_desc: "Aemeth SMC BOS/CHoCH Entry SL TP dirancang untuk membantu trader memetakan struktur pasar Smart Money Concepts secara objektif. Mengidentifikasi Swing High dan Swing Low, Break of Structure (BOS), serta Change of Character (CHoCH) saat tren berbalik arah.\\n\\nSecara otomatis menampilkan level Stop Loss merah (SL: 3587.561), Entry biru (3572.560), dan target Take Profit hijau (TP1: 3563.559, TP2: 3554.558, TP3: 3545.557) dengan opsi jarak berbasis volatilitas ATR maupun jarak tetap.\\n\\nCatatan Penting:\\nIndikator ini adalah alat bantu analisis struktur teknikal, bukan jaminan keuntungan transaksi.",
+      type: "open_source",
+      category: "trend",
+      price_cents: 2490,
+      discount_cents: 510,
+      version: "1.0.0",
+      features: [
+              "BOS & CHoCH Detection: Deteksi struktur pasar dan perubahan tren.",
+              "Entry / SL / TP Label: Level harga terstruktur pada chart (SL: 3587.561, Entry: 3572.560, TP1-TP3).",
+              "ATR-Based Risk Levels: Manajemen risiko berbasis volatilitas dinamis.",
+              "Order Block Visualization & Alerts: Penanda zona minat dan alert real-time.",
+              "Pine Script: Source code siap digunakan."
+      ],
+      thumb: "./products/smc-bos-choch.jpg",
+      normal_idr: 299000,
+      promo_idr: 249000,
+    },
+    {
+      id: "smart-structure-entry-v1",
+      slug: "aemeth-smart-structure-entry-v1",
+      title: "AEMETH Smart Structure Entry System v1.0",
+      short_desc: "Sistem analisis struktur tren menggunakan EMA ganda sebagai trend filter dan deteksi BOS/CHoCH untuk memproyeksikan level Entry, SL, dan 3 target TP.",
+      long_desc: "AEMETH Smart Structure Entry System v1.0 mengintegrasikan analisis struktur pasar (BOS & CHoCH) dengan trend filter moving average ganda. Memberikan konfirmasi arah yang lebih disiplin sebelum sinyal terbentuk.\\n\\nMenampilkan level Stop Loss (SL: 3701.671), Entry harga (3672.845), dan 3 level Take Profit (TP1: 3644.019, TP2: 3615.194, TP3: 3586.368) secara otomatis pada chart TradingView.\\n\\nCatatan Penting:\\nIndikator ini adalah alat bantu visualisasi struktur tren, bukan jaminan profit trading.",
+      type: "open_source",
+      category: "trend",
+      price_cents: 2490,
+      discount_cents: 510,
+      version: "1.0.0",
+      features: [
+              "Trend Filter EMA: Trend filter moving average ganda.",
+              "SMC Structure BOS / CHoCH: Deteksi struktur dan perubahan tren.",
+              "Entry SL TP Auto: Kalkulasi otomatis level trading (SL: 3701.671, Entry: 3672.845).",
+              "Alert Signal Real-Time: Notifikasi sinyal langsung ke TradingView.",
+              "Pine Script: Source code siap digunakan."
+      ],
+      thumb: "./products/smart-structure-entry.jpg",
+      normal_idr: 299000,
+      promo_idr: 249000,
+    },
+    {
+      id: "liquidity-sweep-reversal-v2",
+      slug: "aemeth-liquidity-sweep-reversal-v2",
+      title: "AEMETH Liquidity Sweep Reversal v2.0",
+      short_desc: "Mendeteksi pengambilan likuiditas (liquidity sweep) pada level swing kunci dengan konfirmasi RSI untuk sinyal pembalikan arah, SL, dan 3 target TP.",
+      long_desc: "AEMETH Liquidity Sweep Reversal v2.0 berfokus pada deteksi perburuan likuiditas di atas swing high atau di bawah swing low. Ketika harga menyapu area likuiditas dan kembali ke dalam rentang dengan divergensi RSI, indikator memvalidasi sinyal pembalikan arah potensial.\\n\\nMemproyeksikan level SELL Entry (3623.640), Stop Loss pengaman (SL: 3701.671), serta target Take Profit berjenjang (TP1: 3619.488, TP2: 3615.335, TP3: 3611.183).\\n\\nCatatan Penting:\\nIndikator ini adalah alat bantu teknikal pemetaan likuiditas, bukan jaminan profit.",
+      type: "open_source",
+      category: "reversal",
+      price_cents: 1990,
+      discount_cents: 510,
+      version: "2.0.0",
+      features: [
+              "Liquidity Sweep Detection: Deteksi sweep pada swing high dan low.",
+              "Smart Reversal Signal: Sinyal pembalikan dengan konfirmasi RSI.",
+              "Entry SL TP Auto: Level kalkulasi otomatis (SL: 3701.671, SELL ENTRY: 3623.640).",
+              "Alert Real-Time: Notifikasi alert instan.",
+              "Pine Script: Source code siap digunakan."
+      ],
+      thumb: "./products/liquidity-sweep-reversal.jpg",
+      normal_idr: 249000,
+      promo_idr: 199000,
+    },
+    {
+      id: "mean-reversion-engine-v3",
+      slug: "aemeth-mean-reversion-engine-v3",
+      title: "AEMETH Mean Reversion Engine v3.0",
+      short_desc: "Mendeteksi pergerakan kembali ke area ekuilibrium setelah harga keluar dari Bollinger Bands, dengan filter VWAP dan konfirmasi RSI.",
+      long_desc: "AEMETH Mean Reversion Engine v3.0 dirancang untuk menangkap peluang saat harga kembali ke nilai rata-rata (mean reversion) setelah menyentuh deviasi ekstrem Bollinger Bands. Dilengkapi garis acuan VWAP serta konfirmasi momentum RSI untuk memvalidasi pembalikan arah.\\n\\nMemproyeksikan level BUY Entry (3614.930), Stop Loss terukur (SL: 3610.110), serta 3 target Take Profit (TP1: 3619.488, TP2: 3624.570, TP3: 3629.389).\\n\\nCatatan Penting:\\nIndikator ini adalah alat bantu analisis statistik volatilitas, bukan jaminan hasil trading.",
+      type: "open_source",
+      category: "reversal",
+      price_cents: 1990,
+      discount_cents: 510,
+      version: "3.0.0",
+      features: [
+              "Bollinger Mean Reversion: Deteksi deviasi ekstrem dan re-entry band.",
+              "VWAP Filter Anchor: Acuan nilai wajar intraday.",
+              "Entry SL TP Visual: Level visual jelas (BUY ENTRY: 3614.930, SL: 3610.110).",
+              "3 Take Profit: Multi-target bertingkat (TP1, TP2, TP3).",
+              "Pine Script: Source code siap digunakan."
+      ],
+      thumb: "./products/mean-reversion-engine.jpg",
+      normal_idr: 249000,
+      promo_idr: 199000,
+    },
+    {
+      id: "momentum-shift-pro-v4",
+      slug: "aemeth-momentum-shift-pro-v4",
+      title: "AEMETH Momentum Shift Pro v4.0",
+      short_desc: "Mendeteksi pergeseran momentum menggunakan akselerasi MACD yang dikonfirmasi oleh RSI, dengan visualisasi Entry, SL, dan 3 target TP.",
+      long_desc: "AEMETH Momentum Shift Pro v4.0 mengukur akselerasi momentum pasar melalui persilangan MACD dan konfirmasi osilator RSI. Menghindari sinyal palsu dengan menyaring pergerakan sideways dan hanya menghasilkan sinyal saat momentum searah terkonfirmasi kuat.\\n\\nMenampilkan level BUY Entry (3632.935), Stop Loss protektif (SL: 3625.515), dan target Take Profit (TP1: 3640.355, TP2: 3644.065, TP3: 3647.775) secara visual langsung pada candlestick chart.\\n\\nCatatan Penting:\\nIndikator ini adalah alat ukur momentum objektif, bukan garansi keberhasilan trading.",
+      type: "open_source",
+      category: "momentum",
+      price_cents: 1990,
+      discount_cents: 510,
+      version: "4.0.0",
+      features: [
+              "MACD Momentum Shift: Akselerasi persilangan momentum.",
+              "RSI Filter Confirmation: Filter arah tren berbasis Relative Strength.",
+              "Entry SL TP Pro: Level terstruktur (BUY ENTRY: 3632.935, SL: 3625.515).",
+              "Multi-Target Take Profit: Tiga target bertingkat proporsional.",
+              "Pine Script: Source code siap digunakan."
+      ],
+      thumb: "./products/momentum-shift-pro.jpg",
+      normal_idr: 249000,
+      promo_idr: 199000,
+    },
+    {
+      id: "trend-pullback-hunter-v5",
+      slug: "aemeth-trend-pullback-hunter-v5",
+      title: "AEMETH Trend Pullback Hunter v5.0",
+      short_desc: "Menangkap peluang entry saat retracement dalam tren utama menggunakan EMA Ribbon dan Stochastic, dilengkapi level Entry, SL, dan 3 TP.",
+      long_desc: "AEMETH Trend Pullback Hunter v5.0 berfokus pada strategi mengikuti tren (trend-following) dengan menunggu terjadinya pullback/koreksi sehat ke zona EMA Ribbon dinamis. Menggunakan Stochastic Oscillator untuk memvalidasi akhir dari fase koreksi sebelum melanjutkan pergerakan tren utama.\\n\\nMemproyeksikan setup SELL Entry (3856.420), Stop Loss di atas swing resistance (SL: 3882.525), dan 3 level Take Profit (TP1: 3830.315, TP2: 3817.262, TP3: 3804.209).\\n\\nCatatan Penting:\\nIndikator ini adalah sarana analisis tren dan retracement, bukan penjamin keuntungan transaksi.",
+      type: "open_source",
+      category: "trend",
+      price_cents: 1990,
+      discount_cents: 510,
+      version: "5.0.0",
+      features: [
+              "EMA Ribbon Trend Zone: Identifikasi zona tren dan dynamic support/resistance.",
+              "Stochastic Pullback Filter: Konfirmasi akhir siklus koreksi harga.",
+              "Entry SL TP Auto: Level kalkulasi otomatis (SL: 3882.525, SELL ENTRY: 3856.420).",
+              "3 Take Profit: Multi-target Take Profit bertingkat.",
+              "Pine Script: Source code siap digunakan."
+      ],
+      thumb: "./products/trend-pullback-hunter.jpg",
+      normal_idr: 249000,
+      promo_idr: 199000,
+    },
+    {
+      id: "candle-impulse-v5",
+      slug: "aemeth-candle-impulse-v5",
+      title: "AEMETH Candle Impulse v5.0",
+      short_desc: "Mendeteksi impuls breakout candlestick bervolume tinggi melampaui range harga sebelumnya, dilengkapi visualisasi level Entry, SL, dan 3 TP.",
+      long_desc: "AEMETH Candle Impulse v5.0 mengidentifikasi momentum kuat dari pergerakan candlestick impulsif yang didukung peningkatan volume di atas rata-rata bergerak. Mengeliminasi keraguan dalam mengonfirmasi inisiasi breakout awal.\\n\\nMenampilkan level BUY Entry (3609.325), Stop Loss di bawah base candle impuls (SL: 3602.243), dan tiga level Take Profit berjarak simetris (TP1: 3616.407, TP2: 3623.489, TP3: 3630.572).\\n\\nCatatan Penting:\\nIndikator ini adalah instrumen analisis volume dan aksi harga, bukan jaminan kesuksesan transaksi.",
+      type: "open_source",
+      category: "momentum",
+      price_cents: 1990,
+      discount_cents: 510,
+      version: "5.0.0",
+      features: [
+              "Candle Impulse Detection: Identifikasi candlestick breakout momentum tinggi.",
+              "Volume Surge Filter: Konfirmasi lonjakan volume di atas rata-rata.",
+              "Entry SL TP Visual: Level visual terstruktur (BUY ENTRY: 3609.325, SL: 3602.243).",
+              "Proportional Take Profit: Target TP1, TP2, TP3 bertingkat.",
+              "Pine Script: Source code siap digunakan."
+      ],
+      thumb: "./products/candle-impulse.jpg",
+      normal_idr: 249000,
+      promo_idr: 199000,
+    },
+    {
+      id: "volatility-expansion-breakout-v6",
+      slug: "aemeth-volatility-expansion-breakout-v6",
+      title: "AEMETH Volatility Expansion Breakout v6.0",
+      short_desc: "Mendeteksi ekspansi volatilitas dari fase konsolidasi ATR rendah menuju fase breakout tren baru, dengan proyeksi level Entry, SL, dan 3 TP.",
+      long_desc: "AEMETH Volatility Expansion Breakout v6.0 mengukur transisi siklus pasar dari fase kompresi (low volatility squeeze) ke fase ekspansi volatilitas tinggi (volatility expansion) berdasarkan rasio Average True Range (ATR). Membantu mendeteksi momentum awal sebelum pergerakan besar berlanjut.\\n\\nMenampilkan level BUY Entry (3609.325), Stop Loss protektif (SL: 3602.243), dan target bertingkat Take Profit (TP1: 3616.407, TP2: 3623.489, TP3: 3630.572).\\n\\nCatatan Penting:\\nIndikator ini adalah alat bantu analisis siklus volatilitas pasar, bukan jaminan hasil perdagangan.",
+      type: "open_source",
+      category: "volatility",
+      price_cents: 1990,
+      discount_cents: 510,
+      version: "6.0.0",
+      features: [
+              "Volatility Expansion Ratio: Deteksi transisi dari kompresi ke ekspansi tren.",
+              "ATR Range Filter: Filter rentang volatilitas dinamis.",
+              "Entry SL TP Calculation: Level trading terproyeksi (BUY ENTRY: 3609.325, SL: 3602.243).",
+              "Triple Take Profit: Tiga target Take Profit berjenjang.",
+              "Pine Script: Source code siap digunakan."
+      ],
+      thumb: "./products/volatility-expansion-breakout.jpg",
+      normal_idr: 249000,
+      promo_idr: 199000,
+    },
   ];
 
   // Purge any legacy duplicate products from database
@@ -1653,6 +1829,277 @@ plotshape(bull_cross, "EMA Bull Cross", shape.circle, location.belowbar, color=#
 
 alertcondition(bear_cross, "EMA Bearish Crossover", "Aemeth EMA: Bearish crossover with RSI filter confirmed.")
 alertcondition(bull_cross, "EMA Bullish Crossover", "Aemeth EMA: Bullish crossover with RSI filter confirmed.")
+`,
+    },
+    'smc-bos-choch': {
+      version: '1.0.0',
+      changelog: 'v1.0.0: Initial release of Aemeth SMC BOS/CHoCH Entry SL TP',
+      content: `//@version=5
+indicator("Aemeth SMC BOS/CHoCH Entry SL TP", overlay=true, max_boxes_count=100, max_lines_count=100)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - SMC BOS/CHOCH ENTRY SL TP ENGINE
+// DIRECTIVE: CANDLE 1 CLOSED BAR ANTI-REPAINT VERIFICATION
+// =====================================================================
+
+swing_len = input.int(5, "Swing Lookback Length", minval=2)
+show_bos = input.bool(true, "Show BOS Lines")
+show_choch = input.bool(true, "Show CHoCH Labels")
+
+ph = ta.pivothigh(high, swing_len, swing_len)
+pl = ta.pivotlow(low, swing_len, swing_len)
+
+var float last_ph = na
+var float last_pl = na
+if not na(ph)
+    last_ph := high[swing_len]
+if not na(pl)
+    last_pl := low[swing_len]
+
+bos_bull = ta.crossover(close[1], last_ph)
+bos_bear = ta.crossunder(close[1], last_pl)
+
+atr_val = ta.atr(14)
+var float entry_price = na
+var float sl_price = na
+var float tp1_price = na
+var float tp2_price = na
+var float tp3_price = na
+
+if bos_bear
+    entry_price := close[1]
+    sl_price := last_ph
+    risk = math.abs(sl_price - entry_price)
+    tp1_price := entry_price - risk * 1.0
+    tp2_price := entry_price - risk * 2.0
+    tp3_price := entry_price - risk * 3.0
+
+if bos_bull
+    entry_price := close[1]
+    sl_price := last_pl
+    risk = math.abs(entry_price - sl_price)
+    tp1_price := entry_price + risk * 1.0
+    tp2_price := entry_price + risk * 2.0
+    tp3_price := entry_price + risk * 3.0
+
+plotshape(bos_bear, "Bearish BOS", shape.labeldown, location.abovebar, color=#ef4444, text="BOS\nENTRY", textcolor=color.white, size=size.small)
+plotshape(bos_bull, "Bullish BOS", shape.labelup, location.belowbar, color=#10b981, text="BOS\nENTRY", textcolor=color.white, size=size.small)
+
+alertcondition(bos_bear, "SMC Bearish BOS/CHoCH", "Aemeth SMC: Bearish structure break confirmed.")
+alertcondition(bos_bull, "SMC Bullish BOS/CHoCH", "Aemeth SMC: Bullish structure break confirmed.")
+`,
+    },
+    'smart-structure-entry-v1': {
+      version: '1.0.0',
+      changelog: 'v1.0.0: Initial release of AEMETH Smart Structure Entry System v1.0',
+      content: `//@version=5
+indicator("AEMETH Smart Structure Entry System v1.0", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - SMART STRUCTURE ENTRY SYSTEM V1.0
+// =====================================================================
+
+len_fast = input.int(20, "EMA Fast")
+len_slow = input.int(50, "EMA Slow")
+swing_len = input.int(5, "Structure Swing Length")
+
+ema_f = ta.ema(close, len_fast)
+ema_s = ta.ema(close, len_slow)
+
+plot(ema_f, "EMA Fast", color=color.new(#facc15, 0), linewidth=2)
+plot(ema_s, "EMA Slow", color=color.new(#f97316, 0), linewidth=2)
+
+ph = ta.pivothigh(high, swing_len, swing_len)
+pl = ta.pivotlow(low, swing_len, swing_len)
+var float last_ph = na
+var float last_pl = na
+if not na(ph)
+    last_ph := high[swing_len]
+if not na(pl)
+    last_pl := low[swing_len]
+
+trend_bull = ema_f > ema_s
+trend_bear = ema_f < ema_s
+
+buy_sig = trend_bull and ta.crossover(close[1], last_ph)
+sell_sig = trend_bear and ta.crossunder(close[1], last_pl)
+
+plotshape(buy_sig, "Smart Structure BUY", shape.labelup, location.belowbar, color=#10b981, text="BUY", textcolor=color.white, size=size.small)
+plotshape(sell_sig, "Smart Structure SELL", shape.labeldown, location.abovebar, color=#ef4444, text="SELL", textcolor=color.white, size=size.small)
+
+alertcondition(buy_sig, "Smart Structure BUY", "Aemeth: Smart structure trend buy triggered.")
+alertcondition(sell_sig, "Smart Structure SELL", "Aemeth: Smart structure trend sell triggered.")
+`,
+    },
+    'liquidity-sweep-reversal-v2': {
+      version: '2.0.0',
+      changelog: 'v2.0.0: Upgraded liquidity sweep detection with RSI divergence confirmation',
+      content: `//@version=5
+indicator("AEMETH Liquidity Sweep Reversal v2.0", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - LIQUIDITY SWEEP REVERSAL V2.0
+// =====================================================================
+
+lookback = input.int(10, "Liquidity Swing Lookback")
+rsi_len = input.int(14, "RSI Filter Length")
+
+ph = ta.pivothigh(high, lookback, lookback)
+pl = ta.pivotlow(low, lookback, lookback)
+rsi_val = ta.rsi(close, rsi_len)
+
+var float sweep_high = na
+var float sweep_low = na
+if not na(ph)
+    sweep_high := high[lookback]
+if not na(pl)
+    sweep_low := low[lookback]
+
+bear_sweep = high[1] > sweep_high and close[1] < sweep_high and rsi_val[1] > 60
+bull_sweep = low[1] < sweep_low and close[1] > sweep_low and rsi_val[1] < 40
+
+plotshape(bear_sweep, "Liquidity Sweep SELL", shape.labeldown, location.abovebar, color=#ef4444, text="SELL", textcolor=color.white, size=size.small)
+plotshape(bull_sweep, "Liquidity Sweep BUY", shape.labelup, location.belowbar, color=#10b981, text="BUY", textcolor=color.white, size=size.small)
+
+alertcondition(bear_sweep, "Bearish Liquidity Sweep", "Aemeth: Bearish liquidity sweep reversal signal confirmed.")
+alertcondition(bull_sweep, "Bullish Liquidity Sweep", "Aemeth: Bullish liquidity sweep reversal signal confirmed.")
+`,
+    },
+    'mean-reversion-engine-v3': {
+      version: '3.0.0',
+      changelog: 'v3.0.0: Full Pine Script v5 architecture with VWAP filter and Bollinger re-entry detection',
+      content: `//@version=5
+indicator("AEMETH Mean Reversion Engine v3.0", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - MEAN REVERSION ENGINE V3.0
+// =====================================================================
+
+bb_len = input.int(20, "Bollinger Bands Length")
+bb_mult = input.float(2.0, "BB Deviation Multiplier")
+rsi_len = input.int(14, "RSI Filter Length")
+
+[basis, upper, lower] = ta.bb(close, bb_len, bb_mult)
+rsi_val = ta.rsi(close, rsi_len)
+
+plot(basis, "BB Basis", color=color.gray)
+plot(upper, "BB Upper", color=color.red)
+plot(lower, "BB Lower", color=color.green)
+
+buy_rev = close[2] < lower[2] and close[1] > lower[1] and rsi_val[1] < 35
+sell_rev = close[2] > upper[2] and close[1] < upper[1] and rsi_val[1] > 65
+
+plotshape(buy_rev, "Mean Reversion BUY", shape.labelup, location.belowbar, color=#10b981, text="BUY\nENTRY", textcolor=color.white, size=size.small)
+plotshape(sell_rev, "Mean Reversion SELL", shape.labeldown, location.abovebar, color=#ef4444, text="SELL\nENTRY", textcolor=color.white, size=size.small)
+
+alertcondition(buy_rev, "Mean Reversion BUY", "Aemeth: Mean reversion buy re-entry confirmed.")
+alertcondition(sell_rev, "Mean Reversion SELL", "Aemeth: Mean reversion sell re-entry confirmed.")
+`,
+    },
+    'momentum-shift-pro-v4': {
+      version: '4.0.0',
+      changelog: 'v4.0.0: High-speed MACD momentum acceleration filter with dual RSI gate',
+      content: `//@version=5
+indicator("AEMETH Momentum Shift Pro v4.0", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - MOMENTUM SHIFT PRO V4.0
+// =====================================================================
+
+fast_len = input.int(12, "MACD Fast")
+slow_len = input.int(26, "MACD Slow")
+sig_len  = input.int(9, "MACD Signal")
+rsi_len  = input.int(14, "RSI Gate Length")
+
+[macd_line, sig_line, hist] = ta.macd(close, fast_len, slow_len, sig_len)
+rsi_val = ta.rsi(close, rsi_len)
+
+bull_shift = ta.crossover(macd_line[1], sig_line[1]) and rsi_val[1] > 50
+bear_shift = ta.crossunder(macd_line[1], sig_line[1]) and rsi_val[1] < 50
+
+plotshape(bull_shift, "Momentum Shift BUY", shape.labelup, location.belowbar, color=#10b981, text="BUY\nENTRY", textcolor=color.white, size=size.small)
+plotshape(bear_shift, "Momentum Shift SELL", shape.labeldown, location.abovebar, color=#ef4444, text="SELL\nENTRY", textcolor=color.white, size=size.small)
+
+alertcondition(bull_shift, "Momentum Shift BUY", "Aemeth: Momentum shift bullish acceleration confirmed.")
+alertcondition(bear_shift, "Momentum Shift SELL", "Aemeth: Momentum shift bearish acceleration confirmed.")
+`,
+    },
+    'trend-pullback-hunter-v5': {
+      version: '5.0.0',
+      changelog: 'v5.0.0: Dual EMA Ribbon dynamic channel with Stochastic cycle filter',
+      content: `//@version=5
+indicator("AEMETH Trend Pullback Hunter v5.0", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - TREND PULLBACK HUNTER V5.0
+// =====================================================================
+
+e20 = ta.ema(close, 20)
+e50 = ta.ema(close, 50)
+plot(e20, "EMA 20", color=color.yellow)
+plot(e50, "EMA 50", color=color.orange)
+
+stoch_k = ta.stoch(close, high, low, 14)
+stoch_d = ta.sma(stoch_k, 3)
+
+trend_down = e20 < e50
+pullback_sell = trend_down and high[1] >= e20[1] and close[1] < e20[1] and ta.crossunder(stoch_k[1], stoch_d[1])
+
+trend_up = e20 > e50
+pullback_buy = trend_up and low[1] <= e20[1] and close[1] > e20[1] and ta.crossover(stoch_k[1], stoch_d[1])
+
+plotshape(pullback_sell, "Pullback SELL", shape.labeldown, location.abovebar, color=#ef4444, text="SELL\nENTRY", textcolor=color.white, size=size.small)
+plotshape(pullback_buy, "Pullback BUY", shape.labelup, location.belowbar, color=#10b981, text="BUY\nENTRY", textcolor=color.white, size=size.small)
+
+alertcondition(pullback_sell, "Trend Pullback SELL", "Aemeth: Trend pullback sell trigger confirmed.")
+alertcondition(pullback_buy, "Trend Pullback BUY", "Aemeth: Trend pullback buy trigger confirmed.")
+`,
+    },
+    'candle-impulse-v5': {
+      version: '5.0.0',
+      changelog: 'v5.0.0: Volume-weighted breakout impulse detection system',
+      content: `//@version=5
+indicator("AEMETH Candle Impulse v5.0", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - CANDLE IMPULSE V5.0
+// =====================================================================
+
+vol_ma = ta.sma(volume, 20)
+vol_mult = input.float(1.5, "Volume Spike Factor")
+body_ratio = input.float(0.65, "Minimum Candle Body Ratio")
+
+candle_range = high - low
+body_size = math.abs(close - open)
+is_impulse = candle_range > 0 and (body_size / candle_range) >= body_ratio and volume > vol_ma * vol_mult
+
+bull_impulse = is_impulse[1] and close[1] > open[1] and close[1] > high[2]
+bear_impulse = is_impulse[1] and close[1] < open[1] and close[1] < low[2]
+
+plotshape(bull_impulse, "Impulse BUY", shape.labelup, location.belowbar, color=#10b981, text="BUY\nENTRY", textcolor=color.white, size=size.small)
+plotshape(bear_impulse, "Impulse SELL", shape.labeldown, location.abovebar, color=#ef4444, text="SELL\nENTRY", textcolor=color.white, size=size.small)
+
+alertcondition(bull_impulse, "Candle Impulse BUY", "Aemeth: Volume impulse bullish breakout confirmed.")
+alertcondition(bear_impulse, "Candle Impulse SELL", "Aemeth: Volume impulse bearish breakout confirmed.")
+`,
+    },
+    'volatility-expansion-breakout-v6': {
+      version: '6.0.0',
+      changelog: 'v6.0.0: ATR-ratio expansion filter with multi-target projection',
+      content: `//@version=5
+indicator("AEMETH Volatility Expansion Breakout v6.0", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - VOLATILITY EXPANSION BREAKOUT V6.0
+// =====================================================================
+
+atr_fast = ta.atr(7)
+atr_slow = ta.atr(28)
+expansion = atr_fast > atr_slow * 1.25
+
+break_high = ta.highest(high, 20)[1]
+break_low  = ta.lowest(low, 20)[1]
+
+bull_break = expansion[1] and close[1] > break_high
+bear_break = expansion[1] and close[1] < break_low
+
+plotshape(bull_break, "Volatility Breakout BUY", shape.labelup, location.belowbar, color=#10b981, text="BUY\nENTRY", textcolor=color.white, size=size.small)
+plotshape(bear_break, "Volatility Breakout SELL", shape.labeldown, location.abovebar, color=#ef4444, text="SELL\nENTRY", textcolor=color.white, size=size.small)
+
+alertcondition(bull_break, "Volatility Breakout BUY", "Aemeth: Volatility expansion buy breakout confirmed.")
+alertcondition(bear_break, "Volatility Breakout SELL", "Aemeth: Volatility expansion sell breakout confirmed.")
 `,
     },
   };

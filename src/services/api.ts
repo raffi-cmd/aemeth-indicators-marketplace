@@ -1480,6 +1480,614 @@ const SINGLE_INDICATORS: Product[] = [
     preview_images: ['./products/ema-crossover-rsi.jpg'],
     created_at: new Date('2026-03-29').toISOString(),
   }),
+  injectPricing({
+    id: 'smc-bos-choch',
+    slug: 'aemeth-smc-bos-choch',
+    title: 'Aemeth SMC BOS/CHoCH Entry SL TP',
+    title_id: 'Aemeth SMC BOS/CHoCH Entry SL TP',
+    title_en: 'Aemeth SMC BOS/CHoCH Entry SL TP',
+    short_desc: 'Indikator market structure yang memvisualisasikan Break of Structure (BOS), perubahan arah tren (CHoCH), Order Block, serta level Entry, Stop Loss, dan tiga target TP.',
+    short_desc_id: 'Indikator market structure yang memvisualisasikan Break of Structure (BOS), perubahan arah tren (CHoCH), Order Block, serta level Entry, Stop Loss, dan tiga target TP.',
+    short_desc_en: 'Market structure indicator visualizing Break of Structure (BOS), Change of Character (CHoCH), Order Blocks, and direct Entry, Stop Loss, and 3 Take Profit levels.',
+    long_desc: 'Aemeth SMC BOS/CHoCH Entry SL TP dirancang untuk membantu trader memetakan struktur pasar Smart Money Concepts secara objektif. Mengidentifikasi Swing High dan Swing Low, Break of Structure (BOS), serta Change of Character (CHoCH) saat tren berbalik arah.\n\nSecara otomatis menampilkan level Stop Loss merah (SL: 3587.561), Entry biru (3572.560), dan target Take Profit hijau (TP1: 3563.559, TP2: 3554.558, TP3: 3545.557) dengan opsi jarak berbasis volatilitas ATR maupun jarak tetap.\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis struktur teknikal, bukan jaminan keuntungan transaksi.',
+    long_desc_id: 'Aemeth SMC BOS/CHoCH Entry SL TP dirancang untuk membantu trader memetakan struktur pasar Smart Money Concepts secara objektif. Mengidentifikasi Swing High dan Swing Low, Break of Structure (BOS), serta Change of Character (CHoCH) saat tren berbalik arah.\n\nSecara otomatis menampilkan level Stop Loss merah (SL: 3587.561), Entry biru (3572.560), dan target Take Profit hijau (TP1: 3563.559, TP2: 3554.558, TP3: 3545.557) dengan opsi jarak berbasis volatilitas ATR maupun jarak tetap.\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis struktur teknikal, bukan jaminan keuntungan transaksi.',
+    long_desc_en: 'Aemeth SMC BOS/CHoCH Entry SL TP assists traders in mapping Smart Money Concepts market structures objectively. It identifies Swing Highs and Lows, Break of Structure (BOS), and Change of Character (CHoCH) directional transitions.\n\nAutomatically projects Stop Loss (SL: 3587.561), Entry (3572.560), and Take Profit boundaries (TP1: 3563.559, TP2: 3554.558, TP3: 3545.557) with both ATR-based and fixed risk scaling.\n\nImportant Notice:\nThis indicator is a structured market analysis tool, not an absolute profit guarantee.',
+    type: 'open_source',
+    category: 'trend',
+    version: '1.0.0',
+    pine_version: 'v5',
+    release_date: '2026-03-30',
+    changelog: ['v1.0.0: Initial release of Aemeth SMC BOS/CHoCH Entry SL TP'],
+    changelog_id: ['v1.0.0: Rilis awal Aemeth SMC BOS/CHoCH Entry SL TP'],
+    changelog_en: ['v1.0.0: Initial release of Aemeth SMC BOS/CHoCH Entry SL TP'],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'BOS & CHoCH Detection: Deteksi struktur pasar dan perubahan tren.',
+      'Entry / SL / TP Label: Level harga terstruktur pada chart.',
+      'ATR-Based Risk Levels: Manajemen risiko berbasis volatilitas dinamis.',
+      'Order Block Visualization & Alerts: Penanda zona minat dan alert real-time.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_id: [
+      'BOS & CHoCH Detection: Deteksi struktur pasar dan perubahan tren.',
+      'Entry / SL / TP Label: Level harga terstruktur pada chart.',
+      'ATR-Based Risk Levels: Manajemen risiko berbasis volatilitas dinamis.',
+      'Order Block Visualization: Penanda zona minat dan alert real-time.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_en: [
+      'BOS & CHoCH Detection: Market structure breaks and trend flips.',
+      'Entry / SL / TP Label: On-chart price levels.',
+      'ATR-Based Risk Levels: Volatility-adjusted risk management.',
+      'Order Block Visualization: Institutional zone highlighting.',
+      'Pine Script: Ready-to-use Pine Script v5 source code.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Sistem Analisis', value: 'Smart Money Concepts (BOS & CHoCH)' },
+      { label: 'Sinyal', value: 'Breakout Struktur dengan Entry, SL, TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Analysis System', value: 'Smart Money Concepts (BOS & CHoCH)' },
+      { label: 'Signals', value: 'Structure Breaks with Entry, SL, TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    package_includes_id: [
+      'Pine Script source code (.pine & .txt).',
+      'Panduan instalasi di TradingView.',
+      'Bantuan setup dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and indicator guide.',
+      'Direct setup support from Aemeth team if needed.'
+    ],
+    tradingview_script_id: 'aemeth_smc_bos_choch_v1',
+    is_published: true,
+    thumbnail_url: './products/smc-bos-choch.jpg',
+    preview_images: ['./products/smc-bos-choch.jpg'],
+    created_at: new Date('2026-03-30').toISOString(),
+  }),
+  injectPricing({
+    id: 'smart-structure-entry-v1',
+    slug: 'aemeth-smart-structure-entry-v1',
+    title: 'AEMETH Smart Structure Entry System v1.0',
+    title_id: 'AEMETH Smart Structure Entry System v1.0',
+    title_en: 'AEMETH Smart Structure Entry System v1.0',
+    short_desc: 'Menggabungkan filter tren EMA dan deteksi market structure untuk mengidentifikasi sinyal BUY/SELL serta level Entry, Stop Loss, dan 3 TP.',
+    short_desc_id: 'Menggabungkan filter tren EMA dan deteksi market structure untuk mengidentifikasi sinyal BUY/SELL serta level Entry, Stop Loss, dan 3 TP.',
+    short_desc_en: 'Combines dual EMA trend filters with market structure breakout detection, projecting BUY/SELL signals, Entry, SL, and 3 TP targets.',
+    long_desc: 'AEMETH Smart Structure Entry System v1.0 menggabungkan filter tren EMA Fast dan EMA Slow dengan deteksi breakout struktur pasar untuk mengidentifikasi momentum terarah. Menampilkan sinyal BUY dan SELL terkonfirmasi pada candle close, Stop Loss protektif (SL: 3701.671), Entry otomatis (3672.845), serta tiga target Take Profit (TP1: 3644.019, TP2: 3615.194, TP3: 3586.368) berdasarkan perhitungan ATR dan Risk/Reward.\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis teknikal visual, bukan jaminan keuntungan transaksi.',
+    long_desc_id: 'AEMETH Smart Structure Entry System v1.0 menggabungkan filter tren EMA Fast dan EMA Slow dengan deteksi breakout struktur pasar untuk mengidentifikasi momentum terarah. Menampilkan sinyal BUY dan SELL terkonfirmasi pada candle close, Stop Loss protektif (SL: 3701.671), Entry otomatis (3672.845), serta tiga target Take Profit (TP1: 3644.019, TP2: 3615.194, TP3: 3586.368) berdasarkan perhitungan ATR dan Risk/Reward.\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis teknikal visual, bukan jaminan keuntungan transaksi.',
+    long_desc_en: 'AEMETH Smart Structure Entry System v1.0 merges Fast and Slow EMA trend filters with market structure breakout recognition. Delivers closed-bar BUY/SELL triggers, protective Stop Loss (SL: 3701.671), automated Entry (3672.845), and three sequential Take Profit targets (TP1: 3644.019, TP2: 3615.194, TP3: 3586.368) based on ATR volatility scaling.\n\nImportant Notice:\nThis indicator is an objective technical analysis aid, not a financial guarantee.',
+    type: 'open_source',
+    category: 'trend',
+    version: '1.0.0',
+    pine_version: 'v5',
+    release_date: '2026-03-30',
+    changelog: ['v1.0.0: Initial release of AEMETH Smart Structure Entry System v1.0'],
+    changelog_id: ['v1.0.0: Rilis awal AEMETH Smart Structure Entry System v1.0'],
+    changelog_en: ['v1.0.0: Initial release of AEMETH Smart Structure Entry System v1.0'],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'Trend Filter EMA: Filter arah tren berbasis Fast dan Slow EMA.',
+      'SMC Structure BOS / CHoCH: Deteksi breakout struktur pasar.',
+      'Entry SL TP Auto: Level harga otomatis terkonfirmasi candle close.',
+      'Alert Signal Real-Time: Notifikasi sinyal instan TradingView.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_id: [
+      'Trend Filter EMA: Filter arah tren berbasis Fast dan Slow EMA.',
+      'SMC Structure BOS / CHoCH: Deteksi breakout struktur pasar.',
+      'Entry SL TP Auto: Level harga otomatis terkonfirmasi candle close.',
+      'Alert Signal Real-Time: Notifikasi sinyal instan TradingView.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_en: [
+      'Trend Filter EMA: Fast & Slow EMA directional filtering.',
+      'SMC Structure BOS / CHoCH: Market structure breakout detection.',
+      'Entry SL TP Auto: Closed-bar automated price targets.',
+      'Alert Signal Real-Time: Instant TradingView alert integration.',
+      'Pine Script: Ready-to-use Pine Script source code.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Sistem Analisis', value: 'EMA Trend Filter & Market Structure Break' },
+      { label: 'Sinyal', value: 'BUY & SELL dengan SL, Entry, TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Analysis System', value: 'EMA Trend Filter & Market Structure Break' },
+      { label: 'Signals', value: 'BUY & SELL with SL, Entry, TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    package_includes_id: [
+      'Pine Script source code (.pine & .txt).',
+      'Panduan instalasi di TradingView.',
+      'Bantuan setup dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and indicator guide.',
+      'Direct setup support from Aemeth team if needed.'
+    ],
+    tradingview_script_id: 'aemeth_smart_structure_entry_v1',
+    is_published: true,
+    thumbnail_url: './products/smart-structure-entry.jpg',
+    preview_images: ['./products/smart-structure-entry.jpg'],
+    created_at: new Date('2026-03-30').toISOString(),
+  }),
+  injectPricing({
+    id: 'liquidity-sweep-reversal-v2',
+    slug: 'aemeth-liquidity-sweep-reversal-v2',
+    title: 'AEMETH Liquidity Sweep Reversal v2.0',
+    title_id: 'AEMETH Liquidity Sweep Reversal v2.0',
+    title_en: 'AEMETH Liquidity Sweep Reversal v2.0',
+    short_desc: 'Mengidentifikasi potensi pembalikan harga setelah Liquidity Sweep dengan konfirmasi momentum RSI, sinyal BUY/SELL, dan level TP1–TP3.',
+    short_desc_id: 'Mengidentifikasi potensi pembalikan harga setelah Liquidity Sweep dengan konfirmasi momentum RSI, sinyal BUY/SELL, dan level TP1–TP3.',
+    short_desc_en: 'Identifies high-conviction reversals following Liquidity Sweeps with RSI confirmation, BUY/SELL signals, and 3 TP targets.',
+    long_desc: 'AEMETH Liquidity Sweep Reversal v2.0 dirancang untuk mendeteksi manipulasi wick dan pengambilan likuiditas (Liquidity Sweep) pada Pivot High dan Pivot Low penting. Dilengkapi konfirmasi arah candle serta filter momentum RSI untuk menyaring false sweep.\n\nMemproyeksikan sinyal SELL/BUY terkonfirmasi dengan Stop Loss (SL: 3701.671), SELL Entry (3623.640), dan 3 target Take Profit bertingkat (TP1: 3619.488, TP2: 3615.335, TP3: 3611.183).\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis likuiditas teknikal, bukan jaminan keuntungan transaksi.',
+    long_desc_id: 'AEMETH Liquidity Sweep Reversal v2.0 dirancang untuk mendeteksi manipulasi wick dan pengambilan likuiditas (Liquidity Sweep) pada Pivot High dan Pivot Low penting. Dilengkapi konfirmasi arah candle serta filter momentum RSI untuk menyaring false sweep.\n\nMemproyeksikan sinyal SELL/BUY terkonfirmasi dengan Stop Loss (SL: 3701.671), SELL Entry (3623.640), dan 3 target Take Profit bertingkat (TP1: 3619.488, TP2: 3615.335, TP3: 3611.183).\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis likuiditas teknikal, bukan jaminan keuntungan transaksi.',
+    long_desc_en: 'AEMETH Liquidity Sweep Reversal v2.0 identifies false breakout wick sweeps across pivotal highs and lows. Augmented with candlestick direction confirmation and RSI momentum filtering.\n\nProjects validated entry signals with Stop Loss (SL: 3701.671), SELL Entry (3623.640), and three staged Take Profit levels (TP1: 3619.488, TP2: 3615.335, TP3: 3611.183).\n\nImportant Notice:\nThis indicator is an objective charting tool, not an absolute profit guarantee.',
+    type: 'open_source',
+    category: 'reversal',
+    version: '2.0.0',
+    pine_version: 'v5',
+    release_date: '2026-03-30',
+    changelog: ['v2.0.0: Upgraded liquidity sweep engine with RSI momentum filtering and fallback lookback'],
+    changelog_id: ['v2.0.0: Peningkatan mesin liquidity sweep dengan filter RSI dan fallback lookback'],
+    changelog_en: ['v2.0.0: Upgraded liquidity sweep engine with RSI momentum filtering and fallback lookback'],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'Liquidity Sweep Detection: Deteksi sapuan likuiditas pada pivot kunci.',
+      'Smart Reversal Signal: Sinyal pembalikan arah dengan konfirmasi RSI.',
+      'Entry SL TP Auto: Level harga otomatis terhitung berbasis ATR.',
+      'Alert Real-Time: Notifikasi sinyal sweep TradingView.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_id: [
+      'Liquidity Sweep Detection: Deteksi sapuan likuiditas pada pivot kunci.',
+      'Smart Reversal Signal: Sinyal pembalikan arah dengan konfirmasi RSI.',
+      'Entry SL TP Auto: Level harga otomatis terhitung berbasis ATR.',
+      'Alert Real-Time: Notifikasi sinyal sweep TradingView.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_en: [
+      'Liquidity Sweep Detection: Major pivot liquidity hunt tracking.',
+      'Smart Reversal Signal: Reversal alerts paired with RSI confirmation.',
+      'Entry SL TP Auto: Volatility-adjusted entry, SL, and TP targets.',
+      'Alert Real-Time: Native TradingView alert integration.',
+      'Pine Script: Ready-to-use Pine Script source code.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Sistem Analisis', value: 'Pivot Liquidity Sweep & RSI Momentum' },
+      { label: 'Sinyal', value: 'SELL & BUY Reversal dengan SL dan TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Analysis System', value: 'Pivot Liquidity Sweep & RSI Momentum' },
+      { label: 'Signals', value: 'SELL & BUY Reversal with SL and TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    package_includes_id: [
+      'Pine Script source code (.pine & .txt).',
+      'Panduan instalasi di TradingView.',
+      'Bantuan setup dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and indicator guide.',
+      'Direct setup support from Aemeth team if needed.'
+    ],
+    tradingview_script_id: 'aemeth_liquidity_sweep_reversal_v2',
+    is_published: true,
+    thumbnail_url: './products/liquidity-sweep-reversal.jpg',
+    preview_images: ['./products/liquidity-sweep-reversal.jpg'],
+    created_at: new Date('2026-03-30').toISOString(),
+  }),
+  injectPricing({
+    id: 'mean-reversion-engine-v3',
+    slug: 'aemeth-mean-reversion-engine-v3',
+    title: 'AEMETH Mean Reversion Engine v3.0',
+    title_id: 'AEMETH Mean Reversion Engine v3.0',
+    title_en: 'AEMETH Mean Reversion Engine v3.0',
+    short_desc: 'Mendeteksi pergerakan kembali ke area ekuilibrium setelah harga keluar dari Bollinger Bands, dengan filter VWAP dan konfirmasi RSI.',
+    short_desc_id: 'Mendeteksi pergerakan kembali ke area ekuilibrium setelah harga keluar dari Bollinger Bands, dengan filter VWAP dan konfirmasi RSI.',
+    short_desc_en: 'Identifies statistical mean reversion back inside Bollinger Bands with VWAP directional filtering and RSI momentum confirmation.',
+    long_desc: 'AEMETH Mean Reversion Engine v3.0 dirancang untuk menangkap peluang saat harga kembali ke nilai rata-rata (mean reversion) setelah menyentuh deviasi ekstrem Bollinger Bands. Dilengkapi garis acuan VWAP serta konfirmasi momentum RSI untuk memvalidasi pembalikan arah.\n\nMemproyeksikan level BUY Entry (3614.930), Stop Loss terukur (SL: 3610.110), serta 3 target Take Profit (TP1: 3619.488, TP2: 3624.570, TP3: 3629.389).\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis statistik volatilitas, bukan jaminan hasil trading.',
+    long_desc_id: 'AEMETH Mean Reversion Engine v3.0 dirancang untuk menangkap peluang saat harga kembali ke nilai rata-rata (mean reversion) setelah menyentuh deviasi ekstrem Bollinger Bands. Dilengkapi garis acuan VWAP serta konfirmasi momentum RSI untuk memvalidasi pembalikan arah.\n\nMemproyeksikan level BUY Entry (3614.930), Stop Loss terukur (SL: 3610.110), serta 3 target Take Profit (TP1: 3619.488, TP2: 3624.570, TP3: 3629.389).\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis statistik volatilitas, bukan jaminan hasil trading.',
+    long_desc_en: 'AEMETH Mean Reversion Engine v3.0 captures equilibrium reversion setups following extreme standard deviation excursions outside Bollinger Bands. Anchored by VWAP directional filters and RSI confirmation.\n\nVisualizes BUY Entry (3614.930), guarded Stop Loss (SL: 3610.110), and three risk-reward target levels (TP1: 3619.488, TP2: 3624.570, TP3: 3629.389).\n\nImportant Notice:\nThis indicator is an objective statistical volatility aid, not a financial guarantee.',
+    type: 'open_source',
+    category: 'reversal',
+    version: '3.0.0',
+    pine_version: 'v5',
+    release_date: '2026-03-30',
+    changelog: ['v3.0.0: Full Pine Script v5 architecture with VWAP filter and Bollinger re-entry detection'],
+    changelog_id: ['v3.0.0: Arsitektur Pine Script v5 dengan filter VWAP dan deteksi re-entry Bollinger Bands'],
+    changelog_en: ['v3.0.0: Full Pine Script v5 architecture with VWAP filter and Bollinger re-entry detection'],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'Bollinger Bands Mean Reversion Signal: Deteksi re-entry setelah deviasi ekstrem.',
+      'VWAP Filter RSI Confirmation: Filter arah tren dan konfirmasi momentum.',
+      'ATR Stop Loss TP1, TP2, TP3: Manajemen level risiko-imbalan terstruktur.',
+      'Customizable Settings: Parameter fleksibel untuk berbagai time frame.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_id: [
+      'Bollinger Bands Mean Reversion Signal: Deteksi re-entry setelah deviasi ekstrem.',
+      'VWAP Filter RSI Confirmation: Filter arah tren dan konfirmasi momentum.',
+      'ATR Stop Loss TP1, TP2, TP3: Manajemen level risiko-imbalan terstruktur.',
+      'Customizable Settings: Parameter fleksibel untuk berbagai time frame.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_en: [
+      'Bollinger Bands Mean Reversion Signal: Band re-entry detection.',
+      'VWAP Filter RSI Confirmation: Multi-layer trend and momentum filter.',
+      'ATR Stop Loss TP1, TP2, TP3: Structured Risk/Reward targeting.',
+      'Customizable Settings: Fully adjustable for various timeframes.',
+      'Pine Script: Ready-to-use Pine Script source code.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Sistem Analisis', value: 'Bollinger Bands & VWAP Mean Reversion' },
+      { label: 'Sinyal', value: 'BUY & SELL dengan SL dan TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Analysis System', value: 'Bollinger Bands & VWAP Mean Reversion' },
+      { label: 'Signals', value: 'BUY & SELL with SL and TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    package_includes_id: [
+      'Pine Script source code (.pine & .txt).',
+      'Panduan instalasi di TradingView.',
+      'Bantuan setup dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and indicator guide.',
+      'Direct setup support from Aemeth team if needed.'
+    ],
+    tradingview_script_id: 'aemeth_mean_reversion_engine_v3',
+    is_published: true,
+    thumbnail_url: './products/mean-reversion-engine.jpg',
+    preview_images: ['./products/mean-reversion-engine.jpg'],
+    created_at: new Date('2026-03-30').toISOString(),
+  }),
+  injectPricing({
+    id: 'momentum-shift-pro-v4',
+    slug: 'aemeth-momentum-shift-pro-v4',
+    title: 'AEMETH Momentum Shift Pro v4.0',
+    title_id: 'AEMETH Momentum Shift Pro v4.0',
+    title_en: 'AEMETH Momentum Shift Pro v4.0',
+    short_desc: 'Deteksi pergerakan momentum harga dengan konfirmasi presisi MACD dan Stochastic, dilengkapi level BUY ENTRY, SL, dan 3 TP.',
+    short_desc_id: 'Deteksi pergerakan momentum harga dengan konfirmasi presisi MACD dan Stochastic, dilengkapi level BUY ENTRY, SL, dan 3 TP.',
+    short_desc_en: 'Precision momentum shift detection powered by MACD and Stochastic confluence, projecting BUY ENTRY, SL, and 3 sequential TP targets.',
+    long_desc: 'AEMETH Momentum Shift Pro v4.0 menangkap titik balik momentum pasar secara presisi menggunakan konfluensi sinyal MACD dan Stochastic Oscillator. Memetakan arah BUY yang kuat setelah fase konsolidasi atau koreksi.\n\nSecara visual menampilkan level BUY ENTRY (3632.935), Stop Loss protektif (SL 3625.515), serta tiga target Take Profit bertahap (TP1 3640.355, TP2 3644.065, TP3 3647.775).\n\nCatatan Penting:\nIndikator ini adalah alat bantu membaca momentum pasar, bukan jaminan keberhasilan transaksi.',
+    long_desc_id: 'AEMETH Momentum Shift Pro v4.0 menangkap titik balik momentum pasar secara presisi menggunakan konfluensi sinyal MACD dan Stochastic Oscillator. Memetakan arah BUY yang kuat setelah fase konsolidasi atau koreksi.\n\nSecara visual menampilkan level BUY ENTRY (3632.935), Stop Loss protektif (SL 3625.515), serta tiga target Take Profit bertahap (TP1 3640.355, TP2 3644.065, TP3 3647.775).\n\nCatatan Penting:\nIndikator ini adalah alat bantu membaca momentum pasar, bukan jaminan keberhasilan transaksi.',
+    long_desc_en: 'AEMETH Momentum Shift Pro v4.0 captures high-probability momentum shifts via dual MACD and Stochastic confluence. Designed for clean bullish trend-initiation execution.\n\nVisualizes BUY ENTRY (3632.935), protective Stop Loss (SL 3625.515), and three sequential Take Profit targets (TP1 3640.355, TP2 3644.065, TP3 3647.775).\n\nImportant Notice:\nThis indicator is an objective momentum tool, not an absolute financial guarantee.',
+    type: 'open_source',
+    category: 'momentum',
+    version: '4.0.0',
+    pine_version: 'v5',
+    release_date: '2026-03-30',
+    changelog: ['v4.0.0: Enhanced momentum confluence engine with MACD and Stochastic integration'],
+    changelog_id: ['v4.0.0: Peningkatan mesin konfluensi momentum dengan integrasi MACD dan Stochastic'],
+    changelog_en: ['v4.0.0: Enhanced momentum confluence engine with MACD and Stochastic integration'],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'Momentum Shift Signal: Deteksi pergerakan momentum harga.',
+      'Entry & SL: Level entry dan stop loss yang jelas.',
+      '3 Take Profit: TP1, TP2, TP3 untuk target bertahap.',
+      'Strategi Presisi: Konfirmasi momentum menggunakan MACD dan Stochastic.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_id: [
+      'Momentum Shift Signal: Deteksi pergerakan momentum harga.',
+      'Entry & SL: Level entry dan stop loss yang jelas.',
+      '3 Take Profit: TP1, TP2, TP3 untuk target bertahap.',
+      'Strategi Presisi: Konfirmasi momentum menggunakan MACD dan Stochastic.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_en: [
+      'Momentum Shift Signal: Detects key price momentum turns.',
+      'Entry & SL: Defined entry and stop loss demarcation.',
+      '3 Take Profit: Sequential TP1, TP2, TP3 target projections.',
+      'Precision Strategy: MACD and Stochastic momentum confluence.',
+      'Pine Script: Ready-to-use Pine Script source code.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Sistem Analisis', value: 'MACD & Stochastic Momentum Confluence' },
+      { label: 'Sinyal', value: 'BUY dengan SL, Entry, TP1, TP2, TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Analysis System', value: 'MACD & Stochastic Momentum Confluence' },
+      { label: 'Signals', value: 'BUY with SL, Entry, TP1, TP2, TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    package_includes_id: [
+      'Pine Script source code (.pine & .txt).',
+      'Panduan instalasi di TradingView.',
+      'Bantuan setup dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and indicator guide.',
+      'Direct setup support from Aemeth team if needed.'
+    ],
+    tradingview_script_id: 'aemeth_momentum_shift_pro_v4',
+    is_published: true,
+    thumbnail_url: './products/momentum-shift-pro.jpg',
+    preview_images: ['./products/momentum-shift-pro.jpg'],
+    created_at: new Date('2026-03-30').toISOString(),
+  }),
+  injectPricing({
+    id: 'trend-pullback-hunter-v5',
+    slug: 'aemeth-trend-pullback-hunter-v5',
+    title: 'AEMETH Trend Pullback Hunter v5.0',
+    title_id: 'AEMETH Trend Pullback Hunter v5.0',
+    title_en: 'AEMETH Trend Pullback Hunter v5.0',
+    short_desc: 'Mengidentifikasi entry lanjutan tren (trend pullback) dengan Supertrend, EMA Pullback, konfirmasi ADX, dan level SELL, SL, TP1–TP3.',
+    short_desc_id: 'Mengidentifikasi entry lanjutan tren (trend pullback) dengan Supertrend, EMA Pullback, konfirmasi ADX, dan level SELL, SL, TP1–TP3.',
+    short_desc_en: 'Detects high-probability trend continuation entries using Supertrend, EMA Pullbacks, ADX trend strength, and SELL setup levels.',
+    long_desc: 'AEMETH Trend Pullback Hunter v5.0 menggabungkan arah tren makro dari Supertrend merah dengan area pullback dinamis EMA oranye untuk menangkap continuation bearish. Dikonfirmasi oleh ADX untuk memastikan kekuatan tren cukup kuat sebelum memicu entry.\n\nMemproyeksikan setup SELL lengkap dengan Stop Loss di atas entry (SL 3882.525), SELL ENTRY (3856.420), serta tiga target Take Profit berurutan semakin rendah (TP1 3830.315, TP2 3817.262, TP3 3804.209).\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis teknikal continuation, bukan jaminan profit trading.',
+    long_desc_id: 'AEMETH Trend Pullback Hunter v5.0 menggabungkan arah tren makro dari Supertrend merah dengan area pullback dinamis EMA oranye untuk menangkap continuation bearish. Dikonfirmasi oleh ADX untuk memastikan kekuatan tren cukup kuat sebelum memicu entry.\n\nMemproyeksikan setup SELL lengkap dengan Stop Loss di atas entry (SL 3882.525), SELL ENTRY (3856.420), serta tiga target Take Profit berurutan semakin rendah (TP1 3830.315, TP2 3817.262, TP3 3804.209).\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis teknikal continuation, bukan jaminan profit trading.',
+    long_desc_en: 'AEMETH Trend Pullback Hunter v5.0 pairs macro Supertrend direction with dynamic EMA retracements to capture bearish continuation waves. Filtered by ADX to ensure trend strength.\n\nProjects validated SELL setups with Stop Loss (SL 3882.525), SELL ENTRY (3856.420), and staged Take Profit levels (TP1 3830.315, TP2 3817.262, TP3 3804.209).\n\nImportant Notice:\nThis indicator is a trend continuation aid, not an absolute profit guarantee.',
+    type: 'open_source',
+    category: 'trend',
+    version: '5.0.0',
+    pine_version: 'v5',
+    release_date: '2026-03-30',
+    changelog: ['v5.0.0: Trend pullback continuation engine with Supertrend, EMA, and ADX filters'],
+    changelog_id: ['v5.0.0: Mesin kelanjutan tren pullback dengan filter Supertrend, EMA, dan ADX'],
+    changelog_en: ['v5.0.0: Trend pullback continuation engine with Supertrend, EMA, and ADX filters'],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'Trend Detection: Supertrend Direction dengan akurat.',
+      'EMA Pullback: Trend Pullback Entry dengan EMA.',
+      'ADX Confirmation: Trend Strength menggunakan ADX.',
+      'Risk Management: Entry, SL & 3 TP untuk trading aman.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_id: [
+      'Trend Detection: Supertrend Direction dengan akurat.',
+      'EMA Pullback: Trend Pullback Entry dengan EMA.',
+      'ADX Confirmation: Trend Strength menggunakan ADX.',
+      'Risk Management: Entry, SL & 3 TP untuk trading aman.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_en: [
+      'Trend Detection: Accurate Supertrend trend direction.',
+      'EMA Pullback: High-probability retracement entries.',
+      'ADX Confirmation: Trend strength validation via ADX.',
+      'Risk Management: Structured Entry, SL & 3 TP levels.',
+      'Pine Script: Ready-to-use Pine Script source code.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Sistem Analisis', value: 'Supertrend & EMA Pullback with ADX' },
+      { label: 'Sinyal', value: 'SELL Continuation dengan SL dan TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Analysis System', value: 'Supertrend & EMA Pullback with ADX' },
+      { label: 'Signals', value: 'SELL Continuation with SL and TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    package_includes_id: [
+      'Pine Script source code (.pine & .txt).',
+      'Panduan instalasi di TradingView.',
+      'Bantuan setup dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and indicator guide.',
+      'Direct setup support from Aemeth team if needed.'
+    ],
+    tradingview_script_id: 'aemeth_trend_pullback_hunter_v5',
+    is_published: true,
+    thumbnail_url: './products/trend-pullback-hunter.jpg',
+    preview_images: ['./products/trend-pullback-hunter.jpg'],
+    created_at: new Date('2026-03-30').toISOString(),
+  }),
+  injectPricing({
+    id: 'candle-impulse-v5',
+    slug: 'aemeth-candle-impulse-v5',
+    title: 'AEMETH Candle Impulse v5.0',
+    title_id: 'AEMETH Candle Impulse v5.0',
+    title_en: 'AEMETH Candle Impulse v5.0',
+    short_desc: 'Mendeteksi momentum impuls candle dengan kurva HMA hijau, konfirmasi Engulfing & CCI, serta level BUY, Entry, SL, dan 3 TP.',
+    short_desc_id: 'Mendeteksi momentum impuls candle dengan kurva HMA hijau, konfirmasi Engulfing & CCI, serta level BUY, Entry, SL, dan 3 TP.',
+    short_desc_en: 'Detects candlestick impulse momentum with green HMA curve, Engulfing and CCI confirmation, and structured BUY setup levels.',
+    long_desc: 'AEMETH Candle Impulse v5.0 menangkap pergerakan impulsif bullish melalui pola candlestick engulfing yang dikonfirmasi oleh arah momentum Hull Moving Average (HMA) hijau dan oscillator CCI yang melintasi garis nol.\n\nMemproyeksikan setup BUY terstruktur dengan BUY ENTRY (3609.325), Stop Loss di bawah entry (SL 3602.243), serta tiga level target Take Profit (TP1 3616.407, TP2 3623.489, TP3 3630.572).\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis momentum candle, bukan jaminan hasil transaksi.',
+    long_desc_id: 'AEMETH Candle Impulse v5.0 menangkap pergerakan impulsif bullish melalui pola candlestick engulfing yang dikonfirmasi oleh arah momentum Hull Moving Average (HMA) hijau dan oscillator CCI yang melintasi garis nol.\n\nMemproyeksikan setup BUY terstruktur dengan BUY ENTRY (3609.325), Stop Loss di bawah entry (SL 3602.243), serta tiga level target Take Profit (TP1 3616.407, TP2 3623.489, TP3 3630.572).\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis momentum candle, bukan jaminan hasil transaksi.',
+    long_desc_en: 'AEMETH Candle Impulse v5.0 isolates bullish momentum expansions using candle impulse recognition confirmed by green Hull Moving Average (HMA) and zero-line CCI crossing.\n\nProjects confirmed BUY setups with BUY ENTRY (3609.325), protective Stop Loss (SL 3602.243), and three staged Take Profit targets (TP1 3616.407, TP2 3623.489, TP3 3630.572).\n\nImportant Notice:\nThis indicator is a candlestick momentum tool, not an absolute financial guarantee.',
+    type: 'open_source',
+    category: 'momentum',
+    version: '5.0.0',
+    pine_version: 'v5',
+    release_date: '2026-03-30',
+    changelog: ['v5.0.0: Candle impulse momentum suite with HMA, Engulfing, and CCI filters'],
+    changelog_id: ['v5.0.0: Suite momentum impuls candle dengan filter HMA, Engulfing, dan CCI'],
+    changelog_en: ['v5.0.0: Candle impulse momentum suite with HMA, Engulfing, and CCI filters'],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'HMA Trend: Deteksi arah momentum melalui Hull Moving Average hijau.',
+      'Engulfing Candle: Konfirmasi pola candle impulsif.',
+      'CCI Confirmation: Konfirmasi momentum melalui pergerakan CCI melewati level nol.',
+      'ATR Risk Management: Perhitungan Stop Loss dan 3 Take Profit terstruktur.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_id: [
+      'HMA Trend: Deteksi arah momentum melalui Hull Moving Average hijau.',
+      'Engulfing Candle: Konfirmasi pola candle impulsif.',
+      'CCI Confirmation: Konfirmasi momentum melalui pergerakan CCI melewati level nol.',
+      'ATR Risk Management: Perhitungan Stop Loss dan 3 Take Profit terstruktur.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_en: [
+      'HMA Trend: Momentum orientation via green Hull Moving Average.',
+      'Engulfing Candle: Impulsive candle structure confirmation.',
+      'CCI Confirmation: Momentum validation as CCI traverses zero-line.',
+      'ATR Risk Management: Structured Stop Loss and 3 Take Profit targets.',
+      'Pine Script: Ready-to-use Pine Script source code.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Sistem Analisis', value: 'HMA & Engulfing Candle with CCI' },
+      { label: 'Sinyal', value: 'BUY Impulse dengan SL, Entry, TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Analysis System', value: 'HMA & Engulfing Candle with CCI' },
+      { label: 'Signals', value: 'BUY Impulse with SL, Entry, TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    package_includes_id: [
+      'Pine Script source code (.pine & .txt).',
+      'Panduan instalasi di TradingView.',
+      'Bantuan setup dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and indicator guide.',
+      'Direct setup support from Aemeth team if needed.'
+    ],
+    tradingview_script_id: 'aemeth_candle_impulse_v5',
+    is_published: true,
+    thumbnail_url: './products/candle-impulse.jpg',
+    preview_images: ['./products/candle-impulse.jpg'],
+    created_at: new Date('2026-03-30').toISOString(),
+  }),
+  injectPricing({
+    id: 'volatility-expansion-breakout-v6',
+    slug: 'aemeth-volatility-expansion-breakout-v6',
+    title: 'AEMETH Volatility Expansion Breakout v6.0',
+    title_id: 'AEMETH Volatility Expansion Breakout v6.0',
+    title_en: 'AEMETH Volatility Expansion Breakout v6.0',
+    short_desc: 'Mendeteksi breakout harga Donchian Channel saat volatilitas berekspansi, dengan konfirmasi Williams %R dan level BUY, SL, TP1–TP3.',
+    short_desc_id: 'Mendeteksi breakout harga Donchian Channel saat volatilitas berekspansi, dengan konfirmasi Williams %R dan level BUY, SL, TP1–TP3.',
+    short_desc_en: 'Detects Donchian Channel breakouts during volatility expansion phases, filtered by Williams %R momentum with structured BUY levels.',
+    long_desc: 'AEMETH Volatility Expansion Breakout v6.0 memantau fase kompresi volatilitas sebelum meledak menjadi breakout terarah melalui Donchian Channel. Divalidasi oleh rasio ekspansi ATR dan osilator momentum Williams %R.\n\nMemproyeksikan sinyal BUY terkonfirmasi dengan BUY ENTRY (3609.325), Stop Loss di bawah entry (SL 3602.243), dan target bertingkat (TP1 3616.407, TP2 3623.489, TP3 3630.572).\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis breakout volatilitas, bukan jaminan keuntungan transaksi.',
+    long_desc_id: 'AEMETH Volatility Expansion Breakout v6.0 memantau fase kompresi volatilitas sebelum meledak menjadi breakout terarah melalui Donchian Channel. Divalidasi oleh rasio ekspansi ATR dan osilator momentum Williams %R.\n\nMemproyeksikan sinyal BUY terkonfirmasi dengan BUY ENTRY (3609.325), Stop Loss di bawah entry (SL 3602.243), dan target bertingkat (TP1 3616.407, TP2 3623.489, TP3 3630.572).\n\nCatatan Penting:\nIndikator ini adalah alat bantu analisis breakout volatilitas, bukan jaminan keuntungan transaksi.',
+    long_desc_en: 'AEMETH Volatility Expansion Breakout v6.0 identifies breakouts breaking out of volatility squeeze ranges using Donchian Channels. Confirmed by ATR volatility expansion ratios and Williams %R momentum.\n\nPlots BUY ENTRY (3609.325), Stop Loss (SL 3602.243), and staged Take Profit levels (TP1 3616.407, TP2 3623.489, TP3 3630.572).\n\nImportant Notice:\nThis indicator is a volatility breakout tool, not an absolute profit guarantee.',
+    type: 'open_source',
+    category: 'trend',
+    version: '6.0.0',
+    pine_version: 'v5',
+    release_date: '2026-03-30',
+    changelog: ['v6.0.0: Donchian Channel volatility expansion breakout suite with Williams %R filter'],
+    changelog_id: ['v6.0.0: Suite breakout ekspansi volatilitas Donchian Channel dengan filter Williams %R'],
+    changelog_en: ['v6.0.0: Donchian Channel volatility expansion breakout suite with Williams %R filter'],
+    compatibility: 'TradingView Free, Essential, Plus, & Premium accounts',
+    compatibility_id: 'TradingView (Free, Essential, Plus, dan Premium)',
+    compatibility_en: 'TradingView (Free, Essential, Plus, and Premium)',
+    features: [
+      'Volatility Breakout Signal: Deteksi breakout volatilitas.',
+      'Channel Analysis: Analisis Donchian Channel.',
+      'Momentum Filter: Filter dengan Williams %R.',
+      'Risk Management: Entry, SL & 3 TP dengan ATR.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_id: [
+      'Volatility Breakout Signal: Deteksi breakout volatilitas.',
+      'Channel Analysis: Analisis Donchian Channel.',
+      'Momentum Filter: Filter dengan Williams %R.',
+      'Risk Management: Entry, SL & 3 TP dengan ATR.',
+      'Pine Script: Source code siap digunakan.'
+    ],
+    features_en: [
+      'Volatility Breakout Signal: Volatility expansion breakout trigger.',
+      'Channel Analysis: Donchian Channel barrier tracking.',
+      'Momentum Filter: Williams %R momentum confirmation.',
+      'Risk Management: Volatility-adjusted Entry, SL & 3 TP.',
+      'Pine Script: Ready-to-use Pine Script source code.'
+    ],
+    technical_specs_id: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Bahasa', value: 'Pine Script v5' },
+      { label: 'Tipe', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Sistem Analisis', value: 'Donchian Channel & Volatility Expansion' },
+      { label: 'Sinyal', value: 'BUY & SELL Breakout dengan SL dan TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    technical_specs_en: [
+      { label: 'Platform', value: 'TradingView' },
+      { label: 'Language', value: 'Pine Script v5' },
+      { label: 'Type', value: 'Pine Script Source Code (Overlay Indicator)' },
+      { label: 'Analysis System', value: 'Donchian Channel & Volatility Expansion' },
+      { label: 'Signals', value: 'BUY & SELL Breakout with SL and TP1–TP3' },
+      { label: 'Alerts', value: 'TradingView Alert Conditions' }
+    ],
+    package_includes_id: [
+      'Pine Script source code (.pine & .txt).',
+      'Panduan instalasi di TradingView.',
+      'Bantuan setup dari tim Aemeth jika diperlukan.'
+    ],
+    package_includes_en: [
+      'Pine Script source code (.pine & .txt).',
+      'TradingView setup and indicator guide.',
+      'Direct setup support from Aemeth team if needed.'
+    ],
+    tradingview_script_id: 'aemeth_volatility_expansion_breakout_v6',
+    is_published: true,
+    thumbnail_url: './products/volatility-expansion-breakout.jpg',
+    preview_images: ['./products/volatility-expansion-breakout.jpg'],
+    created_at: new Date('2026-03-30').toISOString(),
+  }),
 ];
 
 // Helper to construct dynamic bundles using the central bundle calculation
@@ -1962,28 +2570,419 @@ export const api = {
     } catch {}
 
     const resolved = resolveProductId(productId).toLowerCase();
+    const isSmcBos = resolved.includes('bos');
+    const isSmartStructure = resolved.includes('smart-structure');
+    const isLiquiditySweep = resolved.includes('liquidity-sweep');
+    const isMeanReversion = resolved.includes('mean-reversion');
+    const isMomentumShift = resolved.includes('momentum-shift');
+    const isTrendPullback = resolved.includes('pullback');
+    const isCandleImpulse = resolved.includes('candle-impulse');
+    const isVolatilityExpansion = resolved.includes('volatility');
     const isIchimoku = resolved.includes('ichimoku');
     const isAiSignal = resolved.includes('ai-signal') || resolved.includes('aisignal');
     const isMfi = resolved.includes('mfi');
     const isPsar = resolved.includes('parabolic-sar') || resolved.includes('psar');
     const isTrendSr = resolved.includes('trendline') || resolved.includes('trendsr');
-    const isSmc = resolved.includes('smc');
+    const isSmc = (resolved.includes('smc-signal-panel') || (resolved.includes('smc') && !isSmcBos && !isSmartStructure));
     const isSupertrend = resolved.includes('supertrend');
-    const isVwap = resolved.includes('vwap');
+    const isVwap = resolved.includes('vwap') && !isMeanReversion;
     const isMajorSwing = resolved.includes('major-swing') || resolved.includes('majorswing');
     const isStochCross = resolved.includes('stochastic') || resolved.includes('stoch');
     const isCrt = resolved.includes('crt');
     const isEmaCross = (resolved.includes('ema') && resolved.includes('cross')) || resolved.includes('ema-crossover');
     const isEmaRibbon = resolved.includes('ribbon');
-    const isHull = resolved.includes('hull');
-    const isMacd = resolved.includes('macd');
-    const isRsi = resolved.includes('rsi') && !isEmaCross;
+    const isHull = resolved.includes('hull') && !isCandleImpulse;
+    const isMacd = resolved.includes('macd') && !isMomentumShift;
+    const isRsi = resolved.includes('rsi') && !isEmaCross && !isLiquiditySweep && !isMeanReversion;
 
     let content = PINE_SCRIPT_LIQUIDITY;
     let filename = 'aemeth_smc_signal_panel_v2.pine';
     let title = 'Aemeth SMC Entry/TP/SL Signal Panel V2';
 
-    if (isMacd) {
+    if (isSmcBos) {
+      content = `//@version=5
+indicator("Aemeth SMC BOS/CHoCH Entry SL TP", overlay=true, max_boxes_count=100, max_lines_count=100)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - SMC BOS/CHOCH ENTRY SL TP ENGINE
+// DIRECTIVE: CANDLE 1 CLOSED BAR ANTI-REPAINT VERIFICATION
+// =====================================================================
+
+swing_len = input.int(5, "Swing Lookback Length", minval=2)
+show_bos = input.bool(true, "Show BOS Lines")
+show_choch = input.bool(true, "Show CHoCH Labels")
+
+ph = ta.pivothigh(high, swing_len, swing_len)
+pl = ta.pivotlow(low, swing_len, swing_len)
+
+var float last_ph = na
+var float last_pl = na
+if not na(ph)
+    last_ph := high[swing_len]
+if not na(pl)
+    last_pl := low[swing_len]
+
+bos_bull = ta.crossover(close[1], last_ph)
+bos_bear = ta.crossunder(close[1], last_pl)
+
+atr_val = ta.atr(14)
+var float entry_price = na
+var float sl_price = na
+var float tp1_price = na
+var float tp2_price = na
+var float tp3_price = na
+
+if bos_bear
+    entry_price := close[1]
+    sl_price := last_ph
+    risk = math.abs(sl_price - entry_price)
+    tp1_price := entry_price - risk * 1.0
+    tp2_price := entry_price - risk * 2.0
+    tp3_price := entry_price - risk * 3.0
+
+if bos_bull
+    entry_price := close[1]
+    sl_price := last_pl
+    risk = math.abs(entry_price - sl_price)
+    tp1_price := entry_price + risk * 1.0
+    tp2_price := entry_price + risk * 2.0
+    tp3_price := entry_price + risk * 3.0
+
+plotshape(bos_bear, "Bearish BOS", shape.labeldown, location.abovebar, color=#ef4444, text="BOS\\nENTRY", textcolor=color.white, size=size.small)
+plotshape(bos_bull, "Bullish BOS", shape.labelup, location.belowbar, color=#10b981, text="BOS\\nENTRY", textcolor=color.white, size=size.small)
+
+alertcondition(bos_bear, "SMC Bearish BOS/CHoCH", "Aemeth SMC: Bearish structure break confirmed.")
+alertcondition(bos_bull, "SMC Bullish BOS/CHoCH", "Aemeth SMC: Bullish structure break confirmed.")
+`;
+      filename = 'aemeth_smc_bos_choch_v1.pine';
+      title = 'Aemeth SMC BOS/CHoCH Entry SL TP';
+    } else if (isSmartStructure) {
+      content = `//@version=5
+indicator("AEMETH Smart Structure Entry System v1.0", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - SMART STRUCTURE ENTRY SYSTEM V1.0
+// =====================================================================
+
+len_fast = input.int(20, "EMA Fast")
+len_slow = input.int(50, "EMA Slow")
+swing_len = input.int(5, "Structure Swing Length")
+
+ema_f = ta.ema(close, len_fast)
+ema_s = ta.ema(close, len_slow)
+
+plot(ema_f, "EMA Fast", color=color.new(#facc15, 0), linewidth=2)
+plot(ema_s, "EMA Slow", color=color.new(#f97316, 0), linewidth=2)
+
+ph = ta.pivothigh(high, swing_len, swing_len)
+pl = ta.pivotlow(low, swing_len, swing_len)
+
+var float last_ph = na
+var float last_pl = na
+if not na(ph)
+    last_ph := high[swing_len]
+if not na(pl)
+    last_pl := low[swing_len]
+
+buy_signal = ta.crossover(close[1], last_ph) and ema_f[1] > ema_s[1]
+sell_signal = ta.crossunder(close[1], last_pl) and ema_f[1] < ema_s[1]
+
+atr_val = ta.atr(14)
+var float entry_p = na
+var float sl_p = na
+var float tp1_p = na
+var float tp2_p = na
+var float tp3_p = na
+
+if buy_signal
+    entry_p := close[1]
+    sl_p := last_pl - atr_val * 0.5
+    risk = math.abs(entry_p - sl_p)
+    tp1_p := entry_p + risk * 1.0
+    tp2_p := entry_p + risk * 2.0
+    tp3_p := entry_p + risk * 3.0
+
+if sell_signal
+    entry_p := close[1]
+    sl_p := last_ph + atr_val * 0.5
+    risk = math.abs(sl_p - entry_p)
+    tp1_p := entry_p - risk * 1.0
+    tp2_p := entry_p - risk * 2.0
+    tp3_p := entry_p - risk * 3.0
+
+plotshape(buy_signal, "BUY", shape.labelup, location.belowbar, color=#10b981, text="BUY", textcolor=color.white, size=size.small)
+plotshape(sell_signal, "SELL", shape.labeldown, location.abovebar, color=#ef4444, text="SELL", textcolor=color.white, size=size.small)
+
+alertcondition(buy_signal, "Smart Structure BUY", "Aemeth Smart Structure: BUY signal confirmed.")
+alertcondition(sell_signal, "Smart Structure SELL", "Aemeth Smart Structure: SELL signal confirmed.")
+`;
+      filename = 'aemeth_smart_structure_entry_v1.pine';
+      title = 'AEMETH Smart Structure Entry System v1.0';
+    } else if (isLiquiditySweep) {
+      content = `//@version=5
+indicator("AEMETH Liquidity Sweep Reversal v2.0", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - LIQUIDITY SWEEP REVERSAL V2.0
+// =====================================================================
+
+sw_len = input.int(7, "Pivot Lookback")
+rsi_len = input.int(14, "RSI Length")
+
+ph = ta.pivothigh(high, sw_len, sw_len)
+pl = ta.pivotlow(low, sw_len, sw_len)
+rsi_val = ta.rsi(close, rsi_len)
+
+var float liq_high = na
+var float liq_low = na
+if not na(ph)
+    liq_high := high[sw_len]
+if not na(pl)
+    liq_low := low[sw_len]
+
+sweep_sell = high[1] > liq_high and close[1] < liq_high and rsi_val[1] > 60
+sweep_buy = low[1] < liq_low and close[1] > liq_low and rsi_val[1] < 40
+
+atr_val = ta.atr(14)
+var float entry_p = na
+var float sl_p = na
+var float tp1_p = na
+var float tp2_p = na
+var float tp3_p = na
+
+if sweep_sell
+    entry_p := close[1]
+    sl_p := high[1] + atr_val * 0.5
+    risk = math.abs(sl_p - entry_p)
+    tp1_p := entry_p - risk * 1.0
+    tp2_p := entry_p - risk * 2.0
+    tp3_p := entry_p - risk * 3.0
+
+if sweep_buy
+    entry_p := close[1]
+    sl_p := low[1] - atr_val * 0.5
+    risk = math.abs(entry_p - sl_p)
+    tp1_p := entry_p + risk * 1.0
+    tp2_p := entry_p + risk * 2.0
+    tp3_p := entry_p + risk * 3.0
+
+plotshape(sweep_sell, "Sweep SELL", shape.labeldown, location.abovebar, color=#ef4444, text="SELL", textcolor=color.white, size=size.small)
+plotshape(sweep_buy, "Sweep BUY", shape.labelup, location.belowbar, color=#10b981, text="BUY", textcolor=color.white, size=size.small)
+
+alertcondition(sweep_sell, "Liquidity Sweep SELL", "Aemeth Liquidity Sweep: Reversal SELL triggered.")
+alertcondition(sweep_buy, "Liquidity Sweep BUY", "Aemeth Liquidity Sweep: Reversal BUY triggered.")
+`;
+      filename = 'aemeth_liquidity_sweep_reversal_v2.pine';
+      title = 'AEMETH Liquidity Sweep Reversal v2.0';
+    } else if (isMeanReversion) {
+      content = `//@version=5
+indicator("AEMETH Mean Reversion Engine v3.0", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - MEAN REVERSION ENGINE V3.0
+// =====================================================================
+
+bb_len = input.int(20, "Bollinger Bands Length")
+bb_mult = input.float(2.0, "Multiplier")
+rsi_len = input.int(14, "RSI Length")
+
+basis = ta.sma(close, bb_len)
+dev = bb_mult * ta.stdev(close, bb_len)
+upper = basis + dev
+lower = basis - dev
+vwap_val = ta.vwap(hlc3)
+rsi_val = ta.rsi(close, rsi_len)
+
+plot(basis, "Basis", color=color.gray)
+plot(upper, "Upper", color=color.red)
+plot(lower, "Lower", color=color.green)
+plot(vwap_val, "VWAP", color=color.orange)
+
+buy_signal = close[2] < lower[2] and close[1] > lower[1] and rsi_val[1] < 45
+sell_signal = close[2] > upper[2] and close[1] < upper[1] and rsi_val[1] > 55
+
+atr_val = ta.atr(14)
+var float entry_p = na
+var float sl_p = na
+var float tp1_p = na
+var float tp2_p = na
+var float tp3_p = na
+
+if buy_signal
+    entry_p := close[1]
+    sl_p := low[1] - atr_val * 0.8
+    risk = math.abs(entry_p - sl_p)
+    tp1_p := entry_p + risk * 1.0
+    tp2_p := entry_p + risk * 1.8
+    tp3_p := entry_p + risk * 2.5
+
+if sell_signal
+    entry_p := close[1]
+    sl_p := high[1] + atr_val * 0.8
+    risk = math.abs(sl_p - entry_p)
+    tp1_p := entry_p - risk * 1.0
+    tp2_p := entry_p - risk * 1.8
+    tp3_p := entry_p - risk * 2.5
+
+plotshape(buy_signal, "BUY", shape.labelup, location.belowbar, color=#10b981, text="BUY", textcolor=color.white, size=size.small)
+plotshape(sell_signal, "SELL", shape.labeldown, location.abovebar, color=#ef4444, text="SELL", textcolor=color.white, size=size.small)
+
+alertcondition(buy_signal, "Mean Reversion BUY", "Aemeth Mean Reversion: BUY equilibrium trigger.")
+alertcondition(sell_signal, "Mean Reversion SELL", "Aemeth Mean Reversion: SELL equilibrium trigger.")
+`;
+      filename = 'aemeth_mean_reversion_engine_v3.pine';
+      title = 'AEMETH Mean Reversion Engine v3.0';
+    } else if (isMomentumShift) {
+      content = `//@version=5
+indicator("AEMETH Momentum Shift Pro v4.0", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - MOMENTUM SHIFT PRO V4.0
+// =====================================================================
+
+[macdLine, signalLine, _] = ta.macd(close, 12, 26, 9)
+stochK = ta.sma(ta.stoch(close, high, low, 14), 3)
+stochD = ta.sma(stochK, 3)
+
+shift_buy = ta.crossover(macdLine, signalLine) and ta.crossover(stochK, stochD) and stochK < 40
+shift_sell = ta.crossunder(macdLine, signalLine) and ta.crossunder(stochK, stochD) and stochK > 60
+
+atr_val = ta.atr(14)
+var float entry_p = na
+var float sl_p = na
+var float tp1_p = na
+var float tp2_p = na
+var float tp3_p = na
+
+if shift_buy
+    entry_p := close[1]
+    sl_p := low[1] - atr_val * 1.0
+    risk = math.abs(entry_p - sl_p)
+    tp1_p := entry_p + risk * 1.0
+    tp2_p := entry_p + risk * 1.5
+    tp3_p := entry_p + risk * 2.0
+
+plotshape(shift_buy, "BUY Shift", shape.labelup, location.belowbar, color=#10b981, text="BUY", textcolor=color.white, size=size.small)
+
+alertcondition(shift_buy, "Momentum Shift BUY", "Aemeth Momentum Shift: Bullish shift confirmed.")
+alertcondition(shift_sell, "Momentum Shift SELL", "Aemeth Momentum Shift: Bearish shift confirmed.")
+`;
+      filename = 'aemeth_momentum_shift_pro_v4.pine';
+      title = 'AEMETH Momentum Shift Pro v4.0';
+    } else if (isTrendPullback) {
+      content = `//@version=5
+indicator("AEMETH Trend Pullback Hunter v5.0", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - TREND PULLBACK HUNTER V5.0
+// =====================================================================
+
+[st, st_dir] = ta.supertrend(3.0, 10)
+ema_pull = ta.ema(close, 21)
+[diplus, diminus, adx] = ta.dmi(14, 14)
+
+plot(st_dir < 0 ? st : na, "Bull Supertrend", color=color.green, linewidth=2)
+plot(st_dir > 0 ? st : na, "Bear Supertrend", color=color.red, linewidth=2)
+plot(ema_pull, "EMA Pullback", color=color.orange, linewidth=2)
+
+pullback_sell = st_dir > 0 and high[1] >= ema_pull[1] and close[1] < ema_pull[1] and adx > 20
+
+atr_val = ta.atr(14)
+var float entry_p = na
+var float sl_p = na
+var float tp1_p = na
+var float tp2_p = na
+var float tp3_p = na
+
+if pullback_sell
+    entry_p := close[1]
+    sl_p := high[1] + atr_val * 1.2
+    risk = math.abs(sl_p - entry_p)
+    tp1_p := entry_p - risk * 1.0
+    tp2_p := entry_p - risk * 1.5
+    tp3_p := entry_p - risk * 2.0
+
+plotshape(pullback_sell, "SELL Pullback", shape.labeldown, location.abovebar, color=#ef4444, text="SELL", textcolor=color.white, size=size.small)
+
+alertcondition(pullback_sell, "Trend Pullback SELL", "Aemeth Pullback Hunter: Bearish trend continuation entry.")
+`;
+      filename = 'aemeth_trend_pullback_hunter_v5.pine';
+      title = 'AEMETH Trend Pullback Hunter v5.0';
+    } else if (isCandleImpulse) {
+      content = `//@version=5
+indicator("AEMETH Candle Impulse v5.0", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - CANDLE IMPULSE V5.0
+// =====================================================================
+
+hull_len = input.int(55, "HMA Length")
+hma = ta.wma(2 * ta.wma(close, hull_len / 2) - ta.wma(close, hull_len), math.round(math.sqrt(hull_len)))
+cci_val = ta.cci(close, 20)
+
+is_bull_hma = hma > hma[1]
+plot(hma, "HMA", color=is_bull_hma ? color.green : color.red, linewidth=2)
+
+bull_engulfing = close[1] > open[1] and close[2] < open[2] and close[1] > open[2] and open[1] < close[2]
+impulse_buy = is_bull_hma and bull_engulfing and ta.crossover(cci_val, 0)
+
+atr_val = ta.atr(14)
+var float entry_p = na
+var float sl_p = na
+var float tp1_p = na
+var float tp2_p = na
+var float tp3_p = na
+
+if impulse_buy
+    entry_p := close[1]
+    sl_p := low[1] - atr_val * 1.0
+    risk = math.abs(entry_p - sl_p)
+    tp1_p := entry_p + risk * 1.0
+    tp2_p := entry_p + risk * 2.0
+    tp3_p := entry_p + risk * 3.0
+
+plotshape(impulse_buy, "BUY Impulse", shape.labelup, location.belowbar, color=#10b981, text="BUY", textcolor=color.white, size=size.small)
+
+alertcondition(impulse_buy, "Candle Impulse BUY", "Aemeth Candle Impulse: Bullish impulse entry confirmed.")
+`;
+      filename = 'aemeth_candle_impulse_v5.pine';
+      title = 'AEMETH Candle Impulse v5.0';
+    } else if (isVolatilityExpansion) {
+      content = `//@version=5
+indicator("AEMETH Volatility Expansion Breakout v6.0", overlay=true)
+// =====================================================================
+// AEMETH TRADER ANALYSIS - VOLATILITY EXPANSION BREAKOUT V6.0
+// =====================================================================
+
+dc_len = input.int(20, "Donchian Length")
+dc_high = ta.highest(high[1], dc_len)
+dc_low = ta.lowest(low[1], dc_len)
+
+atr_curr = ta.atr(14)
+atr_avg = ta.sma(atr_curr, 20)
+vol_expanding = atr_curr > atr_avg
+wpr = ta.wpr(14)
+
+plot(dc_high, "DC High", color=color.green)
+plot(dc_low, "DC Low", color=color.red)
+
+vol_break_buy = ta.crossover(close[1], dc_high) and vol_expanding and wpr > -40
+
+atr_val = ta.atr(14)
+var float entry_p = na
+var float sl_p = na
+var float tp1_p = na
+var float tp2_p = na
+var float tp3_p = na
+
+if vol_break_buy
+    entry_p := close[1]
+    sl_p := low[1] - atr_val * 1.0
+    risk = math.abs(entry_p - sl_p)
+    tp1_p := entry_p + risk * 1.0
+    tp2_p := entry_p + risk * 2.0
+    tp3_p := entry_p + risk * 3.0
+
+plotshape(vol_break_buy, "BUY Volatility", shape.labelup, location.belowbar, color=#10b981, text="BUY", textcolor=color.white, size=size.small)
+
+alertcondition(vol_break_buy, "Volatility Expansion BUY", "Aemeth Volatility Expansion: Breakout detected.")
+`;
+      filename = 'aemeth_volatility_expansion_breakout_v6.pine';
+      title = 'AEMETH Volatility Expansion Breakout v6.0';
+    } else if (isMacd) {
       content = `//@version=5
 indicator("Aemeth MACD Crossover V1 by RIDHO", overlay=true)
 // =====================================================================
